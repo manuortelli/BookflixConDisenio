@@ -108,9 +108,9 @@ class ModificarNovedad extends Component {
         <form onSubmit={this.onSubmit} >
            
 
-            
+        <h2 className="card-header"> Modifcar Novedad</h2>
             <div className="form-group">
-           
+                <h5>Titulo</h5>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -123,7 +123,7 @@ class ModificarNovedad extends Component {
             </div>
 
             <div className="form-group">
-                
+            <h5>Descripción</h5>
                 <textarea className="form-control" 
                     id="exampleFormControlTextarea1" 
                     rows="3"
@@ -136,6 +136,7 @@ class ModificarNovedad extends Component {
             </div>
 
             <div className="form-group">
+            <h5>Fecha de publicacion</h5>
                 <DatePicker className="form-control"
                         selected={this.state.publicacion}
                         name='publicacion'
@@ -156,7 +157,7 @@ class ModificarNovedad extends Component {
             </div >
 
             <div className="form-group">
-                <button type ="submit" className="btn btn-success">
+                <button type ="submit" className="btn btn-success float-right">
                     Modificar Novedad          
                 </button>
             </div>

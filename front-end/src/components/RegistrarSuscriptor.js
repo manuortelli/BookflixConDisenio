@@ -150,12 +150,12 @@ class RegistrarSuscriptor extends Component {
             <Navegacion/>
         <div className="form-novedad" >
         <div className="col-md-6 offset-md-3">
-        <div className="card card-body text-light bg-dark">
+        <div className="cardRS card-body text-light bg-dark">
         
         <form onSubmit={this.cargarSuscriptor} >
-           
-
-            
+        <div className="card-header">
+				    <h3>Registrate</h3>
+			    </div>
             <div className="form-group">
                 <label className="text-light">Nombre
                 </label>
@@ -209,7 +209,7 @@ class RegistrarSuscriptor extends Component {
             </div>
 
             <div className="form-group">
-                <label className="text-light">DNI
+                <label className="text-light">DNI del titular de la tarjeta
                 </label>
                 <input 
                     className="form-control" 

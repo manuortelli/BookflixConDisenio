@@ -38,7 +38,7 @@ class ItemNovedadAdmin extends Component {
 
                     <h5 className="card-title "> {this.props.novedad.titulo} </h5>
                     
-                    <h6 className="card-subtitle mb-2 text-muted">{this.props.novedad.descripcion}</h6>
+                    <h6 className="card-subtitle mb-2 text-light">{this.props.novedad.descripcion}</h6>
                     <div>
 
                     <Link to={'/novedad/detalle/'+this.props.novedad._id} className="btn btn-success " > 

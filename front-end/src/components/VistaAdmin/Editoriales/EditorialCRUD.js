@@ -142,13 +142,15 @@ class Editorial extends Component {
             <div className="row">
                 
                 <div className="form-autor" >
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
-
+                <div className="form-input-field">
                     <form onSubmit={this.agregarEditorial} >
-                    <div className="form-group">
-                        <div className="col s5">
-                            <div className="form-input-field col s5 bg-dark">
+                    
+                   
+                        <div className="cardEditorial offset-md-1">
+                        <div className="card-header">
+				            <h5>Agregar Editorial</h5>
+                            </div>
+                            <div className="card-body">
                                 <label className="text-light">Ingrese la editorial</label>
                                 <input 
                                     className="form-control col s12"
@@ -159,48 +161,54 @@ class Editorial extends Component {
                                     placeholder="Ingrese el nombre de la editorial"
                                     required>
                                 </input>
-                                <div className="form-group">
-                                <button type="submit" className="btn btn-success " > Agregar Edtorial </button>
+                                
+                            </div>
+                            <div className="form-group col s12">
+                                <button type="submit" className="btn btn-success float-right" > Agregar Edtorial </button>
                                 </div>
                             </div>
-                        </div>
-                        </div>
+
                     </form>
-                </div>
+                
                 </div>
                
 
                 
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
+                
 
                     <form onSubmit={this.eliminarEditorial}>
-                        <div className="form-group">
-                            
+                        <div className="cardEliminarAutor offset-md-1">
+                        <div className="card-header">
+				            <h5>Eliminar Editorial</h5>
+                            </div> 
+                            <div className="card-body">
                             <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione una editorial para eliminar</option>
                                 {this.state.editoriales.map(ed =>
                                     <option key={ed.id} value={ed._id} >{ed.nombre}</option>
                                 )}
                             </select>
+                            </div>
+                            <div className="form-group col s12">
+                            <button type="submit" className="btn btn-success float-right" > Eliminar Editorial </button>
                         </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" > Eliminar Editorial </button>
                         </div>
+                        
                     </form>
-                </div>
-                </div>
+                
                 
 
 
                 
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
+                
 
                     <form onSubmit={this.modificarEditorial}>
 
-                        <div className="form-group">
-                           
+                    <div className="cardEditarEditorial offset-md-1">
+                        <div className="card-header">
+                        <h5>Modificar Ediitorial</h5>
+                            </div>
+                            <div className="card-body">  
                             <select required className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione una editorial para modificar</option>
                                 {this.state.editoriales.map(ed =>
@@ -219,27 +227,21 @@ class Editorial extends Component {
                             </input>
                         </div>
 
-
-
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" >
+                        <div className="form-group col s12 ">
+                            <button type="submit" className="btn btn-success float-right" >
                                 Actualizar Editorial
                             </button>
                         </div>
-
-
+                        </div>
+                        
                     </form>
                 </div>
-                
-                </div>
+               
 
 
-                </div>
-
-
-                <div className="col-md-8">
+                <div className="col-md-4">
                     {this.state.editoriales.map(ed =>
-                        <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+                        <div class="card col-md-10 offset-md-5 text-light bg-dark" >
                             <div class="card-body">
                     
                                 <h5 class="card-title" onChange={this.onInputChange2} >{ed.nombre}</h5>

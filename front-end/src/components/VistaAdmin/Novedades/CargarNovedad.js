@@ -67,16 +67,17 @@ export default class CargarNovedad extends Component {
     render(){
         return (
         <div className="form-novedad" >
-       
+        
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
+        <h2 className="card-header">Cargar Novedad</h2>
         
         <form onSubmit={this.onSubmit} >
            
-
+        
             
             <div className="form-group">
-           
+            <h5>Titulo</h5>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -89,7 +90,7 @@ export default class CargarNovedad extends Component {
             </div>
 
             <div className="form-group">
-                
+            <h5>Descripción</h5>
                 <textarea className="form-control" 
                     id="exampleFormControlTextarea1" 
                     rows="3"
@@ -100,8 +101,9 @@ export default class CargarNovedad extends Component {
                     required >
                 </textarea> 
             </div>
-            <label className="text-light">Fecha de publicación</label>
+           
             <div className="form-group">
+            <h5>Fecha de publicación</h5>
                 <DatePicker className="form-control"
                         selected={this.state.publicacion}
                         name='publicacion'

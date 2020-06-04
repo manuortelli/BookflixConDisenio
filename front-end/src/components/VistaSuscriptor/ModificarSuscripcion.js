@@ -150,11 +150,13 @@ export default class MiSuscripcion extends Component {
             <div>
             <div className="form-novedad" >
             <div className="col-md-6 offset-md-3">
-             <div className="card card-body text-light bg-dark">
+             <div className="cardMS card-body text-light bg-dark">
 
              <form onSubmit={this.modificarSuscriptor} >
 
-                <h5 class="card-title">Mi Suscripción: </h5>
+             <div className="card-header">
+				    <h3>Mi Suscripción</h3>
+			    </div>
                 <div className="form-group">
                 <label className="text-light">Nombre
                 </label>
@@ -285,7 +287,7 @@ export default class MiSuscripcion extends Component {
          
             
             <div className="form-group">
-                <button  type="submit" className="btn btn-danger btn-lg btn-block"
+                <button  type="submit" className="btn btn-danger btn-lg btn-block "
                         >
                     Modificar 
                 </button>

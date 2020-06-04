@@ -15,9 +15,11 @@
     "react-confirm-alert": "^2.6.1",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
+    "react-pdf": "^4.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
     "react-slick": "^0.26.1",
+    "reactjs-pdf-reader": "^1.0.12",
     "slick-carousel": "^1.8.1",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
@@ -29,7 +31,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  
   "eslintConfig": {
     "extends": "react-app"
   },

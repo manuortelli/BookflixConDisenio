@@ -102,21 +102,21 @@ export default class DetalleLibrosAdmin extends Component {
   
     
     return (
-        <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+        <div class="card col-md-6 offset-md-3 text-light " >
             <div className="card-body">
                 <h4 className="card-title card-group"> {this.state.libro.titulo}</h4>
-                <img width="580px"height="auto" src={portada + `${this.state.libro.portada}`} />
-                <div></div>
-                <h6 className="card-subtitle mb-2 text-muted">ISBN:{this.state.libro.isbn}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Autor: {this.state.autor.nombre}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Genero: {this.state.genero.nombre}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Editorial: {this.state.editorial.nombre}</h6>
-               
-                <h6 className="card-subtitle mb-2 text-muted">Publicado: {this.state.libro.lanzamiento}</h6>
-               
+                
+                <img width="530px" height="auto" src={portada + `${this.state.libro.portada}`} />  
+                <div className="card-body">
+                <h6 className="card-subtitle mb-2 text-light">ISBN:{this.state.libro.isbn}</h6>
+                <h6 className="card-subtitle mb-2 text-light">Autor: {this.state.autor.nombre}</h6>
+                <h6 className="card-subtitle mb-2 text-light">Genero: {this.state.genero.nombre}</h6>
+                <h6 className="card-subtitle mb-2 text-light">Editorial: {this.state.editorial.nombre}</h6>
+                
+                
                 {this.fechaExpiracion}
                 
-                
+                </div>
             </div>
                   
             </div>

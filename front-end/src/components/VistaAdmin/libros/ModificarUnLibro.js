@@ -216,10 +216,11 @@ class ModificarUnLibro extends Component {
         <div className="col-md-6 offset-md-3">
         <div className="card card-body text-light bg-dark">
        
+        
         <form onSubmit={this.onSubmit} >
-            
+            <h2 className="card-header">Modificar Libro</h2>
             <div className="form-group">
-               
+            <h5>Titulo</h5>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -231,7 +232,7 @@ class ModificarUnLibro extends Component {
                 </input>
             </div>
             <div className="form-group">
-            
+            <h5>ISBN</h5>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -244,7 +245,7 @@ class ModificarUnLibro extends Component {
             </div>
 
             <div className="form-group">
-            
+            <h5>Autor</h5>
                 <select className="form-control"   
                     onChange={this.onInputChange} 
                     id="exampleFormControlSelect1" 
@@ -258,7 +259,7 @@ class ModificarUnLibro extends Component {
             </div>
 
             <div className="form-group">
-            
+            <h5>Genero</h5>
                     <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero" required>
                     
                         {this.state.generos.map(ge =>
@@ -268,7 +269,7 @@ class ModificarUnLibro extends Component {
             </div>
 
             <div className="form-group">
-                
+            <h5>Editorial</h5>
                     <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial" required>
                     <option selected>Editorial</option>
                     {this.state.editoriales.map(ed =>
@@ -295,7 +296,7 @@ class ModificarUnLibro extends Component {
     
             
             <div className="form-group">
-                <button type ="submit" className="btn btn-success"> Modificar </button>
+                <button type ="submit" className="btn btn-success float-right"> Modificar </button>
             </div>
          </form>
          </div>

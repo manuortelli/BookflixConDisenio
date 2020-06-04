@@ -64,6 +64,63 @@ body {
     background-color: rgba(0,0,0,0.5) !important;
     align-content: center;
     }   
+
+    .cardAutor{
+        height: 280px;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 500px;
+        background-color: rgba(0,0,0,0.5) !important;
+        align-content: center;
+        }   
+
+        .cardEliminarAutor{
+            height: 200px;
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 500px;
+            background-color: rgba(0,0,0,0.5) !important;
+            align-content: center;
+            }  
+            
+            .cardEditarAutor{
+                height: 330px;
+                margin-top: auto;
+                margin-bottom: auto;
+                width: 500px;
+                background-color: rgba(0,0,0,0.5) !important;
+                align-content: center;
+                }   
+
+        .cardEditorial{
+                    height: 250px;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    width: 500px;
+                    background-color: rgba(0,0,0,0.5) !important;
+                    align-content: center;
+                    }       
+
+         .cardEditarEditorial{
+            height: 300px;
+            margin-top: auto;
+             margin-bottom: auto;
+             width: 500px;
+             background-color: rgba(0,0,0,0.5) !important;
+            align-content: center;
+            }          
+            
+    .cardVerLibros {
+        height: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 500px;
+        background-color: rgba(0,0,0,0.5) !important;
+        align-content: center;
+
+    }
+    
+
     
     
     
@@ -71,6 +128,11 @@ body {
     color: white;
     align-content: center;
     }
+
+    .card-header h5{
+        color: white;
+        align-content: center;
+        }
     
   
     /*Input preprend es el que separa, creo(?)*/

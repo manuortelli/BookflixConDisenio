@@ -45,9 +45,9 @@ librosCtrl.cargar = async (req,res)=>{
     if(!req.file){
         return res.status(401).json({msg:'La carga de imagen de portada es obligatoria'})
     }
-    if(!req.body.lanzamiento){
+    /*if(!req.body.lanzamiento){
         return res.status(401).json({msg:'Ingrese una fecha de lanzamiento'})
-    }
+    }*/
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,

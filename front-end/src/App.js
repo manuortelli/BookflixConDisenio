@@ -7,6 +7,7 @@ import Home from './components/Home';
 import IniciarSesion from './components/IniciarSesion';
 import RegistrarSuscriptor from './components/RegistrarSuscriptor';
 
+
 import Libros from './components/VistaAdmin/libros/Libros';
 import Novedades from './components/VistaAdmin/Novedades/Novedades';
 import Autores from './components/VistaAdmin/Autores/AutoresCRUD';
@@ -39,7 +40,7 @@ function App() {
     <Router>
       <div className="body" >
        
-        <Route  exact path="/"> <IniciarSesion/> </Route>
+        <Route  exact path="/"> <IniciarSesion/></Route>
         
         
         <Route  exact path="/login"> <IniciarSesion/> </Route>

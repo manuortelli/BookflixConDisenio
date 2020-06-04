@@ -40,7 +40,9 @@ render() {
             <NavegacionAdmin/>
             <div className="card col-md-6 offset-md-3 text-light bg-dark" >
 
-                <h5 className="card-title">Suscriptores: </h5>
+            <div className="card-header">
+				            <h5>Suscriptores: </h5>
+                            </div>
                     {this.state.suscriptores.map(suscriptor => 
                         <VisualizarUnSuscriptor key={suscriptor._id} suscriptor={suscriptor} token={this.state.token}/> )}
             </div>

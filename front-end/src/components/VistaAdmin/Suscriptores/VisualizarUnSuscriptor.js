@@ -28,16 +28,16 @@ export default class UnSuscriptor extends Component {
         
             <div className="card-body">
                 
-                    <form>
-                        <button type="button" className="btn btn-success" onClick={() => {eliminarSuscriptor()}}> X </button>
-                    </form>
+                  
               
                 
-                <h6 className="card-subtitle mb-2 text-muted">Nombre:{this.props.suscriptor.nombre}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Email: {this.props.suscriptor.email}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">DNI: {this.props.suscriptor.dni}</h6>
-                <h6 className="card-subtitle mb-2 text-muted">Tipo de Suscripcion: {this.props.suscriptor.suscripcion}</h6>
-    
+                <h6 className="card-subtitle mb-2 text-light">Nombre: {this.props.suscriptor.nombre}</h6>
+                <h6 className="card-subtitle mb-2 text-light">Email: {this.props.suscriptor.email}</h6>
+                <h6 className="card-subtitle mb-2 text-light">DNI: {this.props.suscriptor.dni}</h6>
+                <h6 className="card-subtitle mb-2 text-light">Tipo de Suscripcion: {this.props.suscriptor.suscripcion}</h6>
+                <form>
+                        <button type="button" className="btn btn-success  float-right" onClick={() => {eliminarSuscriptor()}}> Eliminar Suscriptor </button>
+                    </form>
                 
        
                   

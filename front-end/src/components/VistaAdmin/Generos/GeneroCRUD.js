@@ -142,14 +142,17 @@ class Generos extends Component {
             <div className="row">
                 
                 <div className="form-autor" >
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
-
+                <div className="form-input-field">
                     <form onSubmit={this.agregarGenero} >
-                    <div className="form-group">
-                        <div className="col s5">
-                            <div className="form-input-field col s5 bg-dark">
-                               
+
+
+                    <div className="cardEditorial offset-md-1">
+                    <div className="card-header">
+				            <h5>Agregar género</h5>
+                            </div>
+
+                            <div className="card-body">   
+                            <label className="text-light">Ingrese el género</label>
                                 <input 
                                     className="form-control col s12"
                                     id="nombre"
@@ -159,24 +162,23 @@ class Generos extends Component {
                                     placeholder="Ingrese género"
                                     required>
                                 </input>
-                                <div className="form-group">
-                                <button type="submit" className="btn btn-success " > Agregar Género </button>
-                                </div>
+                                
                             </div>
-                        </div>
+                            <div className="form-group col s12">
+                                <button type="submit" className="btn btn-success float-right" > Agregar Género </button>
+                                </div>
                         </div>
                     </form>
                 </div>
-                </div>
                
 
-                
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
-
+        
                     <form onSubmit={this.eliminarGenero}>
-                        <div className="form-group">
-                            
+                    <div className="cardEliminarAutor offset-md-1">
+                        <div className="card-header">
+				            <h5>Eliminar género</h5>
+                            </div> 
+                            <div className="card-body">
                             <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione un género para eliminar</option>
                                 {this.state.generos.map(ge =>
@@ -184,30 +186,32 @@ class Generos extends Component {
                                 )}
                             </select>
                         </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" > Eliminar Género </button>
-                        </div>
+                        <div className="form-group col s12">
+                            <button type="submit" className="btn btn-success float-right" > Eliminar Género </button>
+                        
+                            </div>
+                            </div>
                     </form>
-                </div>
-                </div>
+               
                 
 
 
                 
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
-
+               
                     <form onSubmit={this.modificarGenero}>
 
-                        <div className="form-group">
-                           
+                    <div className="cardEditarEditorial offset-md-1">
+                        <div className="card-header">
+                        <h5>Modificar Género</h5>
+                            </div>
+                            <div className="card-body"> 
                             <select required className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione un género para modificar</option>
                                 {this.state.generos.map(ge =>
                                     <option key={ge.id} value={ge._id} >{ge.nombre}</option>
                                 )}
                             </select>
-                            
+                            <label className="text-light">Ingrese el nuevo género</label>
                             <input
                                 className="form-control col s12"
                                 id="nombre2"
@@ -221,25 +225,21 @@ class Generos extends Component {
 
 
 
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" >
+                        <div className="form-group col s12 ">
+                            <button type="submit" className="btn btn-success float-right" >
                                 Actualizar Género
                             </button>
                         </div>
-
+                        </div>
 
                     </form>
                 </div>
                 
-                </div>
+                
 
-
-                </div>
-
-
-                <div className="col-md-8">
+                <div className="col-md-4">
                     {this.state.generos.map(ge =>
-                        <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+                        <div class="card col-md-10 offset-md-5 text-light bg-dark" >
                             <div class="card-body">
                     
                                 <h5 class="card-title" onChange={this.onInputChange2} >{ge.nombre}</h5>

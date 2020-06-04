@@ -34,8 +34,6 @@ export default class CargarMetadata extends Component {
         };
       
         this.getPortada=this.getPortada.bind(this);
-        this.onChangeFechaDePublicacion=this.onChangeFechaDePublicacion.bind(this);
-        this.onChangeFechaDeExpiracion=this.onChangeFechaDeExpiracion.bind(this);
         this.onInputChange=this.onInputChange.bind(this);
         this.setAutores=this.setAutores.bind(this);
         
@@ -145,13 +143,13 @@ export default class CargarMetadata extends Component {
         })
     };
 
-    onChangeFechaDePublicacion = fechaDePublicacion => {
+    /*onChangeFechaDePublicacion = fechaDePublicacion => {
         this.setState({ fechaDePublicacion });
     };
 
     onChangeFechaDeExpiracion = fechaDeExpiracion => {
         this.setState({ fechaDeExpiracion });
-    };
+    };*/
 
     getPortada(e){
         this.setState({

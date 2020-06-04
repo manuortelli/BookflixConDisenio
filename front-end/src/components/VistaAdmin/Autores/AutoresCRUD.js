@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import NavegacionAdmin from '../NavegacionAdmin'
+import '/home/manuel/git/BookflixConDisenio/front-end/src/components/styles/cargarsuscriptor.css';
+
+
 
 const getAutores = 'http://localhost:4000/api/autores/';
 const cargar = 'http://localhost:4000/api/autores/cargar';
@@ -135,15 +138,15 @@ class Autor extends Component {
         return (
             <div><NavegacionAdmin/>
             
-            <div className="row">
-                
-                <div className="form-autor" >
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
+                <div className="row">
+                <div className="form-input-field">
                     <form onSubmit={this.agregarAutor} >
 
-                        <div className="col s5">
-                            <div className="form-input-field col s5 bg-dark">
+                        <div className="cardAutor offset-md-1">
+                        <div className="card-header">
+				            <h5>Agregar Autor</h5>
+                            </div>
+                            <div className="card-body">
                                 <label className="text-light">Ingrese Nombre y Apellido</label>
                                 <input className="form-control col s12"
                                     id="nombre"
@@ -162,46 +165,50 @@ class Autor extends Component {
                                     placeholder="Apellido"
                                     required>
                                 </input>
-
-                                <button type="submit" className="btn btn-success " > Agregar Autor/a </button>
+                                
                             </div>
+                            <div className="form-group col s12 ">
+                                <button type="submit" className="btn btn-success float-right " > Agregar Autor/a </button>
+                                </div>
                         </div>
                     </form>
-                </div>
-                </div>
                
-
+               
+                   
                 
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
+              
 
                     <form onSubmit={this.eliminarAutor}>
-                        <div className="form-group">
-                            
-                            <select className="form-control" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
+                        <div className="cardEliminarAutor offset-md-1">
+                        <div className="card-header">
+				            <h5>Eliminar Autor</h5>
+                            </div>
+                        <div className="card-body">  
+                            <select className="form-control col s12" onChange={this.onInputChange2} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione un autor/a para eliminar</option>
                                 {this.state.autores.map(a =>
                                     <option key={a.id} value={a._id} >{a.nombre} {a.apellido}</option>
                                 )}
                             </select>
                         </div>
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" > Eliminar Autor/a </button>
+                        <div className="form-group col s12 ">
+                            <button type="submit" className="btn btn-success float-right" > Eliminar Autor/a </button>
+                        </div>
                         </div>
                     </form>
-                </div>
-                </div>
-                
 
 
+                    
                 
-                <div className="form-input-field col s5 bg-dark">
-                <div className="card card-body text-light bg-dark">
 
                     <form onSubmit={this.modificarAutor}>
+                        
 
-                        <div className="form-group">
-                           
+                        <div className="cardEditarAutor offset-md-1">
+                        <div className="card-header">
+				            <h5>Modificar Autor</h5>
+                            </div>
+                        <div className="card-body">
                             <select required className="form-control" onChange={this.onInputChange3} id="exampleFormControlSelect1" name="editorial">
                             <option selected>Seleccione un/a Autor/a para editar</option>
                                 {this.state.autores.map(a =>
@@ -227,27 +234,23 @@ class Autor extends Component {
                                 </input>
                         </div>
 
-
-
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-success" >
+                                    
+                        <div className="form-group col s12 ">
+                            <button type="submit" className="btn btn-success float-right " >
                                 Actualizar Autor/a
                             </button>
                         </div>
 
-
+                        </div>
                     </form>
-                </div>
-                
-                </div>
 
 
                 </div>
 
 
-                <div className="col-md-8">
+                <div className="col-md-4">
                     {this.state.autores.map(a =>
-                        <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+                        <div class="card col-md-12 offset-md-5 text-light bg-dark" >
                             <div class="card-body">
                     
                                 <h5 class="card-title" onChange={this.onInputChange2} >{a.nombre} {a.apellido}</h5>
@@ -256,6 +259,7 @@ class Autor extends Component {
                         </div>
                     )}
                 </div>
+            
             </div>
             </div>
         )

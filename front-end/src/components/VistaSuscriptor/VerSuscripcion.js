@@ -43,18 +43,17 @@ export default class MiSuscripcion extends Component {
 
     render() {
         return (
-            <div>
-            <div class="card col-md-7 offset-md-3 text-light bg-dark" >
-                <h1 class="card-title"> {this.state.miSuscripcion.nombre} </h1>
-                    <div class="card-body">
+            <div className="container">
+            <div class="cardVS col-md-6 offset-md-3 text-light bg-dark" >
+                <h1 class="card-header"> {this.state.miSuscripcion.nombre} </h1>
+                    <div class="card-body">                        
+                        <h4 class="card-subtitle mb-2 ">EMAIL: {this.state.miSuscripcion.email}</h4>
+                        <h4 class="card-subtitle mb-2 ">SUSCRIPCION: {this.state.miSuscripcion.suscripcion}</h4>
+                        <h4 class="card-subtitle mb-2 ">DNI: {this.state.miSuscripcion.dni}</h4>
                         
-                        <h4 class="card-subtitle mb-2 ">EMAIL {this.state.miSuscripcion.email}</h4>
-                        <h4 class="card-subtitle mb-2 ">SUSCRIPCION {this.state.miSuscripcion.suscripcion}</h4>
-                        <h4 class="card-subtitle mb-2 ">DNI {this.state.miSuscripcion.dni}</h4>
                         
-
                         <div>
-                            <Link to={'/suscriptor/suscripcion/modificar'} className='btn btn-danger'> Modificar</Link>
+                        <Link to={'/suscriptor/suscripcion/modificar'} className='btn login_btn float-right'> Modificar</Link>
                         </div>
                     </div>
                    
@@ -63,6 +62,8 @@ export default class MiSuscripcion extends Component {
 
 
         </div>
+        
+
         )
     }
 }

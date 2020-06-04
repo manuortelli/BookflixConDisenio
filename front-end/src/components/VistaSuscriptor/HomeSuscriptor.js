@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
 import NavegacionSuscriptor from './NavegacionSuscriptor';
-import VerSuscripcion from './VerSuscripcion';
+import { Document, Page } from 'react-pdf';
 
 export default class Home extends Component {
 
@@ -46,7 +46,10 @@ export default class Home extends Component {
                     <div class="d-flex justify-content-center">
                    
                       
-                    <div className='btn btn-secondary' > PRONTO NUEVAS FUNCIONALIDADES !</div> 
+                    <div className='btn btn-secondary' > PRONTO NUEVAS FUNCIONALIDADES !
+                    
+
+                    </div> 
                        
                     </div>
                     
