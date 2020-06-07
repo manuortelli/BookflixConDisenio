@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const cors = require('cors');
-const { listar, logout, visualizar, soyAdmin, login, registrar, modificar, eliminar} = require('../controllers/suscriptores-controllers');
+const { listar, logout, visualizar, soyAdmin, agregarPerfil,  login, registrar, modificar, eliminar, loginPerfiles, loginPerfil} = require('../controllers/suscriptores-controllers');
 
 router.get('/', listar);
 
@@ -13,6 +13,12 @@ router.post('/login', cors(), login);
 router.get('/me', auth, cors(), visualizar);
 
 router.get('/soyAdmin', auth, cors(), soyAdmin);
+
+router.post('/loginPerfiles', auth, cors(), loginPerfiles);
+
+router.post('/loginPerfil', auth, cors(), loginPerfil);
+
+router.post('/agregarPerfil',auth,cors(),agregarPerfil);
 
 router.post('/modificar', auth, cors(), modificar);
 

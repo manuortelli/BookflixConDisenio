@@ -15,9 +15,12 @@ import Editoriales from './components/VistaAdmin/Editoriales/EditorialCRUD';
 import Generos from './components/VistaAdmin/Generos/GeneroCRUD';
 import Suscriptores from './components/VistaAdmin/Suscriptores/Suscriptores';
 import ModificarUnLibro from './components/VistaAdmin/libros/ModificarUnLibro';
+import CargarLibro from './components/VistaAdmin/libros/CargarArchivoLibro';
 import NavegacionAdmin from './components/VistaAdmin/NavegacionAdmin';
 import NavegacionSuscriptor  from './components/VistaSuscriptor/NavegacionSuscriptor';
 import MiSuscripcion from './components/VistaSuscriptor/VerSuscripcion';
+import Perfiles from './components/VistaSuscriptor/Perfiles';
+import NuevoPerfil from './components/VistaSuscriptor/NuevoPerfil';
 
 import VerificarSesion from './components/VerificarSesion';
 import ListarNovedades from './components/VistaSuscriptor/Novedades/ListarNovedades';
@@ -74,6 +77,13 @@ function App() {
                 <NavegacionAdmin/>  
                 <CargarMetadata/> 
           </Route>
+
+          <Route  exact path='/libro/cargar'>
+                <VerificarSesion/> 
+                <NavegacionAdmin/>  
+                <CargarLibro/>
+          </Route>
+        
 
       
 
@@ -141,6 +151,23 @@ function App() {
             <VerificarSesion/>  
             <NavegacionSuscriptor/> 
             <ModificarSuscripcion></ModificarSuscripcion>
+          </div>
+          )}> 
+        </Route>
+
+        <Route  exact path='/suscriptor/suscripcion/perfiles'render={({match  }) => (
+          <div>
+            <VerificarSesion/>  
+            <NavegacionSuscriptor/> 
+            <Perfiles/>
+          </div>
+          )}> 
+        </Route>
+        <Route  exact path='/suscriptor/suscripcion/perfiles/agregar'render={({match  }) => (
+          <div>
+            <VerificarSesion/>  
+            <NavegacionSuscriptor/> 
+            <NuevoPerfil/>
           </div>
           )}> 
         </Route>

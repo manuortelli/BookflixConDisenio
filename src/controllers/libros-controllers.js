@@ -15,6 +15,14 @@ librosCtrl.visualizar = async (req,res)=>{
     
 };
 
+librosCtrl.visualizarCapitulos = async (req,res)=>{
+    
+    await Libro.findById(req.body.id)
+        .then(capitulos=>{ res.json(capitulos.capitulos)})
+        .catch(err=> res.json(err))
+    
+};
+
 librosCtrl.cargar = async (req,res)=>{
     const libroI = await Libro.findOne({ isbn: req.body.isbn});
    
@@ -116,9 +124,56 @@ librosCtrl.modificar = async (req,res)=>{
             .catch(err=> res.json(err))
     }
     
-    
 
 };
+
+librosCtrl.cargarArchivoLibro = async (req,res)=>{
+        
+    const libro = await Libro.findById(req.body.id);
+
+        if(req.file){
+            await libro.updateOne({archivo: req.file.filename})
+        }else{
+            res.send('Debe ingresar un archivo .pdf')
+        }
+        if(req.lanzamiento){
+            await libro.updateOne({lanzamiento: req.body.lanzamiento})
+        }else{
+            res.send('Debe indicar una fecha de lanzamiento');
+        }
+        if(req.body.expiracion){
+            await libro.updateOne({expiracion: req.body.expiracion})
+        } 
+      
+           res.send('Archivo de Libro cargado con éxito')
+}; 
+
+librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
+        
+    const libro = await Libro.findById(req.body.id);
+
+        if(req.file){
+            const index = libro.capitulos.length;
+            await libro.updateOne({
+                capitulos:{
+                    n: index+1,
+                    archivo: req.file.filename
+                } 
+            })
+        }else{
+            res.send('Debe ingresar un archivo .pdf')
+        }
+        if(req.lanzamiento){
+            await libro.updateOne({lanzamiento: req.body.lanzamiento})
+        }else{
+            res.send('Debe indicar una fecha de lanzamiento');
+        }
+        if(req.body.expiracion){
+            await libro.updateOne({expiracion: req.body.expiracion})
+        } 
+      
+           res.send('Archivo de capítulo cargado con éxito')
+}; 
 
 librosCtrl.eliminar = async (req,res)=>{
     

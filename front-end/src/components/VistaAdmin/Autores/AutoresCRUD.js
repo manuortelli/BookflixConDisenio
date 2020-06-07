@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import NavegacionAdmin from '../NavegacionAdmin'
-import '/home/manuel/git/BookflixConDisenio/front-end/src/components/styles/cargarsuscriptor.css';
+
 
 
 

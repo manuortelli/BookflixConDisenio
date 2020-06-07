@@ -16,7 +16,6 @@ suscriptoresCtrl.listar = async (req, res) => {
 suscriptoresCtrl.registrar = async (req,res) => {
     
     const { errors, isValid } = validateRegisterInput(req.body);
-    console.log(req.body.suscripcion);
 
     if(!isValid){
         return res.status(401).json({msg: errors});
@@ -27,32 +26,28 @@ suscriptoresCtrl.registrar = async (req,res) => {
         return res.status(401).json({msg:'Ingrese otro email, el actual ya está en uso' });
     };
      
-    
     const suscriptorDNI = await Suscriptor.findOne({dni: req.body.dni}) ;
 
     if(suscriptorDNI){
         return res.status(401).json({msg:'Ingrese otro dni, el actual ya está en uso'})
     };
 
-    const nuevoSuscriptor = new Suscriptor({
+    const perfil = await new Perfil ({ nombre: req.body.nombre }).save() ;
+
+    console.log(perfil,perfil.__id);
+
+    const nuevoSuscriptor = await new Suscriptor({
         nombre: req.body.nombre,
         email:req.body.email,
         password:req.body.password,
         dni: req.body.dni,
         suscripcion: req.body.suscripcion,
-        perfiles: [new Perfil({ nombre: req.body.nombre })]
-    });
- /* CUANDO SE AVANCE CON LA ASIGNACION DE PERFILES
-    ACÁ SE PREGUNTA POR EL TIPO DE SUSCRIPCION Y AGREGARÍA
-    UN ELEMENTO AL ARREGLO (SI ES REGULAR)
-    O TRES ELEMENTOS AL ARREGLO (SI ES PREMIUM)
+        
+    }).save();
 
-    if (req.body.suscripcion = 'regular'){
-    } else {
-         }   
-*/
-    await nuevoSuscriptor
-        .save()
+    await nuevoSuscriptor.updateOne({$push:{ perfiles: perfil._id }});
+
+    await perfil.updateOne({ suscriptor : nuevoSuscriptor.__id })
         .then( user => {
             JWT.sign(
                 {   id: user._id },
@@ -70,14 +65,13 @@ suscriptoresCtrl.registrar = async (req,res) => {
                 }
             )
         })
-        .catch(err => res.send(err));
+        .catch(err => res.status(401).json({msg:err}));
 
 };
 
 suscriptoresCtrl.login = async (req,res) => {
     const { email , password } = req.body;
-    
-    //esto deberian checarlo en el front
+
     if(!email || !password ){
         return res.status(401).json({msg:'Debe rellenar todos los campos'})
     }
@@ -100,10 +94,35 @@ suscriptoresCtrl.login = async (req,res) => {
             if(err) throw err;    
             res.json({
                 token,
-                user: await Suscriptor.findById(suscriptor._id)
+                user: suscriptor,
+               
             });
         }
     )
+};
+
+suscriptoresCtrl.loginPerfiles = async (req,res) => {
+    const suscriptor = await Suscriptor.findById(req.body.id)
+    console.log(suscriptor.perfiles.lenght)
+    /*
+    
+    res.send(perfiles.perfiles());
+    */
+};
+
+suscriptoresCtrl.loginPerfil = async (req,res) => {
+    const perfil = await Perfil.findById(req.body.id);
+
+    JWT.sign({ id: suscriptor._id },
+        config.secret,
+        {   expiresIn: 3600} ,
+        async (err,token) => {
+            if(err) throw err;    
+            res.json({
+                token,
+                user: perfil
+            });
+        })
 };
 
 suscriptoresCtrl.visualizar =  async (req,res)=>{
@@ -150,7 +169,6 @@ suscriptoresCtrl.modificar =  async (req,res) => {
             email: req.body.email,
             dni: req.body.dni,
             suscripcion: req.body.suscripcion,
-            //perfiles: [new Perfil({ nombre: req.body.nombre })]
             
     })
         .then( susc=> {
@@ -163,18 +181,40 @@ suscriptoresCtrl.modificar =  async (req,res) => {
 };
 
 suscriptoresCtrl.eliminar =  async (req,res)=>{
-    
-    
+        
     await Suscriptor.findByIdAndRemove(req.body.id)
-        .then(res.json('Suscriptor/a Eliminado/a'));
+        .then(res.json({msg:'Suscriptor/a Eliminado/a'}));
 };
 
 suscriptoresCtrl.logout = (req,res) => {
-    //borro su token redireccionandolo al home
+
     req.logout().then(res.json('Sesion eliminada'))
                 .catch(err => res.json(err));
     res.redirect('/');  
 } 
+
+suscriptoresCtrl.agregarPerfil= async (req,res) =>{
+
+    const user = await Suscriptor.findById(req.body.id);
+    const perfiles = await user.perfiles.length;
+    
+
+    if(user.suscripcion === 'REGULAR'){
+        if( perfiles === 2){
+            return res.send('La cantidad maxima de perfiles para tu suscripcion ha sido alcanzada');
+        }
+    }else {
+        if(perfiles === 4){
+            return res.send('La cantidad maxima de perfiles para tu suscripcion ha sido alcanzada');
+        }
+    }
+    const perfil = await new Perfil ({ nombre: req.body.nombre , suscriptor: req.body.id }).save();
+
+    await user.updateOne({ $push:{ perfiles: perfil._id }})
+        .then(res.send('Perfil agregado con éxito'));
+   
+
+}   
 
 
 module.exports = suscriptoresCtrl;

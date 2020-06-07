@@ -54,6 +54,8 @@ export default class MiSuscripcion extends Component {
                         
                         <div>
                         <Link to={'/suscriptor/suscripcion/modificar'} className='btn login_btn float-right'> Modificar</Link>
+                        <Link to={'/suscriptor/suscripcion/perfiles'} className='btn login_btn float-left'> Perfiles</Link>
+                        
                         </div>
                     </div>
                    

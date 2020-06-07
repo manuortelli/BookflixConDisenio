@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcryptjs');
-const Perfil = require('./Perfil');
+
 
 
 const SuscriptorSchema = new Schema({
     nombre:{ type: String, required:true },
     email:{ type: String,  required:true },
     password:{ type: String, required:true} ,
-    perfiles:{},
+    perfiles:[String],
     suscripcion:{ type:String, require:true },
     dni:{ type:String, require:true } 
      
@@ -31,9 +31,7 @@ SuscriptorSchema.methods.matchPassword = async function(password) {
     
 };
 
-async function email(){
-    return await this.email;
-}
+
 
 module.exports = mongoose.model('Suscriptor', SuscriptorSchema);
 

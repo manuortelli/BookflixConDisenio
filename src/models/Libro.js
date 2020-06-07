@@ -27,14 +27,23 @@ const LibroSchema = new Schema({
     genero:{
         type: String,
         required:true,
-    },/*
+    },
     lanzamiento:{
         type: Date,
-        //required:true,
+        
     },
     expiracion:{
         type: Date
-    }*/
+    },
+    archivo:{
+        type:String
+    },
+    capitulos:{
+        type: {
+            n: String,
+            archivo: String, 
+        }
+    }
 });
 
 module.exports = mongoose.model('Libro', LibroSchema);

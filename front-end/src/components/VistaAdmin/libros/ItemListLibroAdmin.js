@@ -99,7 +99,7 @@ class ItemListLibro extends Component {
                         <Link to={'/libros/modificar/' + this.props.libro._id} className='btn btn-success'> Modificar</Link>
 
                                      {' '}
-                                     <div className="btn btn-secondary">Agregar Archivo</div>
+                                     <Link to={'/libro/cargar'} className='btn btn-success'> Agregar Archivo</Link>
                     </div>
                 </div>
             </div>

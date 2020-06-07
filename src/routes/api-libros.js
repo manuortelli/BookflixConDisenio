@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const cors = require('cors');
 const path = require('path');
-const {listar, visualizar, cargar, modificar, eliminar} = require('../controllers/libros-controllers');
+const {listar, visualizar, cargar, modificar, eliminar,cargarArchivoLibro, cargarArchivoCapitulo, visualizarCapitulos} = require('../controllers/libros-controllers');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -27,15 +27,23 @@ const imageFilter = function(req, file, cb) {
 
 const uploadPortada = multer({ 
     storage: storage ,
-    //limits: { fileSize: 1024 * 1024 * 5  },
-    //fileFilter: imageFilter ,
 }).single('portadaImg');
 
 router.get('/',auth,cors(),listar);
 
 router.post('/me',auth, cors(),visualizar);
 
+router.post('misCapitulos', auth, cors(), visualizarCapitulos);
+
 router.post('/cargar',auth, uploadPortada, cargar);
+
+const uploadArchivo = multer({ 
+    storage: storage ,
+}).single('archivoPdf');
+
+router.post('/cargarArchivoLibro',auth, uploadArchivo, cargarArchivoLibro);
+
+router.post('/cargarArchivoCapitulo',auth,cors(),cargarArchivoCapitulo);
 
 router.post('/modificar',auth, uploadPortada, modificar);
 
