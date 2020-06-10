@@ -33,24 +33,22 @@ suscriptoresCtrl.registrar = async (req,res) => {
     };
 
     const perfil = await new Perfil ({ nombre: req.body.nombre }).save() ;
-
-    console.log(perfil,perfil.__id);
-
+    
     const nuevoSuscriptor = await new Suscriptor({
         nombre: req.body.nombre,
         email:req.body.email,
         password:req.body.password,
         dni: req.body.dni,
         suscripcion: req.body.suscripcion,
-        
+        perfiles:{nombre:req.body.nombre, id: perfil._id}
     }).save();
 
-    await nuevoSuscriptor.updateOne({$push:{ perfiles: perfil._id }});
+    
 
     await perfil.updateOne({ suscriptor : nuevoSuscriptor.__id })
         .then( user => {
             JWT.sign(
-                {   id: user._id },
+                {   id: nuevoSuscriptor._id },
                 config.secret,
                 {   expiresIn: '2h'} ,
                 (err,token) => {
@@ -58,8 +56,8 @@ suscriptoresCtrl.registrar = async (req,res) => {
                     res.json({
                         token,
                         user:{
-                            id: user._id,
-                            email: user.email,
+                            id: nuevoSuscriptor._id,
+                            email: nuevoSuscriptor.email,
                         }
                     });
                 }
@@ -96,24 +94,24 @@ suscriptoresCtrl.login = async (req,res) => {
                 token,
                 user: suscriptor,
                
+            
             });
         }
     )
 };
 
 suscriptoresCtrl.loginPerfiles = async (req,res) => {
-    const suscriptor = await Suscriptor.findById(req.body.id)
-    console.log(suscriptor.perfiles.lenght)
-    /*
+    const suscriptor = await Suscriptor.findById(req.user.id); 
     
-    res.send(perfiles.perfiles());
-    */
+    res.send(suscriptor.perfiles);
+
+
 };
 
 suscriptoresCtrl.loginPerfil = async (req,res) => {
     const perfil = await Perfil.findById(req.body.id);
 
-    JWT.sign({ id: suscriptor._id },
+    JWT.sign({ id: perfil._id },
         config.secret,
         {   expiresIn: 3600} ,
         async (err,token) => {
@@ -126,8 +124,8 @@ suscriptoresCtrl.loginPerfil = async (req,res) => {
 };
 
 suscriptoresCtrl.visualizar =  async (req,res)=>{
-
-    await Suscriptor.findById(req.user.id)
+    const perfil = await Perfil.findById(req.user.id);
+    await Suscriptor.findById(perfil.suscriptor)
         .then(user => res.send(user))
 };
 
@@ -141,7 +139,7 @@ suscriptoresCtrl.soyAdmin = async (req,res) =>{
         res.send(false)
     }
 }
-
+;
 suscriptoresCtrl.modificar =  async (req,res) => {
     
     const nuevoSuscriptor = await Suscriptor.findOne({email: req.body.email});
@@ -165,6 +163,7 @@ suscriptoresCtrl.modificar =  async (req,res) => {
     }
     
     await suscriptor.updateOne({
+
             nombre: req.body.nombre, 
             email: req.body.email,
             dni: req.body.dni,
@@ -191,7 +190,7 @@ suscriptoresCtrl.logout = (req,res) => {
     req.logout().then(res.json('Sesion eliminada'))
                 .catch(err => res.json(err));
     res.redirect('/');  
-} 
+};
 
 suscriptoresCtrl.agregarPerfil= async (req,res) =>{
 
@@ -214,7 +213,7 @@ suscriptoresCtrl.agregarPerfil= async (req,res) =>{
         .then(res.send('Perfil agregado con éxito'));
    
 
-}   
+};   
 
 
 module.exports = suscriptoresCtrl;

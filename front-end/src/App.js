@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Home from './components/Home';
+import HomeSuscriptor from './components/VistaSuscriptor/HomeSuscriptor';
 import IniciarSesion from './components/IniciarSesion';
 import RegistrarSuscriptor from './components/RegistrarSuscriptor';
 
@@ -51,6 +52,7 @@ function App() {
         <VerificarSesion/>
 
         <Route  exact path="/home" ><VerificarSesion/><Home/> </Route>
+        <Route  exact path="/homesuscriptor" ><VerificarSesion/><HomeSuscriptor/> </Route>
         <Route  exact path='/libros'><VerificarSesion/> <Libros/>  </Route> 
 
         

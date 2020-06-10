@@ -1,10 +1,11 @@
 const perfilesCtrl = {};
 const Perfil = require('../models/Perfil');
-const Libro = require('../models/Libro');
-
+const Libro = require('../models/Libro'); // para los recomendados
+const Suscriptor = require('../models/Suscriptor');
 
 perfilesCtrl.visualizar = async (req,res) => {
     const perfil = await Perfil.findById(req.body.id);
+    console.log(perfil);
     res.send(perfil);
 };
 

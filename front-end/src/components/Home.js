@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Redirect} from 'react-router-dom';
 
 import HomeAdmin from './VistaAdmin/HomeAdmin';
+import HomePerfiles from './HomePerfiles';
 import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
 import axios from 'axios';
 import VisualizacionInicial from './VisualizacionInicial';
@@ -24,15 +25,19 @@ export default class Home extends Component {
     componentDidMount(){
         this.setSoyAdmin();
     }
+
     async setSoyAdmin() {
-        await axios.get( soyAdminApi ,{
-            headers:{'xaccess':this.state.token}  
+        await axios.get( soyAdminApi ,
+            
+            {headers:{'xaccess':this.state.token}  
         }).then(res =>{
             this.setState({
                 soyAdmin : res.data
             });
         })
     };
+
+
 
     render() {
         return (
@@ -43,7 +48,7 @@ export default class Home extends Component {
 
                     ? <HomeAdmin></HomeAdmin> 
                     
-                    : <HomeSuscriptor></HomeSuscriptor>
+                    : <HomePerfiles></HomePerfiles>
                     
              
                 

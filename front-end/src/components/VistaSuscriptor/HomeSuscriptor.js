@@ -43,7 +43,7 @@ export default class Home extends Component {
     
                     <NavegacionSuscriptor></NavegacionSuscriptor> 
                     
-                    <div class="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center">
                    
                       
                     <div className='btn btn-secondary' > PRONTO NUEVAS FUNCIONALIDADES !
