@@ -7,6 +7,7 @@ import HomePerfiles from './HomePerfiles';
 import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
 import axios from 'axios';
 import VisualizacionInicial from './VisualizacionInicial';
+import Login from './IniciarSesion';
 
 const soyAdminApi = 'http://localhost:4000/api/suscriptores/soyAdmin'
 
@@ -42,7 +43,7 @@ export default class Home extends Component {
     render() {
         return (
             (this.state.token === '' || null) ?  
-                <VisualizacionInicial/>
+                <Login/>
 
             :    this.state.soyAdmin 
 

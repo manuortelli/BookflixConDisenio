@@ -50,7 +50,7 @@ async componentDidMount(){
                 <ul className="navbar-nav ml-auto" >
                   
                 <li className="nav-item ">
-                  <Link className="nav-link" to="/home">Home</Link>
+                  <Link className="nav-link" to="/homesuscriptor">Home</Link>
                   </li>
 
                   <li className="nav-item ">
