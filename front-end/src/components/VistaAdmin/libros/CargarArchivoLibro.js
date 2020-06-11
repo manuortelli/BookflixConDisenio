@@ -6,16 +6,18 @@ import axios from '../../../../node_modules/axios';
 import {  Redirect } from 'react-router-dom';
 
 
-const cargar = 'http://localhost:4000/api/cargarlibro';
+const cargar = 'http://localhost:4000/api/libros/cargarArchivoLibro';
 
 class CargarLibro extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
+            id: this.props.match.params.id,
             token: sessionStorage.getItem('token'),
             lanzamiento:new Date(),
             vencimiento:'',
             pdf:null,
+           
 
         };
        
@@ -23,6 +25,8 @@ class CargarLibro extends Component {
         this.onInputChange=this.onInputChange.bind(this);
         this.onChangeFechaDeVencimiento=this.onChangeFechaDeVencimiento.bind(this);
     }
+
+
 
     onInputChange = (e) => {
         this.setState({
@@ -43,11 +47,11 @@ class CargarLibro extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
- 
         const formData = new FormData();
+        formData.append('id', this.props.id)
         formData.append('lanzamiento', this.state.lanzamiento);
-        formData.append('vencimiento', this.state.vencimiento);
-        formData.append('pdf', this.state.pdf);
+        formData.append('expiracion', this.state.vencimiento);
+        formData.append('portadaImg', this.state.pdf);
     
         axios.post(cargar,formData,{
                 headers: { 'xaccess':this.state.token }
@@ -62,7 +66,15 @@ class CargarLibro extends Component {
             } );
     };
 
+    componentDidMount(){
+        
+        console.log('este es el id del libro que llega', this.state.id)
+    }
+
+ 
+
     render(){
+        
         return (
         <div className="form-novedad" >
         
@@ -77,9 +89,9 @@ class CargarLibro extends Component {
             <label className="text-light">Archivo PDF</label>
             <div className="form-group">
 
-               <input type='file' encType="multipart/form-data" name='pdf'>
+               <input type='file' encType="multipart/form-data" name='pdf' onChange={this.getPdf}>
                </input>
-                
+                 
             </div >
 
             <label className="text-light">Fecha De Vencimiento (Opcional)</label>

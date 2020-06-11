@@ -5,6 +5,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 
+
 const autores = 'http://localhost:4000/api/autores/'
 const eliminar = 'http://localhost:4000/api/libros/eliminar';
 
@@ -14,6 +15,7 @@ class ItemListLibro extends Component {
         this.state = {
          
             autor:'',
+            id:this.props._id
         }
         this.getNombres = this.getNombres.bind(this);
 
@@ -96,10 +98,11 @@ class ItemListLibro extends Component {
                                 );
                             }
                                      })}>Eliminar</button> {''}
+
                         <Link to={'/libros/modificar/' + this.props.libro._id} className='btn btn-success'> Modificar</Link>
 
                                      {' '}
-                                     <Link to={'/libro/cargar'} className='btn btn-success'> Agregar Archivo</Link>
+                                     <Link to={'/libro/cargar/' + this.props.libro._id }  className='btn btn-success' > Agregar Archivo</Link>
                     </div>
                 </div>
             </div>

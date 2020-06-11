@@ -21,7 +21,6 @@ class ModificarUnLibro extends Component {
             id: this.props.match.params.id,
 
             token: sessionStorage.getItem('token'),
-
             titulo:'',
             ISBN:'',
             portadaImg: null,

@@ -15,10 +15,9 @@ const storage = multer.diskStorage({
         cb(null,  file.originalname)
     }
 });
-
 /*
 const imageFilter = function(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4)$/i)) {
+    if (!file.originalname.match(/\.(pdf|doc|docx|jpg)$/)) {
         return cb(new Error('Solo se permiten formatos de imagen o de video!, no se guardó el archivo'), false);
     }
     cb(null, true);
@@ -37,11 +36,9 @@ router.post('misCapitulos', auth, cors(), visualizarCapitulos);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 
-const uploadArchivo = multer({ 
-    storage: storage ,
-}).single('archivoPdf');
 
-router.post('/cargarArchivoLibro',auth, uploadArchivo, cargarArchivoLibro);
+
+router.post('/cargarArchivoLibro',auth, uploadPortada, cargarArchivoLibro);
 
 router.post('/cargarArchivoCapitulo',auth,cors(),cargarArchivoCapitulo);
 

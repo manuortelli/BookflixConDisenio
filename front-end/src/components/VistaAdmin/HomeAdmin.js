@@ -31,6 +31,7 @@ export default class Home extends Component {
                     <div class="d-flex justify-content-center">
                     <Link className='btn btn-secondary' to="/libros">Libros</Link> 
                     <Link className='btn btn-secondary' to="/novedades">Novedades </Link>
+                    <Link className='btn btn-secondary' to="/trailers">Trailers </Link>
                     <Link className='btn btn-secondary' to="/autores">Autores </Link>
                     <Link className='btn btn-secondary' to="/editoriales">Editoriales </Link>
                     <Link className='btn btn-secondary' to="/generos">Generos </Link>

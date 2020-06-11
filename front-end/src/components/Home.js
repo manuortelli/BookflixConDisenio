@@ -18,41 +18,44 @@ export default class Home extends Component {
         this.state={
             user: '',
             token: sessionStorage.getItem('token'),
-            soyAdmin: true
+            soyAdmin: sessionStorage.getItem('soyAdmin')
         };
-        this.setSoyAdmin = this.setSoyAdmin.bind(this)
+        //this.setSoyAdmin = this.setSoyAdmin.bind(this)
        
     }  
     componentDidMount(){
-        this.setSoyAdmin();
+        //this.setSoyAdmin();
+        //console.log(this.state.soyAdmin)
     }
 
-    async setSoyAdmin() {
+    /*async setSoyAdmin() {
         await axios.get( soyAdminApi ,
             
             {headers:{'xaccess':this.state.token}  
         }).then(res =>{
+            console.log(res.data)
             this.setState({
                 soyAdmin : res.data
             });
         })
-    };
+    };*/
 
 
 
     render() {
+        //const admin=sessionStorage.getItem('soyAdmin');
         return (
-            (this.state.token === '' || null) ?  
-                <Login/>
+            (this.state.token === '' || null) 
+            
+            ?    <Login/>
 
-            :    this.state.soyAdmin 
+            :    (this.state.soyAdmin === "false"
 
-                    ? <HomeAdmin></HomeAdmin> 
+                    ? <HomePerfiles></HomePerfiles>
                     
-                    : <HomePerfiles></HomePerfiles>
+                     : <HomeAdmin></HomeAdmin> 
                     
-             
-                
+            )
         )
     }
 }

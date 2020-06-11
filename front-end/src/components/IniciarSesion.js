@@ -5,6 +5,7 @@ import Navegacion from './Navegacion.js';
 import './styles/iniciarsesion.css';
 import { PDFReader } from 'reactjs-pdf-reader';
 
+
 const login = 'http://localhost:4000/api/suscriptores/login';
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
             password: '',
             token: '',
             user: null,
+            soyAdmin:null,
         };
         this.iniciarSesion = this.iniciarSesion.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
@@ -29,13 +31,16 @@ class App extends Component {
 
 
     getToken = async (res) => {
-        const { user, token } = res.data;
+        const { user, token, soyAdmin } = res.data;
 
         sessionStorage.setItem('token', token);
 
         sessionStorage.setItem('user', JSON.stringify({ user }));
 
-        this.setState({ token, user });
+        sessionStorage.setItem ('soyAdmin', soyAdmin );
+
+
+        this.setState({ token, user, soyAdmin});
     };
 
 
@@ -48,6 +53,7 @@ class App extends Component {
             password: this.state.password,
         })
             .then(res => {
+                console.log(res.data)
                 this.getToken(res)
             })
             .catch(error => {

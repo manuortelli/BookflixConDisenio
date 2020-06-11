@@ -84,6 +84,13 @@ suscriptoresCtrl.login = async (req,res) => {
     if(!match){
         return res.status(401).json({msg:'La contraseña es incorrecta'});
     }
+    
+    var soyAdmin;
+    if (suscriptor.email === 'admin@admin.com'){
+        soyAdmin=true
+    } else {
+        soyAdmin=false
+    }
     //el primer parametro es un payload
     JWT.sign({ id: suscriptor._id },
         config.secret,
@@ -93,7 +100,7 @@ suscriptoresCtrl.login = async (req,res) => {
             res.json({
                 token,
                 user: suscriptor,
-               
+                soyAdmin: soyAdmin,
             
             });
         }
@@ -131,13 +138,7 @@ suscriptoresCtrl.visualizar =  async (req,res)=>{
 
 suscriptoresCtrl.soyAdmin = async (req,res) =>{
     
-    const admin = await Suscriptor.findById(req.user.id);
-
-    if (admin.email === 'admin@admin.com'){
-        res.send(true)
-    } else {
-        res.send(false)
-    }
+    
 }
 ;
 suscriptoresCtrl.modificar =  async (req,res) => {
