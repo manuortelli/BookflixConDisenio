@@ -102,26 +102,59 @@ export default class DetalleLibrosAdmin extends Component {
   
     
     return (
-        <div class="card col-md-6 offset-md-3 text-light " >
-            <div className="card-body">
-                <h4 className="card-title card-group"> {this.state.libro.titulo}</h4>
+     
+
+       
+          
+
+
+
+
+
+
+
+
+
+
+
+        <div class="card bg-dark text-light detalleLibro   offset-md-3  ">
+            <img className="card-img "  src={portada + `${this.state.libro.portada}`} />  
+            <div className="card-img-overlay ">
+
+                <div className='tituloLibro'>
+                 <h2 className="card-title "> {this.state.libro.titulo}</h2>
+                </div>
                 
-                <img width="530px" height="auto" src={portada + `${this.state.libro.portada}`} />  
+                
+               
                 <div className="card-body">
-                <h6 className="card-subtitle mb-2 text-light">ISBN:{this.state.libro.isbn}</h6>
-                <h6 className="card-subtitle mb-2 text-light">Autor: {this.state.autor.nombre}</h6>
-                <h6 className="card-subtitle mb-2 text-light">Genero: {this.state.genero.nombre}</h6>
-                <h6 className="card-subtitle mb-2 text-light">Editorial: {this.state.editorial.nombre}</h6>
-                
+                        <br></br>
+                        <div className='bodyDetalleLibro'>
+                        <h5 className="card-subtitle mb-2 text-light">Editorial: {' '+this.state.editorial.nombre}</h5>
+                        <p></p>
+                        <h5 className="card-subtitle mb-2 text-light">Autor: {' '+this.state.autor.nombre+' '+this.state.autor.apellido  }</h5>
+                        <p></p>
+                        <h5 className="card-subtitle mb-2 text-light">Genero: {' '+this.state.genero.nombre}</h5>
+   
+                        
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        
+                       
+
+                        <h5 className="card-subtitle mb-2 text-light isbn ">ISBN: {' '+this.state.libro.isbn}</h5>
+                        </div>  
                 
                 {this.fechaExpiracion}
                 
                 </div>
             </div>
-                  
             </div>
-      
+                  
 
+           
+           
 
 
     )

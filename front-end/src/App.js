@@ -35,8 +35,8 @@ import DetalleLibroAdmin from './components/VistaAdmin/libros/DetalleLibroAdmin'
 import CargarMetadata from './components/VistaAdmin/libros/CargarMetadataLibro';
 import ItemNovedadAdmin from './components/VistaAdmin/Novedades/VisualizarNovedad';
 import CargarNovedad from './components/VistaAdmin/Novedades/CargarNovedad';
-import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros'
-
+import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros';
+import DetalleLibro from './components/VistaSuscriptor/Libros/DetalleLibro';
 
 
 function App() {
@@ -138,6 +138,17 @@ function App() {
             <VerificarSesion />
             <NavegacionSuscriptor />
             <ItemNovedad match={match} />
+          </div>
+        )}>
+
+        </Route>
+
+
+        <Route exact path='/suscriptor/libros/:id' render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionSuscriptor />
+            <DetalleLibro match={match} />
           </div>
         )}>
 

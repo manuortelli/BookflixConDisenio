@@ -25,12 +25,11 @@ class ItemNovedad extends Component {
                         
                             <h5 className="card-title ">{this.props.libro.titulo} </h5>
                        
-                        
+                            <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/' + this.props.libro._id}  >
+                            Ver detalle
+                           </Link>
 
-                            <div  className="btn btn-secondary " > 
-                                Ver Detalle 
                             
-                                </div>
                         
                      </div>
                 </div>

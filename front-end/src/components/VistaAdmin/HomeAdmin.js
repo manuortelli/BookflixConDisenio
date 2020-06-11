@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect , Link } from 'react-router-dom';
 
-import NavegacionAdmin from './NavegacionAdminHome'
+import NavegacionAdmin from './NavegacionAdminHome';
+import Buscador from'./libros/Buscador';
 
 export default class Home extends Component {
 
@@ -37,6 +38,8 @@ export default class Home extends Component {
                     <Link className='btn btn-secondary' to="/generos">Generos </Link>
                     <Link className='btn btn-secondary' to="/suscriptores">Suscriptores </Link>
                     </div>
+
+                    <Buscador></Buscador>
 
                 </div>
             :

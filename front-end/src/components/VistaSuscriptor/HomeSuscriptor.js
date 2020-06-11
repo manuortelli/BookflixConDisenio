@@ -4,6 +4,7 @@ import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
 import NavegacionSuscriptor from './NavegacionSuscriptor';
 import { Document, Page } from 'react-pdf';
+import Buscador from './Libros/Buscador';
 
 export default class Home extends Component {
 
@@ -50,8 +51,10 @@ export default class Home extends Component {
                     
 
                     </div> 
+                    
                        
                     </div>
+                    <Buscador></Buscador>
                     
                 </div>
             :
