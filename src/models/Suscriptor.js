@@ -8,7 +8,7 @@ const SuscriptorSchema = new Schema({
     nombre:{ type: String, required:true },
     email:{ type: String,  required:true },
     password:{ type: String, required:true} ,
-    perfiles:[String],
+    perfiles:[{nombre: String, id:String}],
     suscripcion:{ type:String, require:true },
     dni:{ type:String, require:true } 
      

@@ -4,6 +4,7 @@ import ListarNovedades from './Novedades/ListarNovedades';
 import Carrusel from './Carrusel';
 import NavegacionSuscriptor from './NavegacionSuscriptor';
 import { Document, Page } from 'react-pdf';
+import Buscador from './Libros/Buscador';
 
 export default class Home extends Component {
 
@@ -43,15 +44,17 @@ export default class Home extends Component {
     
                     <NavegacionSuscriptor></NavegacionSuscriptor> 
                     
-                    <div class="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center">
                    
                       
                     <div className='btn btn-secondary' > PRONTO NUEVAS FUNCIONALIDADES !
                     
 
                     </div> 
+                    
                        
                     </div>
+                    <Buscador></Buscador>
                     
                 </div>
             :

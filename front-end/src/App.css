@@ -48,3 +48,26 @@
   padding: 4%;
 }
 
+.itemBuscador{
+  padding: 0.5%;
+  float: left;
+  width: 20%;
+}
+.itemBoton{
+ 
+  margin: 3px;
+
+}
+.detalleLibro{
+  width: 100%;
+}
+.tituloLibro{
+  text-align: center;
+
+}
+.isbn{
+ 
+  text-align: right;
+ 
+}
+

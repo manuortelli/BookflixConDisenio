@@ -27,7 +27,7 @@ export default class MiSuscripcion extends Component {
 
     getData = async () =>{
         await axios.get(suscriptores,{
-            headers:{'xaccess':this.state.token}  
+            headers:{'xaccess':sessionStorage.getItem('token')}  
         })
         .then(res =>{
             this.setSusripcion(res.data)

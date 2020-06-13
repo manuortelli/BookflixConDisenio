@@ -47,6 +47,10 @@ export default class NavegacionAdmin extends Component {
                   </li>
                   
                   <li className="nav-item">
+                  <Link className="nav-link" to="/trailers">Trailer </Link>
+                  </li>
+                  
+                  <li className="nav-item">
                   <Link className="nav-link" to="/autores">Autores </Link>
                   </li>
                   

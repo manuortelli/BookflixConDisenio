@@ -14,7 +14,7 @@ router.get('/me', auth, cors(), visualizar);
 
 router.get('/soyAdmin', auth, cors(), soyAdmin);
 
-router.post('/loginPerfiles', auth, cors(), loginPerfiles);
+router.get('/loginPerfiles', auth, cors(), loginPerfiles);
 
 router.post('/loginPerfil', auth, cors(), loginPerfil);
 

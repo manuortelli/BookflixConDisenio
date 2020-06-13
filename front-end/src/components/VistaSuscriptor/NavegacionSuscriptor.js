@@ -50,7 +50,7 @@ async componentDidMount(){
                 <ul className="navbar-nav ml-auto" >
                   
                 <li className="nav-item ">
-                  <Link className="nav-link" to="/home">Home</Link>
+                  <Link className="nav-link" to="/homesuscriptor">Home</Link>
                   </li>
 
                   <li className="nav-item ">
@@ -61,7 +61,7 @@ async componentDidMount(){
                   <Link className="nav-link" to="/suscriptor/novedades">Novedades </Link>
                   </li>
                   <li className="nav-item">
-                  <Link className="nav-link" to="/suscriptor/suscripcion">{this.state.nombre}</Link>
+                  <Link className="nav-link" to="/suscriptor/suscripcion">Mi suscripcion</Link>
                   </li>
                 
                   <li>

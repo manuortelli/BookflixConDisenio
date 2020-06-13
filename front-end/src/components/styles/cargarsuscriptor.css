@@ -54,6 +54,15 @@ body {
     align-content: center;
     }
 
+.cardPerfil{
+        height: 180px;
+        width: 500px;
+        margin-top: 180px;
+        margin-bottom: auto;
+        background-color: rgba(0,0,0,0.5) !important;
+        align-content: center;
+        }
+    
 
  /*Estilo del card Modificar Suscripción*/
 .cardMS{
@@ -156,6 +165,15 @@ input:focus{
     position: relative;
     }
     
+.btnPerfil {
+    width: 200px ;
+    height: 40px;
+    color: white;
+    background-color: rgb(207, 22, 22);
+    position: relative;
+
+
+}
 .login_btn:hover{
     color: red;
     background-color: white;

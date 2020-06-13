@@ -12,6 +12,7 @@ class ItemListLibro extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            libro:props.libro,
          
             autor:'',
         }
@@ -54,6 +55,9 @@ class ItemListLibro extends Component {
     async componentDidMount(){
         this.getNombres();
     }
+
+    
+
     render() {
       
 
@@ -65,14 +69,14 @@ class ItemListLibro extends Component {
                     <div class="card-body">
 
 
-                        <h5 className="card-title "> {this.props.libro.titulo} -  {this.state.autor.nombre} {this.state.autor.apellido} </h5>
+                        <h5 className="card-title "> {this.props.libro.titulo} </h5>
 
 
-                        <Link className='btn btn-success' to={'/libro/detalle/' + this.props.libro._id}  >
+                        <Link className='btn btn-outline-success itemBoton' to={'/libro/detalle/' + this.props.libro._id}  >
                             Ver detalle
-                             </Link>
+                        </Link>
                         {' '} {' '}
-                        <button className="btn btn-danger" onClick={() => confirmAlert({
+                        <button className="btn btn-outline-danger itemBoton" onClick={() => confirmAlert({
                             customUI: ({ onClose }) => {
                                 return (
                                     <div className='custom-ui'>
@@ -96,10 +100,17 @@ class ItemListLibro extends Component {
                                 );
                             }
                                      })}>Eliminar</button> {''}
-                        <Link to={'/libros/modificar/' + this.props.libro._id} className='btn btn-success'> Modificar</Link>
+                        <Link to={'/libros/modificar/' + this.props.libro._id} className='btn btn-outline-success itemBoton'> Modificar</Link>
 
-                                     {' '}
-                                     <Link to={'/libro/cargar'} className='btn btn-success'> Agregar Archivo</Link>
+                            {' '}
+                    
+                        <Link className='btn btn-outline-success itemBoton'> Modificar Fechas</Link>{' '}
+                        <br></br>
+                        <Link className='btn btn-outline-info itemBoton'> Cargar libro</Link>{' '}
+                        <Link className='btn btn-outline-info itemBoton'> Cargar Capitulos</Link>{' '}
+                        
+                        
+                       
                     </div>
                 </div>
             </div>
