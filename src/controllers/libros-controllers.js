@@ -144,7 +144,10 @@ librosCtrl.cargarArchivoLibro = async (req,res)=>{
         if(req.body.expiracion){
             await libro.updateOne({expiracion: req.body.expiracion})
         } 
-      
+        await libro.updateOne({
+            libro:{
+                nCapitulo: libro.capitulos.length+1}});
+
            res.send('Archivo de Libro cargado con éxito')
 }; 
 
@@ -157,7 +160,8 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
             await libro.updateOne({
                 capitulos:{
                     n: index+1,
-                    archivo: req.file.filename
+                    archivo: req.file.filename,
+                    n:req.body.n
                 } 
             })
         }else{
@@ -172,7 +176,7 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
             await libro.updateOne({expiracion: req.body.expiracion})
         } 
       
-           res.send('Archivo de capítulo cargado con éxito')
+           res.status(200).send('Archivo de capítulo cargado con éxito')
 }; 
 
 librosCtrl.eliminar = async (req,res)=>{

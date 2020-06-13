@@ -41,7 +41,7 @@ const LibroSchema = new Schema({
     capitulos:{
         type: {
             n: String,
-            archivo: String, 
+            archivo: String,
         }
     }
 });
