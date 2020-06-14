@@ -16,7 +16,6 @@ librosCtrl.visualizar = async (req,res)=>{
 };
 
 librosCtrl.visualizarCapitulos = async (req,res)=>{
-    
     await Libro.findById(req.body.id)
         .then(capitulos=>{ res.json(capitulos.capitulos)})
         .catch(err=> res.json(err))
@@ -28,7 +27,7 @@ librosCtrl.cargar = async (req,res)=>{
    
     
     if (libroI){
-        return res.send('El número de ISBN ya se encuentra en uso')
+        return res.status(401).json({msg:'El número de ISBN ya se encuentra en uso'});
     } else{
         const libroT = await Libro.findOne( {titulo: req.body.titulo });
         if(libroT){
@@ -96,21 +95,17 @@ librosCtrl.modificar = async (req,res)=>{
 
     else{
         const libroViejo=await Libro.findById(req.body.id);
-
+        //MODIFICAR LAS FECHAS FALTA
+        // TANTO PARA ELLOS COMO PARA LOS CAPITULOS
         if(req.file){
             await libroViejo.updateOne({portada: req.file.filename})
-        }/*
-        if(req.body.expiracion){
-            await libroViejo.updateOne({expiracion: req.body.expiracion})
-        }*/ 
+        }
         await libroViejo.updateOne({
             titulo: req.body.titulo,
-            
             isbn: req.body.isbn,
             autor:req.body.autor,
             editorial:req.body.editorial,
             genero:req.body.genero,
-            //lanzamiento: req.body.lanzamiento,
             
             })
             .then(res.send('Libro modificado con éxito'))
@@ -146,29 +141,27 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
         
     const libro = await Libro.findById(req.body.id);
 
-        if(req.file){
-            const index = libro.capitulos.length;
-            await libro.updateOne({
-                capitulos:{
-                    n: index+1,
-                    archivo: req.file.filename,
-                    n:req.body.n
-                } 
-            })
-        }else{
-            return res.status(401).json({msg:'Debe ingresar un archivo .pdf'});
-        }
-        if(req.lanzamiento){
-            await libro.updateOne({lanzamiento: req.body.lanzamiento})
-        }else{
-            return res.status(401).json({msg:'Debe indicar una fecha de lanzamiento'});
-        
-        }
-        if(req.body.expiracion){
-            await libro.updateOne({expiracion: req.body.expiracion})
-        } 
-      
-        return res.status(401).json({msg:'Archivo de capítulo cargado con éxito'});
+    if(req.file){
+        await libro.updateOne({
+            capitulos:{
+                archivo: req.file.filename,
+                n:req.body.n
+            } 
+        })
+    }else{
+        return res.status(401).json({msg:'Debe ingresar un archivo'});
+    }
+    if(req.lanzamiento){
+        await libro.updateOne({lanzamiento: req.body.lanzamiento})
+    }else{
+        return res.status(401).json({msg:'Debe indicar una fecha de lanzamiento'});
+    
+    }
+    if(req.body.expiracion){
+        await libro.updateOne({expiracion: req.body.expiracion})
+    } 
+    
+    return res.status(401).json({msg:'Archivo de capítulo cargado con éxito'});
 }; 
 
 librosCtrl.eliminar = async (req,res)=>{

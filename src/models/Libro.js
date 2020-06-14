@@ -42,7 +42,12 @@ const LibroSchema = new Schema({
         type: {
             n: String,
             archivo: String,
+            lanzamiento:String,
+            vencimiento:String,
         }
+    },
+    trailer: {
+        type:String
     }
 });
 
