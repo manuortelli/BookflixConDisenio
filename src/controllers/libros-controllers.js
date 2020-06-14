@@ -53,9 +53,6 @@ librosCtrl.cargar = async (req,res)=>{
     if(!req.file){
         return res.status(401).json({msg:'La carga de imagen de portada es obligatoria'})
     }
-    /*if(!req.body.lanzamiento){
-        return res.status(401).json({msg:'Ingrese una fecha de lanzamiento'})
-    }*/
 
     const libroNuevo = await new Libro({
         titulo: req.body.titulo,
@@ -64,12 +61,8 @@ librosCtrl.cargar = async (req,res)=>{
         autor:req.body.autor,
         editorial:req.body.editorial,
         genero:req.body.genero,
-        //lanzamiento: req.body.lanzamiento
+
     });
-    /*
-    if(req.body.expiracion){
-        await libroNuevo.update({expiracion: req.body.expiracion})
-    }*/
     libroNuevo.save()
             .then(lib => {
                 res.send('Libro cargado con éxito')            
@@ -128,27 +121,25 @@ librosCtrl.modificar = async (req,res)=>{
 };
 
 librosCtrl.cargarArchivoLibro = async (req,res)=>{
-        
+    console.log(req.body.id);
     const libro = await Libro.findById(req.body.id);
-
-        if(req.file){
-            await libro.updateOne({archivo: req.file.filename})
-        }else{
-            res.send('Debe ingresar un archivo .pdf')
-        }
-        if(req.lanzamiento){
-            await libro.updateOne({lanzamiento: req.body.lanzamiento})
-        }else{
-            res.send('Debe indicar una fecha de lanzamiento');
-        }
-        if(req.body.expiracion){
-            await libro.updateOne({expiracion: req.body.expiracion})
-        } 
-        await libro.updateOne({
-            libro:{
-                nCapitulo: libro.capitulos.length+1}});
-
-           res.send('Archivo de Libro cargado con éxito')
+    
+    if(req.file){
+        await libro.updateOne({archivo: req.file.filename})
+    }else{
+        return res.status(401).json({msg:'Debe ingresar un archivo'});
+    }
+    /*if(req.lanzamiento){
+        await libro.updateOne({lanzamiento: req.body.lanzamiento})
+    }else{
+        return res.status(401).json({msg:'Debe indicar una fecha de lanzamiento'});
+        
+    }*/
+    if(req.body.expiracion){
+        await libro.updateOne({expiracion: req.body.expiracion})
+    } 
+    return res.status(401).json({msg:'Archivo de Libro cargado con éxito'});
+    
 }; 
 
 librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
@@ -165,18 +156,19 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
                 } 
             })
         }else{
-            res.send('Debe ingresar un archivo .pdf')
+            return res.status(401).json({msg:'Debe ingresar un archivo .pdf'});
         }
         if(req.lanzamiento){
             await libro.updateOne({lanzamiento: req.body.lanzamiento})
         }else{
-            res.send('Debe indicar una fecha de lanzamiento');
+            return res.status(401).json({msg:'Debe indicar una fecha de lanzamiento'});
+        
         }
         if(req.body.expiracion){
             await libro.updateOne({expiracion: req.body.expiracion})
         } 
       
-           res.status(200).send('Archivo de capítulo cargado con éxito')
+        return res.status(401).json({msg:'Archivo de capítulo cargado con éxito'});
 }; 
 
 librosCtrl.eliminar = async (req,res)=>{

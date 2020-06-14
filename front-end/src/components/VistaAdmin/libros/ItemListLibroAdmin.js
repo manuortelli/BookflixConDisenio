@@ -106,7 +106,7 @@ class ItemListLibro extends Component {
                     
                         <Link className='btn btn-outline-success itemBoton'> Modificar Fechas</Link>{' '}
                         <br></br>
-                        <Link className='btn btn-outline-info itemBoton'> Cargar libro</Link>{' '}
+                        <Link to={'libro/cargar/' + this.props.libro._id} className='btn btn-outline-info itemBoton'> Cargar libro</Link>{' '}
                         <Link className='btn btn-outline-info itemBoton'> Cargar Capitulos</Link>{' '}
                         
                         

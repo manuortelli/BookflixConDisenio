@@ -28,10 +28,6 @@ const uploadPortada = multer({
     storage: storage ,
 }).single('portadaImg');
 
-const archivoPDF = multer({ 
-    storage: storage ,
-}).single('archivoPDF');
-
 
 router.get('/',auth,cors(),listar);
 
@@ -41,11 +37,9 @@ router.post('misCapitulos', auth, cors(), visualizarCapitulos);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 
-
-
 router.post('/cargarArchivoLibro',auth, uploadPortada, cargarArchivoLibro);
 
-router.post('/cargarArchivoCapitulo',auth,archivoPDF,cargarArchivoCapitulo);
+router.post('/cargarArchivoCapitulo',auth,uploadPortada,cargarArchivoCapitulo);
 
 router.post('/modificar',auth, uploadPortada, modificar);
 

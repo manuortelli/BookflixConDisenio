@@ -14,8 +14,8 @@ class CargarLibro extends Component {
         this.state = {
             id: this.props.match.params.id,
             token: sessionStorage.getItem('token'),
-            lanzamiento:new Date(),
-            vencimiento:'',
+            lanzamiento: new Date(),
+            vencimiento: '',
             pdf:null,
            
 
@@ -48,7 +48,7 @@ class CargarLibro extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('id', this.props.id)
+        formData.append('id', this.state.id)
         formData.append('lanzamiento', this.state.lanzamiento);
         formData.append('expiracion', this.state.vencimiento);
         formData.append('portadaImg', this.state.pdf);
@@ -68,7 +68,6 @@ class CargarLibro extends Component {
 
     componentDidMount(){
         
-        console.log('este es el id del libro que llega', this.state.id)
     }
 
  
