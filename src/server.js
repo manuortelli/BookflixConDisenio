@@ -40,7 +40,7 @@ app.use('/api/generos', require('./routes/api-generos'));
 app.use('/api/novedades', require('./routes/api-novedades'));
 app.use('/api/libros', require('./routes/api-libros'));
 app.use('/api/perfiles', require('./routes/api-perfiles'));
-//app.use('/api/trailers', require('./routes/api-trailers'));
+app.use('/api/trailers', require('./routes/api-trailers'));
 
 module.exports = app;
 

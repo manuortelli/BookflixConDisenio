@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const cors = require('cors');
-const {  visualizar, likesLibros,visualizarPadre, likesCapitulos, visitadoLibro, visitadoCapitulo, likeLibro, likeCapitulo, historialLibro, historialCapitulo , recomendados } = require('../controllers/perfiles-controllers'); 
+const {  visualizar,visualizarConId, likesLibros,visualizarPadre, likesCapitulos, visitadoLibro, visitadoCapitulo, likeLibro, likeCapitulo, historialLibro, historialCapitulo , recomendados } = require('../controllers/perfiles-controllers'); 
 
 
-router.post('/me', auth, cors(), visualizar);
+router.get('/me', auth, cors(), visualizar);
+router.get('/meConId', auth, cors(), visualizarConId);
 
 router.post('/visualizarPadre',auth,cors(),visualizarPadre)
 

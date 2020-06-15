@@ -306,7 +306,7 @@ class RegistrarSuscriptor extends Component {
          :
          <Redirect
          from="/singup"
-         to="/home" />
+         to="/homesuscriptor" />
         )
     }
 }

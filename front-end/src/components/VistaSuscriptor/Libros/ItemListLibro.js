@@ -28,6 +28,10 @@ class ItemNovedad extends Component {
                             <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/' + this.props.libro._id}  >
                             Ver detalle
                            </Link>
+                           <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leer/' + this.props.libro.archivo}  >
+                            Leer Libro
+                           </Link>
+
 
                             
                         

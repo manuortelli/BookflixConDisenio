@@ -8,4 +8,4 @@ const TrailerSchema = new Schema({
     archivo:{ type:String },
 });
 
-module.exports = mongoose.model('Trailer', TraeilerSchema);
+module.exports = mongoose.model('Trailer', TrailerSchema);

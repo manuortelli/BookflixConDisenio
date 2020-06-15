@@ -19,10 +19,11 @@ export default class Perfiles extends Component {
     
 
     setSusripcion(res){
-        console.log(res);
+        console.log(res.perfiles);
         this.setState({
             miSuscripcion:res
         });
+        console.log(this.state.miSuscripcion.perfiles);
     }
 
     getData = async () =>{
@@ -47,12 +48,20 @@ export default class Perfiles extends Component {
             <div className="container">
             <div class="cardVS col-md-6 offset-md-3 text-light bg-dark" >
                 <h1 class="card-header">Perfiles de {this.state.miSuscripcion.nombre} </h1>
+                   <div>
+                    {/*this.state.miSuscripcion.perfiles.map(perfil =>
                     <div class="card-body">               
-    
+                            <h2 className="nombre"> {perfil.nombre} </h2>
+                    </div>
+
+                    )*/}
+                     </div>
+                     <div class="card-body">               
+                            <h2 className="nombre">  </h2>
                     </div>
                         <Link to={'/suscriptor/suscripcion/perfiles/agregar'} className='btn login_btn float-right'> Agregar Perfil</Link>
-                    </div>
                    
+                    </div> 
                 
             </div>
 

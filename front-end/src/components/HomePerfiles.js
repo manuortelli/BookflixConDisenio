@@ -9,7 +9,6 @@ import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
 
 //Poner constante a la cual le hacemos la consulta de nuestros pefiles como suscriptor
 const perfilesApi = 'http://localhost:4000/api/suscriptores/loginPerfiles'
-const miperfilApi = 'http://localhost:4000/api/perfiles/me'
 const loginPerfilApi = 'http://localhost:4000/api/suscriptores/loginPerfil'
 
 class ListarPerfiles extends Component {
@@ -32,16 +31,16 @@ class ListarPerfiles extends Component {
 
     irAHomeDePerfil = async (event) => {
 
-
-
         await axios.post(loginPerfilApi,
             { id: this.state.perfiles[0] },
             {
                 headers: { 'xaccess': sessionStorage.getItem('token') }
             })
             .then(res => {
+                console.log(res.data)
                 const { user, token } = res.data;
                 sessionStorage.setItem('token', token);
+                sessionStorage.setItem('perfil', user);
                 this.setState({ perfilselected: true });
             });
 
@@ -88,7 +87,6 @@ class ListarPerfiles extends Component {
 
         return (
             (this.state.token === '' || this.state.perfilselected == false) ?
-
                 <div className="container">
                     <div className="cardPerfil col-md-6 offset-md-3 text-light bg-dark " >
                         <h3 className="card-header">Perfiles:</h3>

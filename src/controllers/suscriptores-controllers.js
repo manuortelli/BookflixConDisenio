@@ -40,30 +40,34 @@ suscriptoresCtrl.registrar = async (req,res) => {
         password:req.body.password,
         dni: req.body.dni,
         suscripcion: req.body.suscripcion,
-        perfiles:{nombre:req.body.nombre, id: perfil._id}
+        perfiles:{nombre:req.body.nombre, id: perfil.__id}
     }).save();
 
+    await perfil.updateOne({ suscriptor : nuevoSuscriptor._id });
     
-
-    await perfil.updateOne({ suscriptor : nuevoSuscriptor.__id })
-        .then( user => {
+    //    .then( user => {
             JWT.sign(
                 {   id: nuevoSuscriptor._id },
                 config.secret,
                 {   expiresIn: '2h'} ,
                 (err,token) => {
+                    console.log(perfil);
                     if(err) throw err;    
                     res.json({
+                        suscriptor:nuevoSuscriptor,
                         token,
                         user:{
                             id: nuevoSuscriptor._id,
                             email: nuevoSuscriptor.email,
-                        }
+                        },
+                        perfil:perfil
+
                     });
+                   
                 }
             )
-        })
-        .catch(err => res.status(401).json({msg:err}));
+        //})
+        //.catch(err => res.status(401).json({msg:err}));
 
 };
 
@@ -136,11 +140,6 @@ suscriptoresCtrl.visualizar =  async (req,res)=>{
         .then(user => res.send(user))
 };
 
-suscriptoresCtrl.soyAdmin = async (req,res) =>{
-    
-    
-}
-;
 suscriptoresCtrl.modificar =  async (req,res) => {
     
     const nuevoSuscriptor = await Suscriptor.findOne({email: req.body.email});

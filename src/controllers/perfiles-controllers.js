@@ -2,8 +2,11 @@ const perfilesCtrl = {};
 const Perfil = require('../models/Perfil');
 
 perfilesCtrl.visualizar = async (req,res) => {
+    const perfil = await Perfil.findById(req.user.id);
+    res.send(perfil);
+};
+perfilesCtrl.visualizarConId = async (req,res) => {
     const perfil = await Perfil.findById(req.body.id);
-    console.log(perfil);
     res.send(perfil);
 };
 
@@ -63,19 +66,19 @@ perfilesCtrl.historialCapitulo = async (req,res) => {
 
 perfilesCtrl.visitadoLibro = async (req,res) => {
     const perfil = await Perfil.findById(req.body.id);
-
     const historial = await perfil.historialLibros();
 
+    //TODO---------FALTA FECHA
     if ( historial.some(req.body.libroId) ){
         await perfil.updateOne({
-            $pull :{ historialLibros:req.body.libroId }
+            $pull: { historialLibros: req.body.libroId },
+            $push: { historialLibros: req.body.libroId },
         })
-        .then(res.send('Libro eliminado del historial'))
     }
     else{
             await perfil.updateOne({
             $push: { historialLibros: req.body.libroId}
-        }).then(res.send('Libro agregado al historial'))  
+        }).then(res.status(200).json({msg:'Libro agregado historial'}))
     }
 };
 
@@ -86,14 +89,17 @@ perfilesCtrl.visitadoCapitulo = async (req,res) => {
 
     if ( historial.some(req.body.capituloId) ){
         await perfil.updateOne({
-            $pull :{ historialCapitulos:req.body.capituloId }
+            $pull: { historialCapitulos:req.body.capituloId }
+        });
+        await perfil.updateOne({
+            $push: { historialCapitulos:req.body.capituloId }
         })
-        .then(res.send('Capitulo eliminado del historial'))
+        
     }
     else{
             await perfil.updateOne({
             $push: { historialCapitulos: req.body.capituloId}
-        }).then(res.send('Capitulo agregado al historial'))  
+        }).then(res.status(200).json({msg:'Capítulo agregado historial'}))
     }
 };
 

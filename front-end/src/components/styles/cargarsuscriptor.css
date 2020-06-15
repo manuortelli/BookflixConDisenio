@@ -1,9 +1,13 @@
+*{
+    margin:0;
+    padding:0;
+    
+}
 
 body {
-    background-image: url(https://miro.medium.com/max/1400/0*D20V-5QYOpFdrFWi);
     background-size: cover;
-    background-blend-mode: multiply;;
-
+    background: linear-gradient(180deg, #000, rgb(39, 38, 38));
+    height: 100vh;
 }
 
 
@@ -11,6 +15,127 @@ body {
     height: 100%;
     align-content: center;
     }
+
+.container-leer{
+    position: center;
+    justify-content: center;
+    align-items: center; 
+    padding-left: 75vh; 
+    padding-bottom: 10px;
+
+}
+
+.container-VerLibro{
+    position: relative;
+    width: 1100px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+.container-VerLibro .box{
+    position: relative;
+    width: 225px;
+    height: 300px;
+    overflow: hidden;
+    transition: 0.5s;
+
+}
+
+.container-VerLibro .box:hover{
+
+    z-index:1;
+    transform: scale(1.25);
+    box-shadow: 2px 25px 40px rgba(0,0,0,.7);
+}
+
+.container-VerLibro .box .imgBx{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.container-VerLibro .box .imgBx:before{
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(180deg,#f00,#000);
+    mix-blend-mode:multiply; 
+    opacity: 0;
+    transition: 0.5s;
+/*    z-index: 1; */
+}
+.container-VerLibro .box:hover .imgBx:before{
+    opacity: 0.4;
+}
+
+.container-VerLibro .box .imgBx img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    
+}
+.container-VerLibro .box .content{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: black;
+    padding: 20px;
+    align-items: flex-start;
+    text-transform: uppercase;
+    font-style: italic;
+    
+
+}
+.container-VerLibro .box:hover .content .titulo{
+    color:aliceblue;
+    opacity: 1;
+    mix-blend-mode: hard-light;
+    transform: translateY(0);
+
+}
+
+.container-VerLibro .box .content .titulo{
+    font-size: medium;
+    color:black;
+    transform: translateY(200px);
+}
+.container-VerLibro .box:hover .content .desc{
+    color: #fff;
+    transition: 0.5s;
+    margin-bottom: 5px;
+    transform: translateY(0) ;
+}
+
+.container-VerLibro .box .content .desc{
+    color: #000;
+    transition: 0.8s;
+    margin-bottom: 5px;
+    transform: translateY(200px) ;
+    font-size: 14px;
+    text-justify: inter-cluster;
+
+}
+
+.lector{
+    height: 50%;
+    width: 100;
+}
 
 /*Estilo de las card en general, supongo que tendremos uno para cada uno*/
     .card{
@@ -46,7 +171,7 @@ body {
 
 /*Estilo del card Ver Suscripción*/
 .cardVS{
-    height: 280px;
+    height: 300px;
     margin-top: auto;
     margin-bottom: auto;
     width: 600px;

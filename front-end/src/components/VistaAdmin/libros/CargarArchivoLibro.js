@@ -57,12 +57,12 @@ class CargarLibro extends Component {
                 headers: { 'xaccess':this.state.token }
             })
             .then(res => {
-                alert(JSON.stringify(res.data));
+                alert(JSON.stringify(res.response.data.msg));
                 return( <Redirect to="http://localhost:3000/libros" />)
             })
     
             .catch(err => {
-                alert(JSON.stringify(err.data))
+                alert(JSON.stringify(err.response.data.msg))
             } );
     };
 

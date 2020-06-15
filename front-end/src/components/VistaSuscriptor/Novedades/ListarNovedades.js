@@ -41,8 +41,6 @@ export default class ListarNovedades extends Component {
             aux2.push(aux);
         }
 
-        console.log('carrusel');
-        console.log(aux2);
         this.setState({
             novedades:res,
             NovedadesCarrusel:aux2
@@ -64,8 +62,7 @@ export default class ListarNovedades extends Component {
             this.setNovedades(res.data)
         })
         .catch(err =>{
-            console.log('lista de novedades');
-            console.log(err.response)});
+            alert(JSON.stringify(err.response))});
 
     }
     async componentDidMount(){

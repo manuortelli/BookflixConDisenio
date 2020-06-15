@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ItemListLibro from './ItemListLibro'
 import axios from 'axios';
-
+import LeerLibro from './LeerLibro'
 import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -98,7 +98,7 @@ export default class ListarLibros extends Component {
                          
                         </Slider>
                     </div>
-                
+                    
                 </div>
             )
         
