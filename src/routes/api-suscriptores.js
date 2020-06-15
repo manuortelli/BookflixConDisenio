@@ -12,7 +12,7 @@ router.post('/login', cors(), login);
 
 router.get('/me', auth, cors(), visualizar);
 
-router.get('/soyAdmin', auth, cors(), soyAdmin);
+//router.get('/soyAdmin', auth, cors(), soyAdmin);
 
 router.get('/loginPerfiles', auth, cors(), loginPerfiles);
 
