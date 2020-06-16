@@ -75,6 +75,8 @@ import ItemNovedad from './components/VistaSuscriptor/Novedades/ItemNovedad';
 import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros';
 import DetalleLibro from './components/VistaSuscriptor/Libros/DetalleLibro';
 import LeerLibro from './components/VistaSuscriptor/Libros/LeerLibro'
+import Buscador from './components/VistaSuscriptor/Libros/Buscador';
+import ModificarFechas from './components/VistaAdmin/libros/ModificarFechas';
 
 
 function App() {
@@ -104,6 +106,15 @@ function App() {
             <VerificarSesion />
             <NavegacionAdmin />
             <ModificarUnLibro match={match} />
+          </div>
+        )} >
+        </Route>
+        <Route exact path="/libros/modificarFechas/:id" render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionAdmin />
+           
+            <ModificarFechas match={match} />
           </div>
         )} >
         </Route>
@@ -213,8 +224,10 @@ function App() {
 
         {/*-----------------------Rutas Suscriptores Libros------------------ */}
         <Route exact path='/suscriptor/libros'> <VerificarSesion /> <NavegacionSuscriptor />
-          <ListarLibros></ListarLibros>
-        </Route>
+          <Buscador></Buscador>
+         
+        </Route> 
+      
 
         <Route exact path='/suscriptor/libros/:id' render={({ match }) => (
           <div>

@@ -6,7 +6,7 @@ import { Container, Col, Row, Card } from 'react-bootstrap'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
+import { Link, Redirect } from 'react-router-dom';
 
 
 const libros = 'http://localhost:4000/api/libros/';
@@ -78,7 +78,9 @@ class VerLibrosNS extends Component {
 
         this.getData();
     }
-
+    verDetalle=(id)=>{
+      return <Redirect to={'/suscriptor/libros/leer/' + id}> </Redirect>
+    };
 
     render() {
 
@@ -99,18 +101,26 @@ class VerLibrosNS extends Component {
                            <div className="container-VerLibro">
                                
                                 {libros.map(libro =>
-                                    <div className="box">
-                                        <span className="imgBx">
+                                    <div>
+                                    <div className="box" >
+                                        <span className="imgBx"  onClick={<Redirect to={'/suscriptor/libros/leer/' + libro._id}> </Redirect>}>
                                             <img src={portada + libro.portada} />
                                         </span>
                                         <span className="content">
-                                            <span>
+                                            <span >
                                                 <h2 className="titulo"> {libro.titulo} </h2>
                                                 <p className="desc">  kk {libro.descripcion} </p>
+                                                
                                             </span>
                                         </span>
+                                
+                                    </div>
+                                     <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/' +libro._id}  >
+                                     Ver detalle
+                                    </Link>
                                     </div>
                                 )}
+                                
                             </div>
                             
                         )}

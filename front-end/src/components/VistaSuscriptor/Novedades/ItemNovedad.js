@@ -31,7 +31,12 @@ class ItemNovedad extends Component {
     async componentDidMount(){
         this.getDatos()
     }
-
+    mostrarFecha=(f)=>{
+        var fecha =new Date(f);
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        return (fecha.getDate() + " de " + meses[fecha.getMonth()] + " de " + fecha.getFullYear());
+        //return fecha.getDate() + "/" + (fecha.getMonth() +1) + "/" + fecha.getFullYear();
+    }
 
     render() {
 
@@ -44,7 +49,7 @@ class ItemNovedad extends Component {
                         <img alt='' width="550px" height="400px" src={portada + `${this.state.novedad.portada}`} />
                         <h5 class="card-header">{this.state.novedad.titulo}</h5>
                         <h6 class="card-subtitle mb-2 text-light">{this.state.novedad.descripcion}</h6>
-                        <h6 class="card-subtitle mb-2 text-light">Publicada: {this.state.novedad.publicacion}</h6>
+                        <h6 class="card-subtitle mb-2 text-light">Publicada el {this.mostrarFecha(this.state.novedad.publicacion)}</h6>
                      </div>
                 </div>
             </div>

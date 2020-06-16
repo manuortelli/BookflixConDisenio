@@ -27,6 +27,7 @@ export default class Buscador extends Component {
             autor:'',
             genero:'',
             editorial:'',
+
             libros:[],
             autores:[],
             generos:[],
@@ -59,12 +60,45 @@ export default class Buscador extends Component {
        
     }
     
-    setLibros(res){
-      
-        this.setState({
-            libros:res,
+
+    filtrarFechas=(libros)=>{
+        var hoy =new Date();
+        console.log('hoy es:'+ hoy );
+        var res=[];
+        libros.map( lib =>{
+            if(lib.lanzamiento != null ){
+                var lan= new Date(lib.lanzamiento);
+                if(lan< hoy){
+                    if(lib.expiracion != null){
+                        var ven= new Date(lib.expiracion);
+                        if(ven > hoy){
+                          res.push(lib);
+                        }
+                    }else{
+                        res.push(lib);
+                    }
+                 }
+            }
+           
+           
+
         });
-        this.setLibrosConFiltro(res);
+        return res;
+
+
+    }
+
+
+
+    setLibros(res){
+        console.log('lista de libros');
+        var re =this.filtrarFechas(res);
+     
+        console.log(re);
+        this.setState({
+            libros:re,
+        });
+        this.setLibrosConFiltro(re);
     }
     setLibrosConFiltro(res){
         var num =2;
