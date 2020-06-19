@@ -23,6 +23,7 @@ import Libros from './components/VistaAdmin/libros/Libros';
 import ModificarUnLibro from './components/VistaAdmin/libros/ModificarUnLibro';
 import CargarMetadata from './components/VistaAdmin/libros/CargarMetadataLibro';
 import CargarLibro from './components/VistaAdmin/libros/CargarArchivoLibro';
+import CargarCapitulo from './components/VistaAdmin/libros/CargarArchivoCapitulo';
 import DetalleLibroAdmin from './components/VistaAdmin/libros/DetalleLibroAdmin';
 
 //!Componente de Administrador ---Novedades---
@@ -141,6 +142,14 @@ function App() {
             <VerificarSesion />
             <NavegacionAdmin />
             <CargarLibro match={match} />
+          </div>
+        )} ></Route>
+
+      <Route exact path="/libro/cargarCapitulo/:id" render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionAdmin />
+            <CargarCapitulo match={match} />
           </div>
         )} ></Route>
 
