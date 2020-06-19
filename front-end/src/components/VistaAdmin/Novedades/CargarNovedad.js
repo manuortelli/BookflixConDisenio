@@ -72,7 +72,7 @@ export default class CargarNovedad extends Component {
         <div className="card card-body text-light bg-dark">
         <h2 className="card-header">Cargar Novedad</h2>
         
-        <form onSubmit={this.onSubmit} >
+        <form onSubmit={this.onSubmit} autoComplete="off" >
            
         
             

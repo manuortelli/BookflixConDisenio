@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from '../../../../node_modules/axios';
 
-import propTypes   from 'prop-types';
-import { set } from 'mongoose';
+
+
 import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -38,6 +38,7 @@ export default class Buscador extends Component {
             
         }
         this.loPuedoAgregar=this.loPuedoAgregar.bind(this);
+        this.setLibros=this.setLibros.bind(this);
 
     }
     setAutores(res){
@@ -60,7 +61,7 @@ export default class Buscador extends Component {
     }
     
     setLibros(res){
-      
+        console.log(res);
         this.setState({
             libros:res,
         });
