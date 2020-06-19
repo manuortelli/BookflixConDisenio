@@ -37,6 +37,7 @@ import CargarNovedad from './components/VistaAdmin/Novedades/CargarNovedad';
 
 import CargarTrailer from './components/VistaAdmin/Trailers/CargarTrailer'
 import VerTrailer from './components/VistaAdmin/Trailers/VisualizarTrailer'
+import ListarTrailer from './components/VistaAdmin/Trailers/ListarTrailerAdmin'
 
 //!Componente de Administrador ---Autores----
 import Autores from './components/VistaAdmin/Autores/AutoresCRUD';
@@ -170,17 +171,27 @@ function App() {
 
          {/*-----------------------Rutas Admin Trailers ------------------ */}
 
-        <Route exact path='/trailers'>
+         <Route exact path='/trailers/'>
+          <VerificarSesion />
+          <NavegacionAdmin />
+          <ListarTrailer/>
+        </Route>
+       
+        <Route exact path='/trailers/nuevo'>
           <VerificarSesion />
           <NavegacionAdmin />
           <CargarTrailer />
         </Route>
 
-        <Route exact path='/trailers/ver'>
-          <VerificarSesion />
-          <NavegacionAdmin />
-          <VerTrailer />
+        <Route exact path='/trailers/detalle/:id' render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionSuscriptor />
+            <VerTrailer match={match} />
+          </div>
+        )}>
         </Route>
+    
 
 
          {/*-----------------------Rutas Admin Autores------------------ */}

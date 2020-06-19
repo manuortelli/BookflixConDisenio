@@ -116,7 +116,7 @@ librosCtrl.modificar = async (req,res)=>{
 };
 
 librosCtrl.cargarArchivoLibro = async (req,res)=>{
-    console.log(req.body.id);
+    
     const libro = await Libro.findById(req.body.id);
     
     if(req.file){
@@ -143,10 +143,10 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
 
     if(req.file){
         await libro.updateOne({
-            capitulos:{
+            $push:{capitulos:{ 
                 archivo: req.file.filename,
                 n:req.body.n
-            } 
+            } }
         })
     }else{
         return res.status(401).json({msg:'Debe ingresar un archivo'});

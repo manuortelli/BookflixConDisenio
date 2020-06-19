@@ -334,10 +334,10 @@ export default class Buscador extends Component {
 
                 </div>
                               
-                    <div >
+                   {/* <div >
                         <Link to='/libro/nuevo' className='btn btn-secondary col-md-6 offset-md-3'>Cargar Metadata de un Libro</Link>
                     </div>
-
+                   */}
                    
                    
 

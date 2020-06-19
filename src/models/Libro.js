@@ -39,12 +39,12 @@ const LibroSchema = new Schema({
         type:String
     },
     capitulos:{
-        type: {
+        type: [{
             n: String,
             archivo: String,
             lanzamiento:String,
             vencimiento:String,
-        }
+        }]
     },
     trailer: {
         type:String

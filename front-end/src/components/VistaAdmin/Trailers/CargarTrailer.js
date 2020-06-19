@@ -5,7 +5,7 @@ import '../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import axios from '../../../../node_modules/axios';
 import {  Redirect } from 'react-router-dom';
 
-const cargar = 'http://localhost:4000/api/trailer/cargar';
+const cargar = 'http://localhost:4000/api/trailers/cargar';
 
 /*CARGAR TRAILER
 - cargar trailer-> muy parecido a la novedad
@@ -38,7 +38,13 @@ class CargarTrailer extends Component {
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('descripcion', this.state.descripcion);
-        formData.append('portadaImg',this.state.video);
+        if (this.state.pdf == null){
+        formData.append('portadaImg',this.state.video);   }
+        else {
+        formData.append('portadaImg',this.state.pdf); }
+
+  
+
     
         axios.post(cargar,formData,{
                 headers: { 'xaccess':this.state.token }
