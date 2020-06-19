@@ -71,6 +71,11 @@ import ListarNovedades from './components/VistaSuscriptor/Novedades/ListarNoveda
 import ItemNovedad from './components/VistaSuscriptor/Novedades/ItemNovedad';
 
 
+//!Componente de Suscriptor ------Trailer------
+import ListarTrailerSuscriptor from './components/VistaSuscriptor/Trailers/ListarTrailerSuscriptor';
+import VerTrailerSuscriptor from './components/VistaSuscriptor/Trailers/VisualizarTrailerSuscriptor'
+
+
 //!Componente de Suscriptor ------Libros-----
 
 import ListarLibros from './components/VistaSuscriptor/Libros/ListarLibros';
@@ -197,7 +202,7 @@ function App() {
         <Route exact path='/trailers/detalle/:id' render={({ match }) => (
           <div>
             <VerificarSesion />
-            <NavegacionSuscriptor />
+            <NavegacionAdmin />
             <VerTrailer match={match} />
           </div>
         )}>
@@ -254,6 +259,24 @@ function App() {
             <VerificarSesion />
             <NavegacionSuscriptor />
             <LeerLibro match={match} />
+          </div>
+        )}>
+        </Route>
+
+
+        {/*--------------------------Rutas Suscriptor Trailers---------------*/}
+
+        <Route exact path='/suscriptor/trailers/'>
+          <VerificarSesion />
+          <NavegacionSuscriptor />
+          <ListarTrailerSuscriptor/>
+        </Route>
+
+        <Route exact path='/suscriptor/trailers/detalle/:id' render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionSuscriptor />  
+            <VerTrailerSuscriptor match={match} />
           </div>
         )}>
         </Route>
