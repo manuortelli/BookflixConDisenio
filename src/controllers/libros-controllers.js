@@ -151,7 +151,7 @@ librosCtrl.cargarArchivoCapitulo = async (req,res)=>{
     }else{
         return res.status(401).json({msg:'Debe ingresar un archivo'});
     }
-    if(req.lanzamiento){
+    if(req.body.lanzamiento){
         await libro.updateOne({lanzamiento: req.body.lanzamiento})
     }else{
         return res.status(401).json({msg:'Debe indicar una fecha de lanzamiento'});

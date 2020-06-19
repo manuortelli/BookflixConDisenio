@@ -84,6 +84,7 @@ import DetalleLibro from './components/VistaSuscriptor/Libros/DetalleLibro';
 import LeerLibro from './components/VistaSuscriptor/Libros/LeerLibro'
 import Buscador from './components/VistaSuscriptor/Libros/Buscador';
 import ModificarFechas from './components/VistaAdmin/libros/ModificarFechas';
+import LeerCapitulo from './components/VistaSuscriptor/Libros/LeerLibro';
 
 
 function App() {
@@ -271,6 +272,17 @@ function App() {
           </div>
         )}>
         </Route>
+
+        <Route exact path='/suscriptor/libros/leerCapitulo/:id' render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionSuscriptor />
+            <LeerCapitulo match={match} />
+          </div>
+        )}>
+        </Route>
+
+
 
 
         {/*--------------------------Rutas Suscriptor Trailers---------------*/}

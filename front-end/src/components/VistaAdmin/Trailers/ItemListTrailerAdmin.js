@@ -28,13 +28,13 @@ class ItemListTrailerAdmin extends Component {
             alert(res.data)
         })
             .catch(err => {
-                alert(err.data)
+                alert(JSON.stringify(err.response.data.msg));
             });
 
     }
 
     componentDidMount = async () => {
-        console.log(this.state.trailer.archivo)
+        
     }
 
 

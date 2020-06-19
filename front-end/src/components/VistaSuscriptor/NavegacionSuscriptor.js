@@ -60,6 +60,11 @@ async componentDidMount(){
                   <li className="nav-item">
                   <Link className="nav-link" to="/suscriptor/novedades">Novedades </Link>
                   </li>
+
+                  <li className="nav-item">
+                  <Link className="nav-link" to="/suscriptor/trailers">Trailers </Link>
+                  </li>
+
                   <li className="nav-item">
                   <Link className="nav-link" to="/suscriptor/suscripcion">Mi suscripcion</Link>
                   </li>
