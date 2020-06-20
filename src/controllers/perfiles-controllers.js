@@ -1,124 +1,132 @@
 const perfilesCtrl = {};
-const Perfil = require('../models/Perfil');
+const Perfil = require("../models/Perfil");
 
-perfilesCtrl.visualizar = async (req,res) => {
-    const perfil = await Perfil.findById(req.user.id);
-    res.send(perfil);
+perfilesCtrl.visualizar = async (req, res) => {
+  const perfil = await Perfil.findById(req.user.id);
+  res.send(perfil);
 };
-perfilesCtrl.visualizarConId = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-    res.send(perfil);
-};
-
-perfilesCtrl.visualizarPadre = async (req,res) =>{
-    const suscriptorPadre = await Perfil.findById(req.body.id).suscriptor;
-    res.send(suscriptorPadre);
-}
-
-perfilesCtrl.likeLibro = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-
-    const likes = await perfil.likesLibros();
-
-    if ( likes.some(req.body.libroId) ){
-        await perfil.updateOne({
-            $pull :{ likesLibros:req.body.libroId }
-        })
-        .then(res.send('Libro eliminado de favoritos'))
-    }
-    else{
-            await perfil.updateOne({
-            $push: { likesLibros: req.body.libroId}
-        }).then(res.send('Libro agregado a la favoritos'))  
-    }
+perfilesCtrl.visualizarConId = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  res.send(perfil);
 };
 
-perfilesCtrl.likeCapitulo  = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-
-    const likes = await perfil.likesCapitulos();
-
-    if ( likes.some(req.body.capituloId) ){
-        await perfil.updateOne({
-            $pull :{ likesCapitulos:req.body.capituloId }
-        })
-        .then(res.send('Capitulo eliminado de favoritos'))
-    }
-    else{
-            await perfil.updateOne({
-            $push: { likesCapitulos: req.body.capituloId}
-        }).then(res.send('Capitulo agregado a la favoritos'))  
-    }
+perfilesCtrl.visualizarPadre = async (req, res) => {
+  const suscriptorPadre = await Perfil.findById(req.body.id).suscriptor;
+  res.send(suscriptorPadre);
 };
 
-perfilesCtrl.historialLibro = async (req,res) => {
-    
-    const perfil = await Perfil.findById(req.body.id);
-    res.send(await perfil.historialLibro());
+perfilesCtrl.likeLibro = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
 
+  const likes = await perfil.likesLibros();
+
+  if (likes.some(req.body.libroId)) {
+    await perfil
+      .updateOne({
+        $pull: { likesLibros: req.body.libroId },
+      })
+      .then(res.send("Libro eliminado de favoritos"));
+  } else {
+    await perfil
+      .updateOne({
+        $push: { likesLibros: req.body.libroId },
+      })
+      .then(res.send("Libro agregado a la favoritos"));
+  }
 };
 
-perfilesCtrl.historialCapitulo = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-    res.send(await perfil.historialCapitulo());
+perfilesCtrl.likeCapitulo = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
 
+  const likes = await perfil.likesCapitulos();
+
+  if (likes.some(req.body.capituloId)) {
+    await perfil
+      .updateOne({
+        $pull: { likesCapitulos: req.body.capituloId },
+      })
+      .then(res.send("Capitulo eliminado de favoritos"));
+  } else {
+    await perfil
+      .updateOne({
+        $push: { likesCapitulos: req.body.capituloId },
+      })
+      .then(res.send("Capitulo agregado a la favoritos"));
+  }
 };
 
-perfilesCtrl.visitadoLibro = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-    const historial = await perfil.historialLibros();
-
-    //TODO---------FALTA FECHA
-    if ( historial.some(req.body.libroId) ){
-        await perfil.updateOne({
-            $pull: { historialLibros: req.body.libroId },
-            $push: { historialLibros: req.body.libroId },
-        })
-    }
-    else{
-            await perfil.updateOne({
-            $push: { historialLibros: req.body.libroId}
-        }).then(res.status(200).json({msg:'Libro agregado historial'}))
-    }
+perfilesCtrl.historialLibro = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  res.send(await perfil.historialLibro());
 };
 
-perfilesCtrl.visitadoCapitulo = async (req,res) => {
-
-    const perfil = await Perfil.findById(req.body.id);
-    const historial = await perfil.historialCapitulos();
-
-    if ( historial.some(req.body.capituloId) ){
-        await perfil.updateOne({
-            $pull: { historialCapitulos:req.body.capituloId }
-        });
-        await perfil.updateOne({
-            $push: { historialCapitulos:req.body.capituloId }
-        })
-        
-    }
-    else{
-            await perfil.updateOne({
-            $push: { historialCapitulos: req.body.capituloId}
-        }).then(res.status(200).json({msg:'Capítulo agregado historial'}))
-    }
+perfilesCtrl.historialCapitulo = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  res.send(await perfil.historialCapitulo());
 };
 
-perfilesCtrl.likesLibros = async (req,res) => {
-    const likes = await Perfil.findById(req.body.id).likesLibros();
-    res.send(likes)
+perfilesCtrl.visitadoLibro = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  const historial = await perfil.historialLibros();
 
+  //TODO---------FALTA FECHA
+  if (historial.some(req.body.libroId)) {
+    await perfil.updateOne({
+      $pull: { historialLibros: req.body.libroId },
+      $push: { historialLibros: req.body.libroId },
+    });
+  } else {
+    await perfil
+      .updateOne({
+        $push: {
+          historialLibros: {
+            archivo: req.body.libroId,
+            terminado: false,
+          },
+        },
+      })
+      .then(res.status(200).json({ msg: "Libro agregado historial" }));
+  }
 };
 
-perfilesCtrl.likesCapitulos = async (req,res) => {
-    const likes = await Perfil.findById(req.body.id).likesCapitulos();
-    res.send(likes)
+perfilesCtrl.visitadoCapitulo = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  const historial = await perfil.historialCapitulos();
 
+  if (historial.some(req.body.capituloId)) {
+    await perfil.updateOne({
+      $pull: { historialCapitulos: req.body.capituloId },
+    });
+    await perfil.updateOne({
+      $push: { historialCapitulos: req.body.capituloId },
+    });
+  } else {
+    await perfil
+      .updateOne({
+        $push: {
+          historialCapitulos: {
+            archivo: req.body.capituloId,
+            terminado: false,
+          },
+        },
+      })
+      .then(res.status(200).json({ msg: "Capítulo agregado historial" }));
+  }
 };
 
-perfilesCtrl.recomendados = async (req,res) => {
-    const perfil = await Perfil.findById(req.body.id);
-    //res.send(await perfil.recomendados());
+perfilesCtrl.likesLibros = async (req, res) => {
+  const likes = await Perfil.findById(req.body.id).likesLibros();
+  res.send(likes);
+};
 
+perfilesCtrl.likesCapitulos = async (req, res) => {
+  const likes = await Perfil.findById(req.body.id).likesCapitulos();
+  res.send(likes);
+};
+
+perfilesCtrl.recomendados = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  //res.send(await perfil.recomendados());
 };
 
 module.exports = perfilesCtrl;
