@@ -119,7 +119,7 @@ librosCtrl.modificar = async (req, res) => {
 };
 
 librosCtrl.modificarFecha = async (req, res) => {
-  const libro = await Libro.findOne({ isbn: req.body.isbn });
+  const libro = await Libro.findById(req.body.id);
 
   if (libro.capitulos) {
     await libro.capitulos.forEach(async (capituloId) => {
@@ -176,14 +176,16 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
   const libro = await Libro.findById(req.body.id);
 
   if (req.file) {
-    if (libro.n) {
-      await libro.n.forEach((nActual) => {
-        if (req.body.n == nActual) {
-          return res
-            .status(401)
-            .json({ msg: "El número de capítulo ya fue cargado" });
-        }
-      });
+    var nCapitulos = libro.nCapitulos;
+    if (nCapitulos) {
+      function existeN(element, index, array) {
+        return element == req.body.n;
+      }
+      if (nCapitulos.some(existeN)) {
+        return res
+          .status(401)
+          .json({ msg: "El número de capítulo ya fue cargado" });
+      }
     }
     const capitulo = await new Capitulo({
       libro: req.body.id,
@@ -203,11 +205,11 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
   } else {
     return res.status(401).json({ msg: "Debe ingresar un archivo" });
   }
-  /*
+
   if (req.body.ultimo) {
     this.modificarFecha(req);
   }
-  */
+
   console.log(libro);
   return res.status(401).json({ msg: "Archivo de capítulo cargado con éxito" });
 };
