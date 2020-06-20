@@ -48,6 +48,16 @@ trailersCtrl.cargar = async (req, res) => {
     });
     //await libro.updateOne({trailer: nuevoTrailer.__id})
   }
+  if (req.body.video) {
+    await nuevoTrailer.updateOne({
+      video: true,
+    });
+  } else {
+    await nuevoTrailer.updateOne({
+      video: false,
+    });
+  }
+
   return res.status(200).json({ msg: "Trailer cargado con éxito" });
 };
 
