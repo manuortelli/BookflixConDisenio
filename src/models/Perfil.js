@@ -9,24 +9,21 @@ const PerfilSchema = new Schema({
     type: String,
     required: true,
   },
-  likesLibros: [String],
-  likesCapitulos: [String],
-  historialLibros: {
-    type: [
-      {
-        archivo: String,
-        terminado: Boolean,
-      },
-    ],
-  },
-  historialCapitulos: {
-    type: [
-      {
-        archivo: String,
-        terminado: Boolean,
-      },
-    ],
-  },
+  likesLibros: [String], //tiene el id del libro
+  likesCapitulos: [String], //tiene el id del capitulo
+  historialLibros: [
+    //arreglo de objetos
+    {
+      libro: String,
+      terminado: Boolean,
+    },
+  ],
+  historialCapitulos: [
+    {
+      capitulo: String,
+      terminado: Boolean,
+    },
+  ],
   reportes: [String],
   recomendados: [String],
 });

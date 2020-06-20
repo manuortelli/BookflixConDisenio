@@ -1,5 +1,6 @@
 const librosCtrl = {};
 const Libro = require("../models/Libro");
+const Capitulo = require("../models/Capitulo");
 
 librosCtrl.listar = async (req, res) => {
   const libros = await Libro.find();
@@ -16,8 +17,10 @@ librosCtrl.visualizar = async (req, res) => {
 
 librosCtrl.visualizarCapitulos = async (req, res) => {
   const libro = await Libro.findById(req.body.id);
-  const capitulos = libro.capitulos.sort({ n: "asc" });
-
+  var capitulos = [];
+  libro.capitulos.forEach(async (capitulo) => {
+    capitulos.push(await Capitulo.findById(capitulo));
+  });
   res.status(200).send(capitulos);
 };
 
@@ -119,14 +122,15 @@ librosCtrl.modificarFecha = async (req, res) => {
   const libro = await Libro.findOne({ isbn: req.body.isbn });
 
   if (libro.capitulos) {
-    await libro.capitulos.forEach((capitulo) => {
+    await libro.capitulos.forEach(async (capituloId) => {
+      const capituloActual = await Capitulo.findById(capituloId);
+
       if (req.body.lanzamiento) {
-        capitulo.lanzamiento = req.body.lanzamiento;
+        capituloActual.updateOne({ lanzamiento: req.body.lanzamiento });
       }
       if (req.body.vencimiento) {
-        capitulo.vencimiento = req.body.vencimiento;
+        capituloActual.updateOne({ vencimiento: req.body.vencimiento });
       }
-      libro.capitulos.save();
     });
   } else {
     if (req.body.lanzamiento) {
@@ -172,25 +176,28 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
   const libro = await Libro.findById(req.body.id);
 
   if (req.file) {
-    if (libro.capitulos) {
-      await libro.capitulos.forEach((capitulo) => {
-        console.log(capitulo);
-        if (req.body.n == capitulo.n) {
+    if (libro.n) {
+      await libro.n.forEach((nActual) => {
+        if (req.body.n == nActual) {
           return res
             .status(401)
             .json({ msg: "El número de capítulo ya fue cargado" });
         }
       });
     }
+    const capitulo = await new Capitulo({
+      libro: req.body.id,
+      titulo: req.body.titulo,
+      archivo: req.file.filename,
+      lanzamiento: req.body.lanzamiento,
+      n: req.body.n,
+      portada: libro.portada,
+    }).save();
+
     await libro.updateOne({
       $push: {
-        capitulos: {
-          archivo: req.file.filename,
-          n: req.body.n,
-          nombre: req.body.nombre,
-          lanzamiento: req.body.lanzamiento,
-          vencimiento: req.body.vencimiento,
-        },
+        capitulos: capitulo._id,
+        nCapitulos: req.body.n,
       },
     });
   } else {

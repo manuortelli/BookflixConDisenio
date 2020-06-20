@@ -36,19 +36,11 @@ const LibroSchema = new Schema({
   archivo: {
     type: String,
   },
-  capitulos: {
-    type: [
-      {
-        n: String,
-        nombre: String,
-        archivo: String,
-        lanzamiento: String,
-        vencimiento: String,
-      },
-    ],
-  },
+  capitulos: [String],
+  nCapitulos: [String],
   trailer: {
-    type: String,
+    tipo: String,
+    archivo: String,
   },
 });
 
