@@ -33,7 +33,7 @@ router.get('/',auth,cors(),listar);
 
 router.post('/me',auth, cors(),visualizar);
 
-router.post('misCapitulos', auth, cors(), visualizarCapitulos);
+router.post('/misCapitulos', auth, cors(), visualizarCapitulos);
 
 router.post('/cargar',auth, uploadPortada, cargar);
 

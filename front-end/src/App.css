@@ -71,4 +71,10 @@
   text-align: right;
  
 }
+.absoluto{
+  position:absolute;
+}
+.ralativo{
+  position: relative;
+}
 

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import DatosLibro from './DatosLibro';
+import { Link } from 'react-router-dom';
+import ListarCapitulos from './ListarCapitulos';
+import { Button } from 'react-bootstrap';
 
 const editoriales= 'http://localhost:4000/api/editoriales/'
 const generos ='http://localhost:4000/api/generos/'
@@ -7,6 +11,7 @@ const autores = 'http://localhost:4000/api/autores/'
 
 const portada = 'http://localhost:4000/uploads/';
 const me = 'http://localhost:4000/api/libros/me';
+const  capi= 'http://localhost:4000/api/libros/misCapitulos';
 
 export default class DetalleLibrosAdmin extends Component {
 
@@ -16,12 +21,15 @@ export default class DetalleLibrosAdmin extends Component {
             id: this.props.match.params.id,
             token: sessionStorage.getItem('token'),
             libro:'',
-
+            capitulos:'',
             editorial:'',
             genero:'',
             autor:'',
+            bottonCap: false,
+            mostrarCapitulos:true,
         }
-        this.fechaExpiracion = this.fechaExpiracion.bind(this)
+        this.fechaExpiracion = this.fechaExpiracion.bind(this);
+        this.mostrarCapitulos=this.mostrarCapitulos.bind(this);
     }
 
     getNombres= async ()=>{
@@ -65,24 +73,42 @@ export default class DetalleLibrosAdmin extends Component {
       .catch(err =>{console.log(err)});
     }
 
+   
+
     getDatos=async()=>{
         await axios.post(me,
             { id: this.state.id },
             { headers:{'xaccess': this.state.token}}
         ).then(res =>{
             console.log(res.data);
+
+
+
+
+
             this.setState({
-                libro:res.data
+                libro:res.data,
+                capitulos:res.data.capitulos
             });
            this.getNombres();
+           this.HayCapitulos();
 
         })
         .catch(err =>{console.log(err)});
 
+       
+    }
+    
+    HayCapitulos = () => {
+        if (this.state.capitulos != "") {
+            this.state.bottonCap = true;
+        }
     }
     
     componentDidMount(){
      this.getDatos();
+     this.HayCapitulos();
+ 
     }
 
     
@@ -94,69 +120,61 @@ export default class DetalleLibrosAdmin extends Component {
             return (<div/>)
         }
     }
+    mostrarCapitulos(){
+        this.setState({
+            mostrarCapitulos:! this.state.mostrarCapitulos
+        })
+    }
   render(){
-   
+
+
+    const show = this.state.bottonCap;
+    const capseleccionado = this.state.capseleccionado-1;
     
 
 
-  
-    
     return (
-     
 
+        <div>
+            <DatosLibro libro={this.state.libro} autor={this.state.autor} genero={this.state.genero} editorial={this.state.editorial}></DatosLibro>
+            <br></br>
+        {show ?( 
+        <React.Fragment>
+        
+        <div class="card col-md-6 offset-md-3" >
+           
+        <button className='btn btn-outline-success' onClick={this.mostrarCapitulos}> Ver Capitulos</button>
+      
+        </div> 
+            {this.state.mostrarCapitulos ? 
+             <React.Fragment> </React.Fragment>
+            :
+            <ListarCapitulos capitulos={this.state.capitulos}></ListarCapitulos>
+            }
+            
+         </React.Fragment>)
+        : ( <React.Fragment>
+            <div>
+                            <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+                                <div class="card-body ">
+                                <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leer/' + this.state.libro.archivo}  > Leer Libro </Link>
+                                </div>
+                            </div>
+            </div>  
+        </React.Fragment>)
+        }
+      
        
-          
-
-
-
-
-
-
-
-
-
-
-
-        <div class="card bg-dark text-light detalleLibro   offset-md-3  ">
-            <img className="card-img "  src={portada + `${this.state.libro.portada}`} />  
-            <div className="card-img-overlay ">
-
-                <div className='tituloLibro'>
-                 <h2 className="card-title "> {this.state.libro.titulo}</h2>
-                </div>
-                
-                
-               
-                <div className="card-body">
-                        <br></br>
-                        <div className='bodyDetalleLibro'>
-                        <h5 className="card-subtitle mb-2 text-light">Editorial: {' '+this.state.editorial.nombre}</h5>
-                        <p></p>
-                        <h5 className="card-subtitle mb-2 text-light">Autor: {' '+this.state.autor.nombre+' '+this.state.autor.apellido  }</h5>
-                        <p></p>
-                        <h5 className="card-subtitle mb-2 text-light">Genero: {' '+this.state.genero.nombre}</h5>
-   
-                        
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        
-                       
-
-                        <h5 className="card-subtitle mb-2 text-light isbn ">ISBN: {' '+this.state.libro.isbn}</h5>
-                        </div>  
-                
-                {this.fechaExpiracion}
-                
-                </div>
-            </div>
-            </div>
-                  
-
-           
-           
+        </div>
+        
 
 
     )
+ 
+
+ }
+
+
+
 }
-}
+
