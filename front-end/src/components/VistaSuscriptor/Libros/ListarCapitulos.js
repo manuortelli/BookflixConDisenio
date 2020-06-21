@@ -6,17 +6,41 @@ import { Link } from 'react-router-dom';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { Button } from 'react-bootstrap';
 
-
+const perfiles ='http://localhost:4000/api/perfiles/';
 const libros= 'http://localhost:4000/api/libros/';
 export default class ListarLibros extends Component {
     constructor(props){
         super(props);
         this.state={
-         
+            token: sessionStorage.getItem('token'),
+            idPerfil:'',
         }
 
     }
+    componentDidMount(){
+        this.getData();
+    }
+    
+    leerCapitulo= async (id)=>{
+
+      
+        await axios.post(perfiles+'visitadoCapitulo',
+          { id:sessionStorage.getItem('perfilID'),
+            capituloId:id 
+          },
+          { headers:{'xaccess': this.state.token}}
+      )
+      .then(res =>{
+          console.log(res.data);
+        
+      })
+      .catch(err =>{console.log(err.response.data.msg)});
+
+
+    }
+       
  
 
     render() {
@@ -35,9 +59,10 @@ export default class ListarLibros extends Component {
                             <div class="card col-md-6 offset-md-3 text-light bg-dark " >
                                 <div class="card-body">
                                 <h5 className="card-title ">Capitulo { capi.n} </h5>
-                                    <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leerCapitulo/' +capi.archivo}  >
+                                    <Link onClick={this.leerCapitulo} className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leerCapitulo/' +capi.archivo}  >
                                         Leer Capitulo
                                     </Link>
+                                    <Button  onClick={this.leerCapitulo} > leer </Button>
                                 </div>
                             </div>
                             </div>  
