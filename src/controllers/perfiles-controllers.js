@@ -84,7 +84,7 @@ perfilesCtrl.termineLibro = async (req, res) => {
     });
     capitulosLeidos.forEach(async (cap) => {
       await perfil.updateOne({
-        $pull: { historialCapitulos: req.body.capituloId },
+        $pull: { historialCapitulos: cap },
         $push: {
           historialCapitulos: {
             libro: cap.capitulo,
