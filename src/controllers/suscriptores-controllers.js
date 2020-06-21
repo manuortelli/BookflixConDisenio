@@ -36,6 +36,7 @@ suscriptoresCtrl.registrar = async (req, res) => {
   }
 
   const perfil = await new Perfil({ nombre: req.body.nombre }).save();
+  console.log(perfil._id);
 
   const nuevoSuscriptor = await new Suscriptor({
     nombre: req.body.nombre,
@@ -43,10 +44,10 @@ suscriptoresCtrl.registrar = async (req, res) => {
     password: req.body.password,
     dni: req.body.dni,
     suscripcion: req.body.suscripcion,
-    perfiles: { nombre: req.body.nombre, id: perfil.__id },
+    perfiles: { nombre: req.body.nombre, id: perfil._id },
   }).save();
-
-  await perfil.updateOne({ suscriptor: nuevoSuscriptor._id });
+  const padre = nuevoSuscriptor._id;
+  await perfil.updateOne({ suscriptor: padre });
 
   //    .then( user => {
   JWT.sign(
@@ -119,11 +120,11 @@ suscriptoresCtrl.loginPerfiles = async (req, res) => {
 
 suscriptoresCtrl.loginPerfil = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
-  //const perfiles = await Perfil.find();
+  const perfiles = await Perfil.find();
   //return res.send(perfiles);
-  console.log(perfil);
+  console.log(req.body.id, perfil.id);
   JWT.sign(
-    { id: perfil._id },
+    { id: perfil.id },
     config.secret,
     { expiresIn: 3600 },
     async (err, token) => {
