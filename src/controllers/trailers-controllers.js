@@ -46,7 +46,6 @@ trailersCtrl.cargar = async (req, res) => {
     const libro = await Libro.findById(req.body.libro).updateOne({
       trailer: nuevoTrailer.__id,
     });
-    //await libro.updateOne({trailer: nuevoTrailer.__id})
   }
   if (req.body.video) {
     await nuevoTrailer.updateOne({

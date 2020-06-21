@@ -11,6 +11,9 @@ const CapituloSchema = new Schema({
   titulo: {
     type: String,
   },
+  descripcion: {
+    type: String,
+  },
   archivo: {
     type: String,
   },

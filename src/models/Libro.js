@@ -38,10 +38,7 @@ const LibroSchema = new Schema({
   },
   capitulos: [String],
   nCapitulos: [String],
-  trailer: {
-    tipo: String,
-    archivo: String,
-  },
+  trailer: { type: String },
 });
 
 module.exports = mongoose.model("Libro", LibroSchema);
