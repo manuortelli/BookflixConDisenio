@@ -83,6 +83,7 @@ class ModificarFechas extends Component {
   onChangeExpiracion = (expiracion) => {
     this.setState({ expiracion });
   };
+
   validacion=()=>{
     console.log(this.state.FechaAntigua );
     if(this.state.FechaAntigua != null){
@@ -118,7 +119,6 @@ class ModificarFechas extends Component {
      
   onSubmit = async (e) => {
 
-   if(this.validacion()){
     e.preventDefault();
     const formData = new FormData();
     formData.append("id", this.state.id);
@@ -137,7 +137,7 @@ class ModificarFechas extends Component {
         alert(JSON.stringify(err.response.data.msg));
       });
   
-  };
+
    }
     
 
