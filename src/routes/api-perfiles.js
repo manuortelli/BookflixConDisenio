@@ -20,6 +20,7 @@ const {
 } = require("../controllers/perfiles-controllers");
 
 router.get("/me", auth, cors(), visualizar);
+
 router.get("/meConId", auth, cors(), visualizarConId);
 
 router.post("/visualizarPadre", auth, cors(), visualizarPadre);

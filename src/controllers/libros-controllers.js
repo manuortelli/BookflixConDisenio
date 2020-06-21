@@ -1,6 +1,7 @@
 const librosCtrl = {};
 const Libro = require("../models/Libro");
 const Capitulo = require("../models/Capitulo");
+const Perfil = require("./../models/Perfil");
 
 librosCtrl.listar = async (req, res) => {
   const libros = await Libro.find();
@@ -17,11 +18,19 @@ librosCtrl.visualizar = async (req, res) => {
 
 librosCtrl.visualizarCapitulos = async (req, res) => {
   const libro = await Libro.findById(req.body.id);
-  var capitulos = [];
-  libro.capitulos.forEach(async (capitulo) => {
-    capitulos.push(await Capitulo.findById(capitulo));
-  });
-  res.status(200).send(capitulos);
+  const capitulosId = await libro.capitulos;
+  var capitulos = await Capitulo.find({
+    _id: {
+      $in: capitulosId,
+    },
+  }).sort({ n: "asc" });
+
+  res.status(200).json(capitulos);
+};
+
+librosCtrl.verCapitulo = async (req, res) => {
+  const capitulo = await Capitulo.findById(req.body.id);
+  res.status(200).send(capitulo);
 };
 
 librosCtrl.cargar = async (req, res) => {
@@ -165,6 +174,12 @@ librosCtrl.cargarArchivoLibro = async (req, res) => {
     await libro.updateOne({ expiracion: req.body.expiracion });
   }
   if (libro.capitulos) {
+    const capitulosId = await libro.capitulos;
+    await Perfil.find({
+      historialCapitulos: {
+        $unset: capitulosId,
+      },
+    });
     await libro.updateOne({ capitulos: null });
   }
 

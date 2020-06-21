@@ -13,6 +13,7 @@ const {
   cargarArchivoCapitulo,
   visualizarCapitulos,
   modificarFecha,
+  verCapitulo,
 } = require("../controllers/libros-controllers");
 const multer = require("multer");
 
@@ -42,6 +43,8 @@ router.get("/", auth, cors(), listar);
 router.post("/me", auth, cors(), visualizar);
 
 router.post("/misCapitulos", auth, cors(), visualizarCapitulos);
+
+router.post("/verCapitulo", auth, cors(), verCapitulo);
 
 router.post("/cargar", auth, uploadPortada, cargar);
 
