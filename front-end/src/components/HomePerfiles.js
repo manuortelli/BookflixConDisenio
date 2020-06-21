@@ -48,7 +48,9 @@ class ListarPerfiles extends Component {
                 sessionStorage.setItem('perfil',user);
                 sessionStorage.setItem('perfilID',user._id);
                 sessionStorage.setItem('token', token);
-                sessionStorage.setItem('perfil', user);
+                sessionStorage.setItem('perfilUser',JSON.stringify(user));
+                sessionStorage.setItem('perfil',user);
+                sessionStorage.setItem('perfilID',user._id);
                 this.setState({ perfilselected: true });
             });
 

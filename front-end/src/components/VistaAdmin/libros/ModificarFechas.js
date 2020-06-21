@@ -17,12 +17,13 @@ class ModificarFechas extends Component {
 
       token: sessionStorage.getItem("token"),
       titulo: "",
-      fechaDeExpiracion: new Date(),
+      fechaDeExpiracion: '',
       fechaDePublicacion: new Date(),
+      FechaAntigua:'',
     };
 
     this.onChangeExpiracion = this.onChangeExpiracion.bind(this);
-    this.onChangeLanzamiento = this.onChangeLanzamiento.bind(this);
+   
   }
 
   setLibro = async (libro) => {
@@ -44,6 +45,8 @@ class ModificarFechas extends Component {
       titulo: libro.titulo,
       lanzamiento: lan,
       expiracion: ven,
+      lanzamiento: lan,
+      FechaAntigua: libro.lanzamiento
     });
   };
 
@@ -80,8 +83,40 @@ class ModificarFechas extends Component {
   onChangeExpiracion = (expiracion) => {
     this.setState({ expiracion });
   };
+  validacion(){
+    console.log(this.state.FechaAntigua );
+    if(this.state.FechaAntigua !== ''){
+      if(new Date(this.state.fechaDePublicacion) == new Date( this.state.FechaAntigua)){
 
+      }else{
+        if(new Date(this.state.fechaDePublicacion) >= new Date()){
+          alert('la fecha de publicacion debe ser mayor a la de hoyy  ');
+          return false;
+        }
+      }
+    }else{
+        if(new Date(this.state.fechaDePublicacion) >= new Date()){
+          alert('la fecha de publicacion debe ser mayor a la de hoy  ');
+          return false;
+        }
+
+      
+    }
+       
+    if(this.state.fechaDeExpiracion !== ''){
+      if(new Date(this.state.fechaDePublicacion) >=  new Date(this.state.fechaDeExpiracion)){
+        alert('la fecha de expiracion no debe ser menor a la de publicacion');
+        return false;
+      }
+    } 
+    alert('estas en validacion exitosa')
+    return true;
+
+  }
+     
   onSubmit = async (e) => {
+
+   
     e.preventDefault();
     const formData = new FormData();
     formData.append("id", this.state.id);
@@ -97,8 +132,9 @@ class ModificarFechas extends Component {
       })
 
       .catch((err) => {
-        alert(JSON.stringify(err.response));
+        alert(JSON.stringify(err.response.data.msg));
       });
+  
   };
 
   render() {
