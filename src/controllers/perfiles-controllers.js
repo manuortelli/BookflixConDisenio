@@ -1,5 +1,6 @@
 const perfilesCtrl = {};
 const Perfil = require("../models/Perfil");
+const Libro = require("../models/Libro");
 
 perfilesCtrl.visualizar = async (req, res) => {
   const perfil = await Perfil.findById(req.user.id);
@@ -59,15 +60,29 @@ perfilesCtrl.likeCapitulo = async (req, res) => {
 
 perfilesCtrl.termineLibro = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
-  await perfil.updateOne({
-    $pull: { historialLibros: req.body.libroId },
-    $push: {
-      historialLibros: {
-        libro: req.body.libroId,
-        terminado: true,
+  const libro = await Libro.findById(req.body.libroId);
+
+  if (!libro.capitulos) {
+    await perfil.updateOne({
+      $pull: { historialLibros: req.body.libroId },
+      $push: {
+        historialLibros: {
+          libro: req.body.libroId,
+          terminado: true,
+        },
       },
-    },
-  });
+    });
+  } else {
+    const capitulosLeidos = perfil.historialCapitulos;
+    libro.capitulos.forEach((cap) => {
+      if (!capitulosLeidos.some(capitulo == cap)) {
+        return res.status(401).json({
+          msg:
+            "No puede marcarlo como terminado al libro ya que algunos capítulos no fueron leidos",
+        });
+      }
+    });
+  }
 };
 
 perfilesCtrl.termineCapitulo = async (req, res) => {
