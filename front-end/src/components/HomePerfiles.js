@@ -29,105 +29,6 @@ class ListarPerfiles extends Component {
         {
           headers: { xaccess: sessionStorage.getItem("token") },
         }
-<<<<<<< HEAD
-
-
-    }
-
-
-
-
-
-    irAHomeDePerfil = async (event) => {
-
-        await axios.post(loginPerfilApi,
-            { id: this.state.perfiles[0] },
-            {
-                headers: { 'xaccess': sessionStorage.getItem('token') }
-            })
-            .then(res => {
-                console.log(res.data)
-                const { user, token } = res.data;
-                console.log("user", user)
-                console.log("idPerdil", user._id)
-                console.log("perfilUser", JSON.stringify(user))
-
-
-                sessionStorage.setItem('perfilUser',JSON.stringify(user));
-                sessionStorage.setItem('perfil',user);
-                sessionStorage.setItem('perfilID',user._id);
-                sessionStorage.setItem('token', token);
-                sessionStorage.setItem('perfilUser',JSON.stringify(user));
-                sessionStorage.setItem('perfil',user);
-                sessionStorage.setItem('perfilID',user._id);
-                this.setState({ perfilselected: true });
-            });
-
-
-
-    }
-
-
-
-
-    async componentDidMount() {
-        var perfilesid = new Array(), perfilesNombre1 = new Array()
-        await axios.get(perfilesApi,
-            { headers: { 'xaccess': sessionStorage.getItem('token') } }
-        )
-            .then(res => {
-                res.data.map(info => {
-                    { perfilesid.push(info.id) }
-                    { perfilesNombre1.push(info.nombre) }
-
-                })
-
-
-            });
-
-        this.setState({
-            perfiles: perfilesid,
-            perfilesNombre: perfilesNombre1
-
-        })
-
-
-
-        console.log(this.state.perfiles[0])
-        console.log(this.state.perfilesNombre[0])
-        console.log(this.state.perfilesNombre)
-
-
-    }
-
-
-
-    render() {
-
-        return (
-            (this.state.token === '' || this.state.perfilselected == false) ?
-                <div className="container">
-                    <div className="cardPerfil col-md-6 offset-md-3 text-light bg-dark " >
-                        <h3 className="card-header">Perfiles:</h3>
-                        <div className="card-header">
-                            <h3>{this.state.perfilesNombre[0]}</h3>
-                            <button className="btnPerfil float-right login_btn" onClick={this.irAHomeDePerfil}>
-                                Ingresar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                : <HomeSuscriptor></HomeSuscriptor>
-
-
-
-
-
-        )
-    }
-
-=======
       )
       .then((res) => {
         console.log(res.data);
@@ -191,7 +92,6 @@ class ListarPerfiles extends Component {
       <HomeSuscriptor></HomeSuscriptor>
     );
   }
->>>>>>> 0fcccbd803eaf903f738f638846ee047df301f3a
 }
 
 export default ListarPerfiles;

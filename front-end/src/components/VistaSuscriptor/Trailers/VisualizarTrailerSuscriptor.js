@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const file = 'http://localhost:4000/uploads/';
 const me = 'http://localhost:4000/api/trailers/me';
+const meLibro= "http://localhost:4000/api/libros/me";
 
 
 class VisualizarTrailer extends Component {
@@ -14,11 +15,30 @@ class VisualizarTrailer extends Component {
             id: this.props.match.params.id,
             token: sessionStorage.getItem('token'),
             trailer: [],
+            libro: [],
             
         }
         this.getDatos=this.getDatos.bind(this);
+        this.getDataLibro=this.getDataLibro.bind(this);
 
     }
+
+    getDataLibro = async () => {
+        await axios.post(meLibro,
+        { id: this.state.trailer.libro },
+        { headers: { 'xaccess': this.state.token } }
+    )
+        .then(res => {
+            this.setState({
+                libro: res.data
+            })
+            console.log(this.state.libro)
+        })
+        .catch(err => { console.log(err) });
+}
+    
+
+
     getDatos = async () => {
         await axios.post(me,
             { id: this.state.id },
@@ -28,7 +48,7 @@ class VisualizarTrailer extends Component {
                 this.setState({
                     trailer: res.data
                 })
-                console.log(this.state.trailer)
+                this.getDataLibro();
             })
             .catch(err => { console.log(err) });
     }
@@ -47,7 +67,7 @@ class VisualizarTrailer extends Component {
 
                     <h5 class="card-header">{this.state.trailer.titulo}</h5>
                     <div class="card-body">
-                     <h6 class="card-subtitle mb-2 text-light"> {this.state.trailer.descripcion}</h6>
+                    <h6 class="card-subtitle mb-2 text-light"> {this.state.trailer.descripcion}</h6>
                     
                     { show == "si" ? 
                         <video width="500" height="300" controls="controls" autoPlay="false" src={ file + `${this.state.trailer.archivo}`}/>
@@ -55,6 +75,7 @@ class VisualizarTrailer extends Component {
                         <iframe src={ file + `${this.state.trailer.archivo}`} scrolling="auto" height="700" width="500" options="false" />
                     }
                     </div>
+                <h6 class="card-subtitle mb-2 text-light"> Este es el trailer de libro titulado: {this.state.libro.titulo}</h6>
                 </div>
 
             </div>

@@ -45,12 +45,12 @@ class CargarTrailer extends Component {
         const formData = new FormData();
         formData.append('titulo', this.state.titulo);
         formData.append('descripcion', this.state.descripcion);
-        if (this.state.libro != null){
-            formData.append('libro', this.state.libro);}
-        if (this.archivo !== null){
-            formData.append('archivo', this.state.archivo);
+        if (this.state.libroseleccionado != null){
+            formData.append('libro', this.state.libroseleccionado);}
+        if (this.state.archivo != null){
+            formData.append('hola', this.state.archivo);
         }
-        if (this.video !== null){
+        if (this.state.video != null){
             formData.append('video', this.state.video);
         }
         for (var value of formData.values()) {
@@ -86,7 +86,7 @@ class CargarTrailer extends Component {
             { return alert ("Ya se ha cargado un video, no se pueden cargar ammbos")}
             else {
             this.state.video="no";
-            this.state.archivo= e.target.files[0].name;}
+            this.state.archivo= e.target.files[0];}
         console.log(this.state.video, this.state.archivo)
     }
     
@@ -96,7 +96,7 @@ class CargarTrailer extends Component {
         { return alert ("Ya se ha cargado un pdf, no se pueden cargar ammbos")}
         else {
             this.state.video='si';
-            this.state.archivo= e.target.files[0].name;
+            this.state.archivo= e.target.files[0];
            }
        
         
@@ -162,19 +162,17 @@ class CargarTrailer extends Component {
 
             <div className="form-group">
             <select className="form-control"  onChange={this.onInputChangeLibro}  id="exampleFormControlSelect1" name="libros">
-            <option value="" selected>Libro Para seleccionar</option>
                 {this.state.libros.map(libro =>
                 <option key={libro._id} value={libro._id} >{libro.titulo}</option>
                 )}
             </select>
             </div>
-        
             
        
             <label className="text-light">Seleccione Archivo PDF (Opcional)</label>
             <div className="form-group">
 
-               <input type='file' encType="multipart/form-data" name='ArchivoPDF' onChange={this.getPdf} accept=".pdf">
+               <input type='file' encType="multipart/form-data" name='archivo' onChange={this.getPdf} accept=".pdf">
                </input>
                 
             </div >
@@ -182,7 +180,7 @@ class CargarTrailer extends Component {
             <label className="text-light">Seleccione un Video (Opcional)</label>
             <div className="form-group">
 
-               <input type='file' encType="multipart/form-data" name='Video' onChange={this.getVideo}>
+               <input type='file' encType="multipart/form-data" name='archivo' onChange={this.getVideo}>
                </input>
                 
             </div >

@@ -9,11 +9,13 @@ trailersCtrl.listar = async (req, res) => {
 
 trailersCtrl.visualizar = async (req, res) => {
   await Trailer.findById(req.body.id).then((tr) => {
+    console.log(tr)
     res.json(tr);
   });
 };
 
 trailersCtrl.cargar = async (req, res) => {
+  console.log(req.file)
   const trailer = await Trailer.findOne({ titulo: req.body.titulo });
   if (trailer) {
     return res.status(401).json({

@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 
 const uploadPortada = multer({ 
   storage: storage ,
-}).single('portadaImg');
+}).single('hola');
 
 router.get('/', auth,cors(),listar);
 
