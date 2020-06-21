@@ -82,6 +82,15 @@ perfilesCtrl.termineLibro = async (req, res) => {
         });
       }
     });
+    await perfil.updateOne({
+      $pull: { historialLibros: req.body.libroId },
+      $push: {
+        historialLibros: {
+          libro: req.body.libroId,
+          terminado: true,
+        },
+      },
+    });
   }
 };
 
