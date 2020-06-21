@@ -8,8 +8,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ItemListLibro from './ItemListLibro';
+import ItemLIbroConPortada from './ItemLIbroConPortada';
 
-
+const portada = 'http://localhost:4000/uploads/';
 const autores = 'http://localhost:4000/api/autores/';
 const generos = 'http://localhost:4000/api/generos/';
 const editoriales = 'http://localhost:4000/api/editoriales/';
@@ -78,6 +79,12 @@ export default class Buscador extends Component {
                         res.push(lib);
                     }
                  }
+            }else{
+                if(lib.capitulos != []){
+                    res.push(lib);
+                }
+
+
             }
            
            
@@ -97,6 +104,7 @@ export default class Buscador extends Component {
         console.log(re);
         this.setState({
             libros:re,
+            librosConFiltro:re
         });
         this.setLibrosConFiltro(re);
     }
@@ -288,14 +296,14 @@ export default class Buscador extends Component {
     render() {
         const settings = {
             dots: true,
-            infinite: true,
+            infinite: false,
             speed: 500,
-            
-            slidesToShow: 1,
+            slidesToShow: 3,
             slidesToScroll: 1,
-            className: 'slides',
-            
-          };
+            className: 'slides'
+
+        };
+
         return (
             <div> 
             <div className="col-md-8 offset-md-2">
@@ -307,7 +315,7 @@ export default class Buscador extends Component {
                             name ="buscador"
                             onChange={this.onInputChange}
                             value={this.state.buscador}
-                            placeholder="Buscador"
+                            placeholder="Buscar"
                             >
                         </input>
                     </div>
@@ -372,14 +380,28 @@ export default class Buscador extends Component {
                    <div className="carrusel">
                       <Slider {...settings} >
 
-                           {this.state.LibrosCarrousel.map(lib => 
-                          <div>
-                             {lib.map( libro=>
-                              <div>
-                                  <ItemListLibro libro={libro}></ItemListLibro>    
-                              </div>  
-                              )}
-                          </div>
+                           {this.state.librosConFiltro.map(libro => 
+                                 <div className="container-VerLibro">
+                               
+                               
+                                 <div className="box" >
+                                     <Link className="imgBx"   to={'/suscriptor/libros/' +libro._id} >
+                                         <img src={portada + libro.portada} />
+                                     </Link>
+                                     <span className="content">
+                                         <span >
+                                             <br></br>
+                                             <h2 className="titulo"> {libro.titulo} </h2>
+                                            
+                                             
+                                         </span>
+                                     </span>
+                             
+                                 </div>
+                                 
+
+                         </div>
+                         
                           )} 
 
                              

@@ -30,6 +30,9 @@ export default class DetalleLibrosAdmin extends Component {
       bottonCap: false,
       mostrarCapitulos: true,
       trailer: null,
+      capi:[],
+      capitulosActivos:[],
+      botonTermine:true,
     };
     this.fechaExpiracion = this.fechaExpiracion.bind(this);
     this.mostrarCapitulos = this.mostrarCapitulos.bind(this);
@@ -122,18 +125,63 @@ export default class DetalleLibrosAdmin extends Component {
           libro: res.data,
           capitulos: res.data.capitulos,
         });
+        this.getCapitulos();
         this.getNombres();
         this.HayCapitulos();
         this.getTrailer();
+        
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+
+  filtrarCapitulos=(capi)=>{
+      var validos=[];
+      var hoy = new Date();
+      if( capi != []){
+          capi.map(cap=>{
+              
+            if(cap.lanzamiento < hoy  && cap.expiracion > hoy){
+                validos.push(cap)
+
+            }
+          }
+          )
+          this.setState({
+            capitulosActivos:validos
+          })
+
+      }
+
+  }
+
+  getCapitulos=async ()=>{
+    await axios.post(capi ,
+      { id: this.props.match.params.id },
+      { headers: { xaccess: this.state.token } }
+    )
+    .then((res) => {
+      console.log(res.data);
+      this.setState({
+          capi:res.data
+      })
+      this.filtrarCapitulos(res.data);
+
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(JSON.stringify(err.response.data.msg));
+    });
+  }
+
+
   HayCapitulos = () => {
     if (this.state.capitulos != "") {
       this.state.bottonCap = true;
+
+    
     }
   };
 
@@ -177,10 +225,28 @@ export default class DetalleLibrosAdmin extends Component {
       mostrarCapitulos: !this.state.mostrarCapitulos,
     });
   }
+  mostrarTermineLibro() {
+   
+  }
 
-  termineLibro = () => {};
+  termineLibro = async() => {
+    await axios
+    .post(
+      perfiles + "termineLibro",
+      { id: sessionStorage.getItem("perfilID"), libroId: this.state.id },
+      { headers: { xaccess: this.state.token } }
+    )
+    .then((res) => {
+     alert(res.data.msg);
+    })
+    .catch((err) => {
+      alert(err.response.data.msg);
+    });
+
+  };
   render() {
     const show = this.state.bottonCap;
+    const termineL = this.state.botonTermine;
     const capseleccionado = this.state.capseleccionado - 1;
 
     return (
@@ -192,9 +258,19 @@ export default class DetalleLibrosAdmin extends Component {
           editorial={this.state.editorial}
         ></DatosLibro>
         <br></br>
-        <button className="btn btn-outline-success" onClick={this.termineLibro}>
+        {termineL ? (
+        <React.Fragment>
+        <button className="btn btn-outline-success col-md-2 offset-md-3" onClick={this.termineLibro}>
           Termine libro
         </button>
+        <br></br>
+        <br></br>
+        </React.Fragment>):( <React.Fragment></React.Fragment>)
+        
+        }
+            
+       
+
         {show ? (
           <React.Fragment>
             <div class="card col-md-6 offset-md-3">
@@ -210,7 +286,7 @@ export default class DetalleLibrosAdmin extends Component {
               <React.Fragment> </React.Fragment>
             ) : (
               <ListarCapitulos
-                capitulos={this.state.capitulos}
+                capitulos={this.state.capitulosActivos}
                 libroId={this.state.libro._id}
               ></ListarCapitulos>
             )}

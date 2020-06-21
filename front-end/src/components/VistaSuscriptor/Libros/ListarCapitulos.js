@@ -19,9 +19,7 @@ export default class ListarLibros extends Component {
         }
 
     }
-    componentDidMount(){
-        this.getData();
-    }
+
     
     leerCapitulo= async (id)=>{
 
@@ -38,23 +36,41 @@ export default class ListarLibros extends Component {
       })
       .catch(err =>{console.log(err.response.data.msg)});
 
-
     }
        
  
 
     render() {
        
+          
          
-        
+           
+
+                   
+         
+              
             return (
                     <div>
+
+                    {this.props.capitulos ==[]?
+                   
+                     (<div class="card col-md-6 offset-md-3 text-light bg-dark " >
+                         <div class="card-body">
+                             <h1> No hay capitulos Disponibles</h1>
+                         </div>
+                     </div>):(
+                     <div></div>)
+                
+                }    
                    
 
                     <div className="carrusel">
                    
                        
                              {this.props.capitulos.map(capi => 
+
+
+                                   
                             <div >
                             <div class="card col-md-6 offset-md-3 text-light bg-dark " >
                                 <div class="card-body">
@@ -74,7 +90,7 @@ export default class ListarLibros extends Component {
                     
                 </div>
             )
+    }    
         
-        
-    }
+  
 }

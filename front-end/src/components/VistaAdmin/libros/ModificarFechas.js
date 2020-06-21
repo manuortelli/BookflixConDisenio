@@ -19,7 +19,7 @@ class ModificarFechas extends Component {
       titulo: "",
       fechaDeExpiracion: '',
       fechaDePublicacion: new Date(),
-      FechaAntigua:'',
+      FechaAntigua:null,
     };
 
     this.onChangeExpiracion = this.onChangeExpiracion.bind(this);
@@ -45,7 +45,7 @@ class ModificarFechas extends Component {
       titulo: libro.titulo,
       lanzamiento: lan,
       expiracion: ven,
-      lanzamiento: lan,
+    
       FechaAntigua: libro.lanzamiento
     });
   };
@@ -83,19 +83,20 @@ class ModificarFechas extends Component {
   onChangeExpiracion = (expiracion) => {
     this.setState({ expiracion });
   };
-  validacion(){
-    console.log(this.state.FechaAntigua );
-    if(this.state.FechaAntigua !== ''){
-      if(new Date(this.state.fechaDePublicacion) == new Date( this.state.FechaAntigua)){
 
-      }else{
-        if(new Date(this.state.fechaDePublicacion) >= new Date()){
+  validacion=()=>{
+    console.log(this.state.FechaAntigua );
+    if(this.state.FechaAntigua != null){
+      if(new Date(this.state.fechaDePublicacion).getTime() != new Date( this.state.FechaAntigua).getTime()){
+
+        if(new Date(this.state.fechaDePublicacion).getTime() >= new Date().getTime()){
           alert('la fecha de publicacion debe ser mayor a la de hoyy  ');
           return false;
         }
       }
-    }else{
-        if(new Date(this.state.fechaDePublicacion) >= new Date()){
+    }
+    else{
+        if(new Date().getTime() > new Date(this.state.fechaDePublicacion).getTime()){
           alert('la fecha de publicacion debe ser mayor a la de hoy  ');
           return false;
         }
@@ -103,12 +104,14 @@ class ModificarFechas extends Component {
       
     }
        
-    if(this.state.fechaDeExpiracion !== ''){
-      if(new Date(this.state.fechaDePublicacion) >=  new Date(this.state.fechaDeExpiracion)){
+    if(this.state.fechaDeExpiracion == ''){
+     
+    } else{
+      if(new Date(this.state.fechaDeExpiracion).getTime() < new Date(this.state.fechaDePublicacion.getTime())){
         alert('la fecha de expiracion no debe ser menor a la de publicacion');
         return false;
       }
-    } 
+    }
     alert('estas en validacion exitosa')
     return true;
 
@@ -116,7 +119,6 @@ class ModificarFechas extends Component {
      
   onSubmit = async (e) => {
 
-   
     e.preventDefault();
     const formData = new FormData();
     formData.append("id", this.state.id);
@@ -135,7 +137,9 @@ class ModificarFechas extends Component {
         alert(JSON.stringify(err.response.data.msg));
       });
   
-  };
+
+   }
+    
 
   render() {
     const id = this.state.id;
