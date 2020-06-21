@@ -79,6 +79,12 @@ export default class Buscador extends Component {
                         res.push(lib);
                     }
                  }
+            }else{
+                if(lib.capitulos != []){
+                    res.push(lib);
+                }
+
+
             }
            
            
