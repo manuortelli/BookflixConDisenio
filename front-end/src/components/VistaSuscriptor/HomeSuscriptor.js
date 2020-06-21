@@ -5,7 +5,8 @@ import Carrusel from './Carrusel';
 import NavegacionSuscriptor from './NavegacionSuscriptor';
 import { Document, Page } from 'react-pdf';
 import Buscador from './Libros/Buscador';
-import SlideLibros from './Libros/VerLibrosNS'
+import SlideLibros from './Libros/VerLibrosNS';
+
 
 export default class Home extends Component {
 
@@ -51,8 +52,9 @@ export default class Home extends Component {
                     
                        
                     </div>
+                    <SlideLibros></SlideLibros>
 
-                   <SlideLibros></SlideLibros>
+                 
                     
                 </div>
             :

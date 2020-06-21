@@ -72,9 +72,14 @@
  
 }
 .absoluto{
-  position:absolute;
+ position: absolute; left: 30px;
+
 }
 .ralativo{
   position: relative;
 }
+
+
+
+
 
