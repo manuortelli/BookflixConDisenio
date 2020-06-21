@@ -49,7 +49,7 @@ class VisualizarTrailer extends Component {
                     <div class="card-body">
                      <h6 class="card-subtitle mb-2 text-light"> {this.state.trailer.descripcion}</h6>
                     
-                    { show ? 
+                    { show == "si" ? 
                         <video width="500" height="300" controls="controls" autoPlay="false" src={ file + `${this.state.trailer.archivo}`}/>
                         :
                         <iframe src={ file + `${this.state.trailer.archivo}`} scrolling="auto" height="700" width="500" options="false" />

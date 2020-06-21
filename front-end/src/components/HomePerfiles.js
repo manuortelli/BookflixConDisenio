@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom';
-import ItemPerfil from './ItemPerfil';
-import { Link } from 'react-router-dom';
-import HomeSuscriptor from './VistaSuscriptor/HomeSuscriptor';
-
-
+import React, { Component } from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
+import ItemPerfil from "./ItemPerfil";
+import { Link } from "react-router-dom";
+import HomeSuscriptor from "./VistaSuscriptor/HomeSuscriptor";
 
 //Poner constante a la cual le hacemos la consulta de nuestros pefiles como suscriptor
-const perfilesApi = 'http://localhost:4000/api/suscriptores/loginPerfiles'
-const loginPerfilApi = 'http://localhost:4000/api/suscriptores/loginPerfil'
+const perfilesApi = "http://localhost:4000/api/suscriptores/loginPerfiles";
+const loginPerfilApi = "http://localhost:4000/api/suscriptores/loginPerfil";
 
 class ListarPerfiles extends Component {
-    constructor() {
-        super();
-        this.state = {
-            token: sessionStorage.getItem('token'),
-            perfiles: [],
-            perfilesNombre: [],
-            perfilselected: false
+  constructor() {
+    super();
+    this.state = {
+      token: sessionStorage.getItem("token"),
+      perfiles: [],
+      perfilesNombre: [],
+      perfilselected: false,
+    };
+  }
 
+  irAHomeDePerfil = async (event) => {
+    console.log(this.state.perfiles[0]);
+    await axios
+      .post(
+        loginPerfilApi,
+        { id: this.state.perfiles[0] },
+        {
+          headers: { xaccess: sessionStorage.getItem("token") },
         }
+<<<<<<< HEAD
 
 
     }
@@ -118,8 +127,71 @@ class ListarPerfiles extends Component {
         )
     }
 
+=======
+      )
+      .then((res) => {
+        console.log(res.data);
+        const { user, token } = res.data;
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("perfilUser", JSON.stringify(user));
+        sessionStorage.setItem("perfil", user);
+        sessionStorage.setItem("perfilID", user._id);
+        this.setState({ perfilselected: true });
+      });
+  };
+
+  async componentDidMount() {
+    var perfilesid = new Array(),
+      perfilesNombre1 = new Array();
+    await axios
+      .get(perfilesApi, {
+        headers: { xaccess: sessionStorage.getItem("token") },
+      })
+      .then((res) => {
+        console.log(res.data);
+        res.data.map((info) => {
+          {
+            console.log(info.id);
+            perfilesid.push(info.id);
+          }
+          {
+            perfilesNombre1.push(info.nombre);
+          }
+        });
+      });
+
+    this.setState({
+      perfiles: perfilesid,
+      perfilesNombre: perfilesNombre1,
+    });
+    console.log(this.state.perfiles[0]);
+
+    console.log(this.state.perfiles[0]);
+    console.log(this.state.perfilesNombre[0]);
+    console.log(this.state.perfilesNombre);
+  }
+
+  render() {
+    return this.state.token === "" || this.state.perfilselected == false ? (
+      <div className="container">
+        <div className="cardPerfil col-md-6 offset-md-3 text-light bg-dark ">
+          <h3 className="card-header">Perfiles:</h3>
+          <div className="card-header">
+            <h3>{this.state.perfilesNombre[0]}</h3>
+            <button
+              className="btnPerfil float-right login_btn"
+              onClick={this.irAHomeDePerfil}
+            >
+              Ingresar
+            </button>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <HomeSuscriptor></HomeSuscriptor>
+    );
+  }
+>>>>>>> 0fcccbd803eaf903f738f638846ee047df301f3a
 }
-
-
 
 export default ListarPerfiles;

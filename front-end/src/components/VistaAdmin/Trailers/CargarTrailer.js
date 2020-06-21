@@ -47,12 +47,14 @@ class CargarTrailer extends Component {
         formData.append('descripcion', this.state.descripcion);
         if (this.state.libro != null){
             formData.append('libro', this.state.libro);}
-        if (this.archivo != null){
+        if (this.archivo !== null){
             formData.append('archivo', this.state.archivo);
         }
-        if (this.video != null){
+        if (this.video !== null){
             formData.append('video', this.state.video);
         }
+        for (var value of formData.values()) {
+            console.log(value); }
         axios.post(cargar,formData,{
                 headers: { 'xaccess':this.state.token }
             })
@@ -80,16 +82,24 @@ class CargarTrailer extends Component {
     };
 
     getPdf = (e) => {
+            if (this.state.archivo != null)
+            { return alert ("Ya se ha cargado un video, no se pueden cargar ammbos")}
+            else {
             this.state.video="no";
-            this.state.archivo= e.target.files[0].name;
+            this.state.archivo= e.target.files[0].name;}
         console.log(this.state.video, this.state.archivo)
     }
     
 
     getVideo = (e) => {
+        if (this.state.archivo != null)
+        { return alert ("Ya se ha cargado un pdf, no se pueden cargar ammbos")}
+        else {
             this.state.video='si';
             this.state.archivo= e.target.files[0].name;
-        console.log(this.state.video, this.state.archivo)
+           }
+       
+        
     }
 
     getLibros = async () => {
@@ -160,11 +170,11 @@ class CargarTrailer extends Component {
             </div>
         
             
-            
+       
             <label className="text-light">Seleccione Archivo PDF (Opcional)</label>
             <div className="form-group">
 
-               <input type='file' encType="multipart/form-data" name='ArchivoPDF' onChange={this.getPdf}>
+               <input type='file' encType="multipart/form-data" name='ArchivoPDF' onChange={this.getPdf} accept=".pdf">
                </input>
                 
             </div >
@@ -176,6 +186,7 @@ class CargarTrailer extends Component {
                </input>
                 
             </div >
+            
 
             <div className="form-group">
                 <button type ="submit" className="btn btn-success float-right">

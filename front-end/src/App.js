@@ -65,6 +65,10 @@ import NuevoPerfil from './components/VistaSuscriptor/NuevoPerfil';
 import MiSuscripcion from './components/VistaSuscriptor/VerSuscripcion';
 import ModificarSuscripcion from './components/VistaSuscriptor/ModificarSuscripcion';
 
+//!Componente de Suscriptor -----Historial-----
+
+import Historial from './components/VistaSuscriptor/Historial/Historial';
+
 
 //!Componente de Suscriptor ------Novedad-----
 
@@ -321,6 +325,16 @@ function App() {
           </div>
         )}>
         </Route>
+
+        
+        <Route exact path='/suscriptor/perfiles/historial' render={({ match }) => (
+          <div>
+            <VerificarSesion />
+            <NavegacionSuscriptor />
+            <Historial></Historial>
+          </div>
+        )}>
+        </Route>  
 
         {/*-----------------------Rutas Suscriptor Perfiles------------------ */}
         <Route exact path='/suscriptor/suscripcion/perfiles' render={({ match }) => (

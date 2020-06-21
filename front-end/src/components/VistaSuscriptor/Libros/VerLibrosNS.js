@@ -25,30 +25,41 @@ class VerLibrosNS extends Component {
         }
 
     }
+
+    filtrarFechas=(libros)=>{
+        var hoy =new Date();
+        console.log('hoy es:'+ hoy );
+        var res=[];
+        libros.map( lib =>{
+            if(lib.lanzamiento != null ){
+                var lan= new Date(lib.lanzamiento);
+                if(lan< hoy){
+                    if(lib.expiracion != null){
+                        var ven= new Date(lib.expiracion);
+                        if(ven > hoy){
+                          res.push(lib);
+                        }
+                    }else{
+                        res.push(lib);
+                    }
+                 }
+            }
+           
+           
+
+        });
+        return res;
+
+
+    }
     
     setLibros(res) {
 
-        var num = 1;
-        var aux = [];
-        var aux2 = [];
-
-        res.map(libro => {
-            if (aux.length < num) {
-                aux.push(libro);
-            }
-            else {
-                aux.push(libro);
-                aux2.push(aux);
-                aux = []
-            };
-        })
-        if (aux != []) {
-            aux2.push(aux);
-        }
-
+      
+        var re =this.filtrarFechas(res);
         this.setState({
             libros: res,
-            librosCarrousel: aux2
+            librosCarrousel: re
 
         });
     }
@@ -81,12 +92,12 @@ class VerLibrosNS extends Component {
     verDetalle=(id)=>{
       return <Redirect to={'/suscriptor/libros/leer/' + id}> </Redirect>
     };
-
+  
     render() {
 
         const settings = {
             dots: true,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 3,
             slidesToScroll: 1,
@@ -97,30 +108,26 @@ class VerLibrosNS extends Component {
         return (
             <div className="carrusel">
                 <Slider {...settings}>
-                {this.state.librosCarrousel.map(libros => 
+                {this.state.librosCarrousel.map(libro => 
                            <div className="container-VerLibro">
                                
-                                {libros.map(libro =>
-                                    <div>
+                               
                                     <div className="box" >
-                                        <span className="imgBx"  onClick={<Redirect to={'/suscriptor/libros/leer/' + libro._id}> </Redirect>}>
+                                        <Link className="imgBx"   to={'/suscriptor/libros/' +libro._id} >
                                             <img src={portada + libro.portada} />
-                                        </span>
+                                        </Link>
                                         <span className="content">
                                             <span >
+                                                <br></br>
                                                 <h2 className="titulo"> {libro.titulo} </h2>
-                                                <p className="desc">  kk {libro.descripcion} </p>
+                                               
                                                 
                                             </span>
                                         </span>
                                 
                                     </div>
-                                     <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/' +libro._id}  >
-                                     Ver detalle
-                                    </Link>
-                                    </div>
-                                )}
-                                
+                                    
+
                             </div>
                             
                         )}

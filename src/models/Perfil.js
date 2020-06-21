@@ -11,19 +11,15 @@ const PerfilSchema = new Schema({
   },
   likesLibros: [String], //tiene el id del libro
   likesCapitulos: [String], //tiene el id del capitulo
-  historialLibros: [
-    //arreglo de objetos
-    {
-      libro: String,
-      terminado: Boolean,
-    },
-  ],
-  historialCapitulos: [
-    {
-      capitulo: String,
-      terminado: Boolean,
-    },
-  ],
+  historialLibros:[{
+    libro : String,
+    terminado : String
+     }],
+  
+  historialCapitulos : [{
+    capitulo : String,
+    terminado : String
+     }],
   reportes: [String],
   recomendados: [String],
 });
