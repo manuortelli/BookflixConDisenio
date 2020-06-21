@@ -39,6 +39,14 @@ class ListarPerfiles extends Component {
             .then(res => {
                 console.log(res.data)
                 const { user, token } = res.data;
+                console.log("user", user)
+                console.log("idPerdil", user._id)
+                console.log("perfilUser", JSON.stringify(user))
+
+
+                sessionStorage.setItem('perfilUser',JSON.stringify(user));
+                sessionStorage.setItem('perfil',user);
+                sessionStorage.setItem('perfilID',user._id);
                 sessionStorage.setItem('token', token);
                 sessionStorage.setItem('perfil', user);
                 this.setState({ perfilselected: true });
