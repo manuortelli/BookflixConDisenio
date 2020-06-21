@@ -14,13 +14,13 @@ const PerfilSchema = new Schema({
   historialLibros: [
     //arreglo de objetos
     {
-      archivo: String,
+      libro: String,
       terminado: Boolean,
     },
   ],
   historialCapitulos: [
     {
-      archivo: String,
+      capitulo: String,
       terminado: Boolean,
     },
   ],

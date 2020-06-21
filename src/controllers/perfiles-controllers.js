@@ -57,6 +57,33 @@ perfilesCtrl.likeCapitulo = async (req, res) => {
   }
 };
 
+perfilesCtrl.termineLibro = async (req, res) => {
+  const perfil = await Perfil.findById(req.body.id);
+  await perfil.updateOne({
+    $pull: { historialLibros: req.body.libroId },
+    $push: {
+      historialLibros: {
+        libro: req.body.libroId,
+        terminado: true,
+      },
+    },
+  });
+};
+
+perfilesCtrl.termineCapitulo = async (req, res) => {
+  perfilesCtrl.termineLibro = async (req, res) => {
+    const perfil = await Perfil.findById(req.body.id);
+    await perfil.updateOne({
+      $pull: { historialCapitulos: req.body.capituloId },
+      $push: {
+        historialCapitulos: {
+          libro: req.body.capituloId,
+          terminado: true,
+        },
+      },
+    });
+  };
+};
 perfilesCtrl.historialLibro = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
   res.send(await perfil.historialLibros);
@@ -83,7 +110,7 @@ perfilesCtrl.visitadoLibro = async (req, res) => {
       .updateOne({
         $push: {
           historialLibros: {
-            archivo: req.body.libroId,
+            libro: req.body.libroId,
             terminado: false,
           },
         },
@@ -110,7 +137,7 @@ perfilesCtrl.visitadoCapitulo = async (req, res) => {
       .updateOne({
         $push: {
           historialCapitulos: {
-            archivo: req.body.capituloId,
+            capitulo: req.body.capituloId,
             terminado: false,
           },
         },

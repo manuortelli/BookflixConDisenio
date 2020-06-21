@@ -49,11 +49,7 @@ trailersCtrl.cargar = async (req, res) => {
   }
   if (req.body.video) {
     await nuevoTrailer.updateOne({
-      video: true,
-    });
-  } else {
-    await nuevoTrailer.updateOne({
-      video: false,
+      video: req.body.video,
     });
   }
 
