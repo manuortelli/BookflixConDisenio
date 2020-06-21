@@ -82,32 +82,33 @@ perfilesCtrl.termineLibro = async (req, res) => {
         });
       }
     });
-    await perfil.updateOne({
-      $pull: { historialLibros: req.body.libroId },
-      $push: {
-        historialLibros: {
-          libro: req.body.libroId,
-          terminado: true,
+    capitulosLeidos.forEach(async (cap) => {
+      await perfil.updateOne({
+        $pull: { historialCapitulos: req.body.capituloId },
+        $push: {
+          historialCapitulos: {
+            libro: cap.capitulo,
+            terminado: true,
+          },
         },
-      },
+      });
     });
   }
 };
 
 perfilesCtrl.termineCapitulo = async (req, res) => {
-  perfilesCtrl.termineLibro = async (req, res) => {
-    const perfil = await Perfil.findById(req.body.id);
-    await perfil.updateOne({
-      $pull: { historialCapitulos: req.body.capituloId },
-      $push: {
-        historialCapitulos: {
-          libro: req.body.capituloId,
-          terminado: true,
-        },
+  const perfil = await Perfil.findById(req.body.id);
+  await perfil.updateOne({
+    $pull: { historialCapitulos: req.body.capituloId },
+    $push: {
+      historialCapitulos: {
+        libro: req.body.capituloId,
+        terminado: true,
       },
-    });
-  };
+    },
+  });
 };
+
 perfilesCtrl.historialLibro = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
   res.send(await perfil.historialLibros);
