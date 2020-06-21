@@ -73,12 +73,17 @@ perfilesCtrl.termineLibro = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
   const libro = await Libro.findById(req.body.libroId);
 
-  if (libro.capitulos) {
+  console.log("CAPITULOS EN EL LIBRO: ", !libro.capitulos);
+
+  if (!libro.capitulos) {
+    console.log("entro en el if");
     //entra cuando el libro no tiene capitulos ¿?
+    //y cuando tiene tambien
+
     var librosLeidos = await perfil.historialLibros;
+
     librosLeidos.map(async (lib) => {
       if (lib.libro == req.body.libroId) {
-        console.log(lib.libro == req.body.libroId);
         await perfil.updateOne({
           $pull: {
             historialLibros: {
@@ -86,6 +91,7 @@ perfilesCtrl.termineLibro = async (req, res) => {
             },
           },
         });
+
         await perfil.updateOne({
           $push: {
             historialLibros: {
@@ -99,44 +105,41 @@ perfilesCtrl.termineLibro = async (req, res) => {
     console.log(perfil.historialLibros);
     res.status(200).json({ msg: "Libro Atómico Terminado" });
   } else {
-    const capitulosLeidos = perfil.historialCapitulos;
-    libro.capitulos.forEach((cap) => {
+    console.log("entro en el else");
+    const capitulosLeidosPorPerfil = perfil.historialCapitulos;
+    const capitulosLibro = libro.capitulos;
+
+    capitulosLibro.forEach((cap) => {
       function existeN(element, index, array) {
         return element == cap;
       }
 
-      if (!capitulosLeidos.some(existeN)) {
+      if (!capitulosLeidosPorPerfil.some(existeN)) {
         return res.status(401).json({
           msg:
-            "No puede marcarlo como terminado al libro ya que algunos capítulos no fueron leidos",
+            "No puede marcarlo como terminado al libro ya que uno o más capítulos no fueron leidos",
         });
       }
-    }); /*
+    });
     capitulosLeidos.forEach(async (cap) => {
       await perfil.updateOne({
         $pull: { historialCapitulos: cap },
+      });
+      await perfil.updateOne({
         $push: {
           historialCapitulos: {
-            libro: cap.capitulo,
+            capitulo: cap.capitulo,
             terminado: true,
           },
         },
       });
-    });*/
+    });
   }
 };
 
 perfilesCtrl.termineCapitulo = async (req, res) => {
-  const perfil = await Perfil.findById(req.body.id);
-  await perfil.updateOne({
-    $pull: { historialCapitulos: req.body.capituloId },
-    $push: {
-      historialCapitulos: {
-        libro: req.body.capituloId,
-        terminado: true,
-      },
-    },
-  });
+  /*
+   */
 };
 
 perfilesCtrl.historialLibro = async (req, res) => {
@@ -151,10 +154,14 @@ perfilesCtrl.historialCapitulo = async (req, res) => {
 
 perfilesCtrl.visitadoLibro = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
-
   const historial = await perfil.historialLibros;
 
+  console.log("historial", historial);
+
   if (historial != []) {
+    // TENGA ALGO O NO TENGA ALOG HISTORIAL, ENTRA ACA
+    console.log("entro al if");
+
     var noEsta = true;
     historial.map(async (lib) => {
       if (lib.libro == req.body.libroId) {
