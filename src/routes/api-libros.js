@@ -14,6 +14,8 @@ const {
   visualizarCapitulos,
   modificarFecha,
   verCapitulo,
+  existeLibro,
+  existeCapitulo,
 } = require("../controllers/libros-controllers");
 const multer = require("multer");
 
@@ -58,6 +60,10 @@ router.post(
 );
 
 router.post("/modificar", auth, uploadPortada, modificar);
+
+router.post("/existeLibro", auth, cors(), existeLibro);
+
+router.post("/existeCapitulo", auth, cors(), existeCapitulo);
 
 router.post("/modificarFechasLibro", auth, modificarFecha);
 

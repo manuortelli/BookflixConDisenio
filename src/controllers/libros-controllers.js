@@ -190,18 +190,6 @@ librosCtrl.cargarArchivoLibro = async (req, res) => {
     await libro.updateOne({ expiracion: req.body.expiracion });
   }
   if (libro.capitulos) {
-    console.log("entro al if de q tiene capitulos");
-    const capitulosId = await libro.capitulos;
-    const perfilesQueTienenEsosCapitulosEnHistorial = await Perfil.find({
-      historialCapitulos: {
-        $in: {
-          capitulosId,
-        },
-      },
-    });
-    await perfilesQueTienenEsosCapitulosEnHistorial.map(async (perfil) => {
-      console.log(perfil);
-    });
     await libro.updateOne({ capitulos: [], nCapitulos: [] });
   }
 
@@ -259,6 +247,9 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
         nCapitulos: req.body.n,
       },
     });
+    await libro.updateOne({
+      archivo: "",
+    });
   } else {
     return res.status(401).json({ msg: "Debe ingresar un archivo" });
   }
@@ -275,6 +266,25 @@ librosCtrl.eliminar = async (req, res) => {
   await Libro.findByIdAndRemove(req.body.id)
     .then(res.send("Libro eliminado"))
     .catch((err) => res.json(err));
+};
+
+librosCtrl.existeLibro = async (req, res) => {
+  const libro = Libro.findById(req.body.id);
+
+  if (libro) {
+    return res.status(200).json({ existe: true });
+  } else {
+    return res.status(200).json({ existe: false });
+  }
+};
+librosCtrl.existeCapitulo = async (req, res) => {
+  const capitulo = Capitulo.findById(req.body.id);
+
+  if (capitulo) {
+    return res.status(200).json({ existe: true });
+  } else {
+    return res.status(200).json({ existe: false });
+  }
 };
 
 module.exports = librosCtrl;

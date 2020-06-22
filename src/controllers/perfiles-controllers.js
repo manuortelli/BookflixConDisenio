@@ -113,7 +113,7 @@ perfilesCtrl.termineLibro = async (req, res) => {
       function existeN(element, index, array) {
         return element == cap;
       }
-      
+
       if (!capitulosLeidosPorPerfil.some(existeN)) {
         return res.status(401).json({
           msg:
@@ -204,13 +204,17 @@ perfilesCtrl.visitadoLibro = async (req, res) => {
 perfilesCtrl.visitadoCapitulo = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
   const historial = await perfil.historialCapitulos;
+  console.log("historial de usuario:", historial);
+
   if (historial != []) {
     var noEsta = true;
     historial.map(async (cap) => {
+      console.log(cap);
       if (cap.capitulo == req.body.capituloId) {
         noEsta = false;
       }
     });
+    console.log(noEsta);
     if (noEsta) {
       await perfil
         .updateOne({

@@ -90,7 +90,6 @@ export default class DetalleLibrosAdmin extends Component {
       });
   };
 
-
   getTrailer = async () => {
     if (this.state.libro.trailer != null) {
       await axios
@@ -128,61 +127,84 @@ export default class DetalleLibrosAdmin extends Component {
         this.getNombres();
         this.HayCapitulos();
         this.getTrailer();
-
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-
   filtrarCapitulos = (capi) => {
+    console.log("CAPITULOS ANTES DE FILTRARLOS", capi);
     var validos = [];
-    var hoy = new Date();
+
+    const hoy = JSON.stringify(new Date().getDate());
+    const mes = JSON.stringify(new Date().getMonth() + 1);
+    const año = JSON.stringify(new Date().getFullYear());
+    const hoyEntera = JSON.stringify(new Date());
+
     if (capi != []) {
-      capi.map(cap => {
-        const lanza=new Date(cap.lanzamiento);
-        if (lanza <= hoy) {
-          console.log("capitulo valido",cap)
-          validos.push(cap)
-        }
-        if (cap.vencimiento){
-          const venc= new Date(cap.vencimiento);
-          if(venc >= hoy){
-            console.log('capitulo con vencimeinto valido', cap)
+      capi.map((cap) => {
+        const lanzaHoy = JSON.stringify(new Date(cap.lanzamiento).getDate());
+        const lanzaMes = JSON.stringify(
+          new Date(cap.lanzamiento).getMonth() + 1
+        );
+        const lanzaAño = JSON.stringify(
+          new Date(cap.lanzamiento).getFullYear()
+        );
+        const lanzaEntera = JSON.stringify(new Date(capi.lanzamiento));
+        if (
+          (hoy == lanzaHoy) & (mes == lanzaMes) & (año == lanzaAño) ||
+          lanzaEntera > hoyEntera
+        ) {
+          if (cap.vencimiento) {
+            const venciHoy = JSON.stringify(
+              new Date(cap.lanzamiento).getDate()
+            );
+            const venciMes = JSON.stringify(
+              new Date(cap.lanzamiento).getMonth() + 1
+            );
+            const venciAño = JSON.stringify(
+              new Date(cap.lanzamiento).getFullYear()
+            );
+            const venciEntera = JSON.stringify(new Date(cap.vencimiento));
+
+            if (
+              (venciHoy == hoy) & (venciMes == mes) & (venciAño == año) ||
+              venciEntera > hoyEntera
+            ) {
+              validos.push(cap);
+            }
+          } else {
+            validos.push(cap);
           }
         }
-      }
-      )
+      });
       this.setState({
-        capitulosActivos: validos
-      })
-      console.log("Aca le estamos prestando atención", this.state.capitulosActivos, validos)
-
+        capitulosActivos: validos,
+      });
     }
-
-  }
+    console.log("CAPITULOS DESPUES DE FILTRARLOS", this.state.capitulosActivos);
+  };
 
   getCapitulos = async () => {
-    await axios.post(capi,
-      { id: this.props.match.params.id },
-      { headers: { xaccess: this.state.token } }
-    )
+    await axios
+      .post(
+        capi,
+        { id: this.props.match.params.id },
+        { headers: { xaccess: this.state.token } }
+      )
       .then((res) => {
-        console.log( res.data);
         this.setState({
-          capi: res.data
-        })
-        console.log("lo que contiene capi",this.state.capi)
-        this.filtrarCapitulos(res.data);
+          capi: res.data,
+        });
 
+        this.filtrarCapitulos(res.data);
       })
       .catch((err) => {
         console.log(err);
         alert(JSON.stringify(err.response.data.msg));
       });
-  }
-
+  };
 
   HayCapitulos = () => {
     if (this.state.capitulos != "") {
@@ -228,24 +250,24 @@ export default class DetalleLibrosAdmin extends Component {
 
   mostrarCapitulos() {
     this.setState({
-      mostrarCapitulos: !this.state.mostrarCapitulos
-
+      mostrarCapitulos: !this.state.mostrarCapitulos,
     });
-    console.log(this.state.mostrarCapitulos)
+    console.log(this.state.mostrarCapitulos);
   }
 
   mostrarTermineLibro() {
-    if (this.state.botonTermine){
-
+    if (this.state.botonTermine) {
     }
-
   }
 
   termineLibro = async () => {
     await axios
       .post(
         perfiles + "termineLibro",
-        { id: sessionStorage.getItem("perfilID"), libroId: this.state.libro._id },
+        {
+          id: sessionStorage.getItem("perfilID"),
+          libroId: this.state.libro._id,
+        },
         { headers: { xaccess: this.state.token } }
       )
       .then((res) => {
@@ -254,10 +276,7 @@ export default class DetalleLibrosAdmin extends Component {
       .catch((err) => {
         alert(err.response.data.msg);
       });
-
   };
-
-
 
   render() {
     const show = this.state.bottonCap;
@@ -272,20 +291,22 @@ export default class DetalleLibrosAdmin extends Component {
           genero={this.state.genero}
           editorial={this.state.editorial}
         ></DatosLibro>
-        
+
         {termineL ? (
           <React.Fragment>
-            <div >
-            <button className="btn btn-outline-success col-md-2 offset-md-3 danger" onClick={this.termineLibro}>
-              Termine libro
-        </button>
-        </div>
-        <br></br>   
-          </React.Fragment>) : (<React.Fragment></React.Fragment>)
-
-        }
-
-
+            <div>
+              <button
+                className="btn btn-outline-success col-md-2 offset-md-3 danger"
+                onClick={this.termineLibro}
+              >
+                Termine libro
+              </button>
+            </div>
+            <br></br>
+          </React.Fragment>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
 
         {show ? (
           <React.Fragment>
@@ -305,31 +326,28 @@ export default class DetalleLibrosAdmin extends Component {
                 capitulos={this.state.capitulosActivos}
                 libroId={this.state.libro._id}
               ></ListarCapitulos>
-
-
             ) : (
-
-                <React.Fragment> </React.Fragment>
-              )}
+              <React.Fragment> </React.Fragment>
+            )}
           </React.Fragment>
         ) : (
-            <React.Fragment>
-              <div>
-                <div class="card col-md-6 offset-md-3 text-light bg-dark">
-                  <div class="card-body ">
-                    <Link
-                      onClick={this.leerLibro}
-                      className="btn btn-outline-success itemBoton"
-                      to={"/suscriptor/libros/leer/" + this.state.libro.archivo}
-                    >
-                      {" "}
+          <React.Fragment>
+            <div>
+              <div class="card col-md-6 offset-md-3 text-light bg-dark">
+                <div class="card-body ">
+                  <Link
+                    onClick={this.leerLibro}
+                    className="btn btn-outline-success itemBoton"
+                    to={"/suscriptor/libros/leer/" + this.state.libro.archivo}
+                  >
+                    {" "}
                     Leer Libro{" "}
-                    </Link>
-                  </div>
+                  </Link>
                 </div>
               </div>
-            </React.Fragment>
-          )}
+            </div>
+          </React.Fragment>
+        )}
         <React.Fragment>
           <MostrarTrailersAsociados
             trailer={this.state.trailer}
