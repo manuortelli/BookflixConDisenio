@@ -79,7 +79,7 @@ export default class MiSuscripcion extends Component {
                         <h4 class="card-subtitle mb-2 ">DNI: {this.state.miSuscripcion.dni}</h4>
                         <div>
                         <Link to={'/suscriptor/suscripcion/modificar'} className='btn login_btn float-right'> Modificar</Link>
-                        <Link to={'/suscriptor/suscripcion/perfiles'} className='btn login_btn float-left'> Perfiles</Link>
+                        <Link to={'/suscriptor/perfiles/historial'} className='btn login_btn float-left'> Historial</Link>
                         
                         </div>
                     </div>

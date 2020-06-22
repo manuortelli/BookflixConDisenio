@@ -169,7 +169,7 @@ export default class CargarMetadata extends Component {
         <form onSubmit={this.onSubmit} >
             
             <div className="form-group">
-               
+            <h6 class="card-subtitle mb-2 text-light">Titulo</h6>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -181,7 +181,7 @@ export default class CargarMetadata extends Component {
                 </input>
             </div>
             <div className="form-group">
-            
+            <h6 class="card-subtitle mb-2 text-light">ISBN</h6>
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -194,7 +194,7 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-            
+            <h6 class="card-subtitle mb-2 text-light">Seleccione un/a autor/a</h6>
                 <select className="form-control"   
                     onChange={this.onInputChange} 
                     id="exampleFormControlSelect1" 
@@ -208,7 +208,7 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-            
+            <h6 class="card-subtitle mb-2 text-light">Seleccione un género</h6>
                     <select className="form-control"  onChange={this.onInputChange}  id="exampleFormControlSelect1" name="genero" required>
                     <option selected>Género</option>
                         {this.state.generos.map(ge =>
@@ -218,7 +218,7 @@ export default class CargarMetadata extends Component {
             </div>
 
             <div className="form-group">
-                
+            <h6 class="card-subtitle mb-2 text-light">Seleccione una editorial</h6>
                     <select className="form-control"  onChange={this.onInputChange} id="exampleFormControlSelect1" name="editorial" required>
                     <option selected>Editorial</option>
                     {this.state.editoriales.map(ed =>
