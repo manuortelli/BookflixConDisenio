@@ -77,12 +77,22 @@ class ModificarFechas extends Component {
   };
 
   validacion = () => {
-    console.log(
-      "fecha antigua es igual a null: ",
-      this.state.fechaAntigua == null
-    );
-
     if (this.state.FechaAntigua != null) {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
       if (
         new Date(this.state.lanzamiento).getTime() !=
         new Date(this.state.FechaAntigua).getTime()
@@ -105,7 +115,6 @@ class ModificarFechas extends Component {
       const inputAño = JSON.stringify(
         new Date(this.state.lanzamiento).getFullYear()
       );
-
       if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
         return true;
       }
