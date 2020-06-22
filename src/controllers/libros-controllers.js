@@ -190,13 +190,19 @@ librosCtrl.cargarArchivoLibro = async (req, res) => {
     await libro.updateOne({ expiracion: req.body.expiracion });
   }
   if (libro.capitulos) {
+    console.log("entro al if de q tiene capitulos");
     const capitulosId = await libro.capitulos;
-    await Perfil.find({
+    const perfilesQueTienenEsosCapitulosEnHistorial = await Perfil.find({
       historialCapitulos: {
-        $unset: capitulosId,
+        $in: {
+          capitulosId,
+        },
       },
     });
-    await libro.updateOne({ capitulos: null });
+    await perfilesQueTienenEsosCapitulosEnHistorial.map(async (perfil) => {
+      console.log(perfil);
+    });
+    await libro.updateOne({ capitulos: [], nCapitulos: [] });
   }
 
   console.log(libro);
