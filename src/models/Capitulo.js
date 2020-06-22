@@ -18,10 +18,10 @@ const CapituloSchema = new Schema({
     type: String,
   },
   lanzamiento: {
-    type: String,
+    type: Date,
   },
   vencimiento: {
-    type: String,
+    type: Date,
   },
   n: {
     type: String,

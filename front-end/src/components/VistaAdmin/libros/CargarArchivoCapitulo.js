@@ -62,7 +62,7 @@ class CargarCapitulo extends Component {
     formData.append("id", this.state.id);
     formData.append("nombre", this.state.titulo);
     formData.append("lanzamiento", this.state.lanzamiento);
-    formData.append("expiracion", this.state.vencimiento);
+    formData.append("vencimiento", this.state.vencimiento);
     formData.append("n", this.state.numero);
     formData.append("ultimoCapitulo", this.state.ultimoCapitulo);
     formData.append("portadaImg", this.state.pdf);
@@ -77,7 +77,7 @@ class CargarCapitulo extends Component {
       })
 
       .catch((err) => {
-        alert(JSON.stringify(err.msg));
+        alert(JSON.stringify(err.response.data.msg));
       });
   };
 
