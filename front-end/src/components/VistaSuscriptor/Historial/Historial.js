@@ -25,6 +25,7 @@ export default class MiSuscripcion extends Component {
         this.setState({
             miPerfil:res
         });
+        console.log(this.state.miPerfil)
         
     }
 
@@ -34,7 +35,8 @@ export default class MiSuscripcion extends Component {
         })
         .then(res =>{
             this.setPerfiles(res.data);
-        })
+        }
+         )
         .catch(err =>{
             alert(err.response)});
     }

@@ -21,12 +21,12 @@ export default class ListarLibros extends Component {
     }
 
     
-    leerCapitulo= async (id)=>{
+    leerCapitulo = async (id)=>{
 
       
         await axios.post(perfiles+'visitadoCapitulo',
           { id:sessionStorage.getItem('perfilID'),
-            capituloId:id 
+            capituloId:id
           },
           { headers:{'xaccess': this.state.token}}
       )
@@ -39,17 +39,11 @@ export default class ListarLibros extends Component {
     }
        
  
-
+mostrarFecha=()=>{
+    
+}
     render() {
-       
-          
-         
-           
-
-                   
-         
-              
-            return (
+          return (
                     <div>
 
                     {this.props.capitulos ==[]?
@@ -63,25 +57,19 @@ export default class ListarLibros extends Component {
                 
                 }    
                    
-
                     <div className="carrusel">
-                   
-                       
-                             {this.props.capitulos.map(capi => 
-
-
-                                   
-                            <div >
-                            <div class="card col-md-6 offset-md-3 text-light bg-dark " >
+                             {this.props.capitulos.map(capi =>                                    
+                            
+                            <div class="card col-md-5 offset-md-3 text-light bg-dark " >
                                 <div class="card-body">
                                 <h5 className="card-title ">Capitulo { capi.n} </h5>
-                                    <Link onClick={this.leerCapitulo} className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leerCapitulo/' +capi.archivo}  >
+                                    <Link onClick={this.leerCapitulo} className='btn btn-outline-success itemBoton' to={'/suscriptor/libros/leerCapitulo/' + capi.archivo}  >
                                         Leer Capitulo
                                     </Link>
-                                    <Button  onClick={this.leerCapitulo} > leer </Button>
+                                    <Button  onClick={this.leerCapitulo(capi._id)} > Marcar como leido</Button>
                                 </div>
                             </div>
-                            </div>  
+                            
                               
                           
                             )} 

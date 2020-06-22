@@ -24,41 +24,26 @@ export default class DatosLibro extends Component {
     
     return (
 
-        <div>
+        <div className="container">
 
-                <div class="card bg-dark text-light detalleLibro   offset-md-3  ">
-                    <img className="card-img "  src={portada + `${this.props.libro.portada}`} />  
-                    <div className="card-img-overlay ">
-
-                        <div className='tituloLibro'>
-                        <h2 className="card-title "> {this.props.libro.titulo}</h2>
-                        </div>
-                        
-                        
-                    
+                <div className="cardDetalleLibro">
+                <img src={portada + `${this.props.libro.portada}`} />   
                         <div className="card-body">
+                                <h3 className="card-title text-light "> {this.props.libro.titulo}</h3>
                                 <br></br>
                                 <div className='bodyDetalleLibro'>
-                                <h5 className="card-subtitle mb-2 text-light">Editorial: {' '+this.props.editorial.nombre}</h5>
+                                <h6 className="card-subtitle mb-2 text-light">Editorial: {' '+this.props.editorial.nombre}</h6>
                                 <p></p>
-                                <h5 className="card-subtitle mb-2 text-light">Autor: {' '+this.props.autor.nombre+' '+this.state.autor.apellido  }</h5>
+                                <h6 className="card-subtitle mb-2 text-light">Autor: {' '+this.props.autor.nombre+' '+this.state.autor.apellido  }</h6>
                                 <p></p>
-                                <h5 className="card-subtitle mb-2 text-light">Genero: {' '+this.props.genero.nombre}</h5>
-        
-                                
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                
-                            
-
-                                <h5 className="card-subtitle mb-2 text-light isbn ">ISBN: {' '+this.props.libro.isbn}</h5>
+                                <h6 className="card-subtitle mb-2 text-light">Genero: {' '+this.props.genero.nombre}</h6>
+                                <p></p>
+                                <h6 className="card-subtitle mb-2 text-light">ISBN: {' '+this.props.libro.isbn}</h6>
                                 </div>  
                         
                       
                         </div>
-                    </div>
-                
+                   
                     </div>
 
                 

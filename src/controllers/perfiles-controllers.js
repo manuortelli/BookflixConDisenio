@@ -113,7 +113,7 @@ perfilesCtrl.termineLibro = async (req, res) => {
       function existeN(element, index, array) {
         return element == cap;
       }
-
+      
       if (!capitulosLeidosPorPerfil.some(existeN)) {
         return res.status(401).json({
           msg:
@@ -121,7 +121,7 @@ perfilesCtrl.termineLibro = async (req, res) => {
         });
       }
     });
-    capitulosLeidos.forEach(async (cap) => {
+    capitulosLeidosPorPerfil.forEach(async (cap) => {
       await perfil.updateOne({
         $pull: { historialCapitulos: cap },
       });
