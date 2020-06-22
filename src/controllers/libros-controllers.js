@@ -130,28 +130,44 @@ librosCtrl.modificar = async (req, res) => {
 librosCtrl.modificarFecha = async (req, res) => {
   const libro = await Libro.findById(req.body.id);
 
-  if (libro.capitulos) {
-    await libro.capitulos.forEach(async (capituloId) => {
+  if (libro.capitulos != null) {
+    const capitulos = await libro.capitulos;
+    await capitulos.forEach(async (capituloId) => {
       const capituloActual = await Capitulo.findById(capituloId);
 
-      if (req.body.lanzamiento) {
-        capituloActual.updateOne({ lanzamiento: req.body.lanzamiento });
+      if (req.body.lanzamiento != "") {
+        await capituloActual.updateOne({ lanzamiento: req.body.lanzamiento });
       }
-      if (req.body.vencimiento) {
-        capituloActual.updateOne({ vencimiento: req.body.vencimiento });
+      if (req.body.vencimiento != "") {
+        await capituloActual.updateOne({ vencimiento: req.body.vencimiento });
       }
     });
-  } else {
-    if (req.body.lanzamiento) {
+    if (req.body.lanzamiento != "") {
       await libro.updateOne({
         lanzamiento: req.body.lanzamiento,
       });
     }
+
     if (req.body.vencimiento) {
       await libro.updateOne({
-        vencimiento: req.body.vencimiento,
+        expiracion: req.body.vencimiento,
       });
     }
+    return res
+      .status(200)
+      .json({ msg: "Fecha/s de capitulo/s de libro modificada/s con éxito" });
+  } else {
+    if (req.body.lanzamiento != "") {
+      await libro.updateOne({
+        lanzamiento: req.body.lanzamiento,
+      });
+    }
+    if (req.body.vencimiento != "") {
+      await libro.updateOne({
+        expiracion: req.body.vencimiento,
+      });
+    }
+    return res.status(200).json({ msg: "Fecha/s modificada/s con éxito" });
   }
 };
 
@@ -192,6 +208,7 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
 
   if (req.file) {
     var nCapitulos = libro.nCapitulos;
+
     if (nCapitulos) {
       function existeN(element, index, array) {
         return element == req.body.n;
@@ -200,6 +217,20 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
         return res
           .status(401)
           .json({ msg: "El número de capítulo ya fue cargado" });
+      } else {
+        const capitulo = await new Capitulo({
+          libro: req.body.id,
+          titulo: req.body.titulo,
+          archivo: req.file.filename,
+          lanzamiento: req.body.lanzamiento,
+          n: req.body.n,
+          portada: libro.portada,
+        }).save();
+        if (req.body.vencimiento) {
+          capitulo.updateOne({
+            vencimiento: req.body.vencimiento,
+          });
+        }
       }
     }
     const capitulo = await new Capitulo({
@@ -210,6 +241,11 @@ librosCtrl.cargarArchivoCapitulo = async (req, res) => {
       n: req.body.n,
       portada: libro.portada,
     }).save();
+    if (req.body.vencimiento) {
+      capitulo.updateOne({
+        vencimiento: req.body.vencimiento,
+      });
+    }
 
     await libro.updateOne({
       $push: {

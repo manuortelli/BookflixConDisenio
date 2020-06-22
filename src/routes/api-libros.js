@@ -59,7 +59,7 @@ router.post(
 
 router.post("/modificar", auth, uploadPortada, modificar);
 
-router.post("/modificarFechasLibro", auth, cors(), modificarFecha);
+router.post("/modificarFechasLibro", auth, modificarFecha);
 
 router.post("/eliminar", auth, cors(), eliminar);
 

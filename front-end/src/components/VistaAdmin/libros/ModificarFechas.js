@@ -17,21 +17,21 @@ class ModificarFechas extends Component {
 
       token: sessionStorage.getItem("token"),
       titulo: "",
-      fechaDeExpiracion: '',
-      fechaDePublicacion: new Date(),
-      FechaAntigua:null,
+      lanzamiento: "", // new Date()
+      expiracion: "",
+      FechaAntigua: null,
     };
 
-    this.onChangeExpiracion = this.onChangeExpiracion.bind(this);
-   
+    this.onChangeVencimiento = this.onChangeVencimiento.bind(this);
   }
 
   setLibro = async (libro) => {
-    var ven = libro.expiracion;
-    if (ven != null) {
-      ven = new Date(libro.expiracion);
+    var exp = libro.expiracion;
+    if (exp != null) {
+      exp = new Date(libro.expiracion);
+      console.log("exp", exp);
     } else {
-      ven = "";
+      exp = "";
     }
     var lan = libro.lanzamiento;
     if (lan != null) {
@@ -44,13 +44,13 @@ class ModificarFechas extends Component {
       id: libro._id,
       titulo: libro.titulo,
       lanzamiento: lan,
-      expiracion: ven,
-    
-      FechaAntigua: libro.lanzamiento
+      expiracion: exp,
+
+      FechaAntigua: libro.lanzamiento,
     });
   };
 
-  getData = async () => {
+  async componentDidMount() {
     await axios
       .post(
         me,
@@ -58,16 +58,8 @@ class ModificarFechas extends Component {
         { headers: { xaccess: this.state.token } }
       )
       .then((res) => {
-        console.log(res.data);
         this.setLibro(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
-  };
-
-  async componentDidMount() {
-    this.getData();
   }
 
   onInputChange = (e) => {
@@ -80,71 +72,93 @@ class ModificarFechas extends Component {
     this.setState({ lanzamiento });
   };
 
-  onChangeExpiracion = (expiracion) => {
+  onChangeVencimiento = (expiracion) => {
     this.setState({ expiracion });
   };
 
-  validacion=()=>{
-    console.log(this.state.FechaAntigua );
-    if(this.state.FechaAntigua != null){
-      if(new Date(this.state.fechaDePublicacion).getTime() != new Date( this.state.FechaAntigua).getTime()){
+  validacion = () => {
+    console.log(
+      "fecha antigua es igual a null: ",
+      this.state.fechaAntigua == null
+    );
 
-        if(new Date(this.state.fechaDePublicacion).getTime() >= new Date().getTime()){
-          alert('la fecha de publicacion debe ser mayor a la de hoyy  ');
+    if (this.state.FechaAntigua != null) {
+      if (
+        new Date(this.state.lanzamiento).getTime() !=
+        new Date(this.state.FechaAntigua).getTime()
+      ) {
+        if (new Date(this.state.lanzamiento) < new Date()) {
+          alert("La fecha de publicacion debe ser igual o mayor a la de hoy ");
           return false;
         }
       }
-    }
-    else{
-        if(new Date().getTime() > new Date(this.state.fechaDePublicacion).getTime()){
-          alert('la fecha de publicacion debe ser mayor a la de hoy  ');
-          return false;
-        }
+    } else {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
 
-      
-    }
-       
-    if(this.state.fechaDeExpiracion == ''){
-     
-    } else{
-      if(new Date(this.state.fechaDeExpiracion).getTime() < new Date(this.state.fechaDePublicacion.getTime())){
-        alert('la fecha de expiracion no debe ser menor a la de publicacion');
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
+      if (new Date() > new Date(this.state.lanzamiento)) {
+        alert(
+          "La fecha de publicacion debe ser igual o mayor mayor a la de hoy  "
+        );
         return false;
       }
     }
-    alert('estas en validacion exitosa')
+
+    if (this.state.expiracion == "") {
+    } else {
+      if (
+        new Date(this.state.expiracion).getTime() <
+        new Date(this.state.lanzamiento.getTime())
+      ) {
+        alert("La fecha de expiracion no debe ser menor a la de publicacion");
+        return false;
+      }
+    }
     return true;
+  };
 
-  }
-     
   onSubmit = async (e) => {
-
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("id", this.state.id);
-    formData.append("lanzamiento", this.state.fechaDePublicacion);
-    formData.append("expiracion", this.state.fechaDeExpiracion);
-    axios
-      .post(modificar, formData, {
-        headers: { xaccess: this.state.token },
-      })
-      .then((res) => {
-        alert(JSON.stringify(res.response.data.msg));
-        return <Redirect to="http://localhost:3000/libros" />;
-      })
-
-      .catch((err) => {
-        alert(JSON.stringify(err.response.data.msg));
-      });
-  
-
-   }
-    
+    console.log(this.state.expiracion);
+    if (this.validacion()) {
+      axios
+        .post(
+          modificar,
+          {
+            id: this.state.id,
+            lanzamiento: this.state.lanzamiento,
+            vencimiento: this.state.expiracion,
+          },
+          {
+            headers: { xaccess: this.state.token },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          alert(JSON.stringify(res.data.msg));
+          return <Redirect to="http://localhost:3000/libros" />;
+        })
+        .catch((err) => {
+          alert(JSON.stringify(err.data.msg));
+        });
+    }
+  };
 
   render() {
     const id = this.state.id;
-    console.log("modificar libro");
-    console.log(id);
 
     return (
       <div className="">
@@ -172,8 +186,7 @@ class ModificarFechas extends Component {
                   className="form-control"
                   selected={this.state.expiracion}
                   name="expiracion"
-                  onChange={this.onChangeExpiracion}
-                  required
+                  onChange={this.onChangeVencimiento}
                 />
               </div>
 
