@@ -31,7 +31,7 @@ class ItemListTrailerAdmin extends Component {
                         <h5 className="card-title "> {this.props.trailer.titulo} </h5>
 
 
-                        <Link className='btn btn-outline-success itemBoton' to={'/suscriptor/trailers/detalle/' + this.props.trailer._id}  >
+                        <Link className='btn btn-outline-danger itemBoton float-right' to={'/suscriptor/trailers/detalle/' + this.props.trailer._id}  >
                             Ver detalle
                         </Link>
                        

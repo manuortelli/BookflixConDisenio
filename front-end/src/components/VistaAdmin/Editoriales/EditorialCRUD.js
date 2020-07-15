@@ -164,7 +164,7 @@ class Editorial extends Component {
                                 
                             </div>
                             <div className="form-group col s12">
-                                <button type="submit" className="btn btn-success float-right" > Agregar Edtorial </button>
+                                <button type="submit" className="btn btn-danger float-right" > Agregar Edtorial </button>
                                 </div>
                             </div>
 
@@ -190,7 +190,7 @@ class Editorial extends Component {
                             </select>
                             </div>
                             <div className="form-group col s12">
-                            <button type="submit" className="btn btn-success float-right" > Eliminar Editorial </button>
+                            <button type="submit" className="btn btn-danger float-right" > Eliminar Editorial </button>
                         </div>
                         </div>
                         
@@ -228,7 +228,7 @@ class Editorial extends Component {
                         </div>
 
                         <div className="form-group col s12 ">
-                            <button type="submit" className="btn btn-success float-right" >
+                            <button type="submit" className="btn btn-danger float-right" >
                                 Actualizar Editorial
                             </button>
                         </div>

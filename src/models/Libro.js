@@ -39,6 +39,8 @@ const LibroSchema = new Schema({
   capitulos: [String],
   nCapitulos: [String],
   trailer: { type: String },
+  finalizado: { type: Boolean },
+  reseñas: [String],
 });
 
 module.exports = mongoose.model("Libro", LibroSchema);

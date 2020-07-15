@@ -26,6 +26,13 @@ const CapituloSchema = new Schema({
   n: {
     type: String,
   },
+  tituloLibro: {
+    type: String,
+  },
+  reseñas: [String],
+  ultimo: {
+    type: Boolean,
+  },
 });
 
 module.exports = mongoose.model("Capitulo", CapituloSchema);

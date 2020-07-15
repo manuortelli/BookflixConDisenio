@@ -7,6 +7,7 @@ const validateRegisterInput = require("../validation/register");
 
 const Suscriptor = require("../models/Suscriptor");
 const Perfil = require("../models/Perfil");
+const Reseña = require("../models/Reseña");
 
 suscriptoresCtrl.listar = async (req, res) => {
   const suscriptores = await Suscriptor.find();
@@ -28,7 +29,6 @@ suscriptoresCtrl.registrar = async (req, res) => {
   }
 
   const suscriptorDNI = await Suscriptor.findOne({ dni: req.body.dni });
-
   if (suscriptorDNI) {
     return res
       .status(401)
@@ -36,7 +36,6 @@ suscriptoresCtrl.registrar = async (req, res) => {
   }
 
   const perfil = await new Perfil({ nombre: req.body.nombre }).save();
-  console.log(perfil._id);
 
   const nuevoSuscriptor = await new Suscriptor({
     nombre: req.body.nombre,
@@ -45,11 +44,11 @@ suscriptoresCtrl.registrar = async (req, res) => {
     dni: req.body.dni,
     suscripcion: req.body.suscripcion,
     perfiles: { nombre: req.body.nombre, id: perfil._id },
+    createdAt: new Date(),
   }).save();
-  const padre = nuevoSuscriptor._id;
-  await perfil.updateOne({ suscriptor: padre });
 
-  //    .then( user => {
+  await perfil.updateOne({ suscriptor: nuevoSuscriptor._id });
+
   JWT.sign(
     { id: nuevoSuscriptor._id },
     config.secret,
@@ -68,8 +67,6 @@ suscriptoresCtrl.registrar = async (req, res) => {
       });
     }
   );
-  //})
-  //.catch(err => res.status(401).json({msg:err}));
 };
 
 suscriptoresCtrl.login = async (req, res) => {
@@ -114,7 +111,6 @@ suscriptoresCtrl.login = async (req, res) => {
 
 suscriptoresCtrl.loginPerfiles = async (req, res) => {
   const suscriptor = await Suscriptor.findById(req.user.id);
-
   res.send(suscriptor.perfiles);
 };
 
@@ -122,7 +118,7 @@ suscriptoresCtrl.loginPerfil = async (req, res) => {
   const perfil = await Perfil.findById(req.body.id);
   const perfiles = await Perfil.find();
   //return res.send(perfiles);
-  console.log(req.body.id, perfil.id);
+  console.log(req.body.id, perfil);
   JWT.sign(
     { id: perfil.id },
     config.secret,
@@ -139,7 +135,9 @@ suscriptoresCtrl.loginPerfil = async (req, res) => {
 
 suscriptoresCtrl.visualizar = async (req, res) => {
   const perfil = await Perfil.findById(req.user.id);
-  await Suscriptor.findById(perfil.suscriptor).then((user) => res.send(user));
+  if (perfil) {
+    await Suscriptor.findById(perfil.suscriptor).then((user) => res.send(user));
+  }
 };
 
 suscriptoresCtrl.modificar = async (req, res) => {
@@ -150,7 +148,6 @@ suscriptoresCtrl.modificar = async (req, res) => {
   }
 
   const nuevoSuscriptorDNI = await Suscriptor.findOne({ dni: req.body.dni });
-  console.log(nuevoSuscriptorDNI);
 
   if (nuevoSuscriptorDNI && nuevoSuscriptorDNI._id != req.body.id) {
     return res.send("El DNI ya esta en uso");
@@ -162,24 +159,50 @@ suscriptoresCtrl.modificar = async (req, res) => {
   if (!match) {
     return res.json("La contraseña es incorrecta");
   }
+  await suscriptor.updateOne({
+    nombre: req.body.nombre,
+    email: req.body.email,
+    dni: req.body.dni,
+  });
 
-  await suscriptor
-    .updateOne({
-      nombre: req.body.nombre,
-      email: req.body.email,
-      dni: req.body.dni,
+  if (req.body.suscripcion) {
+    await suscriptor.updateOne({
       suscripcion: req.body.suscripcion,
-    })
-    .then((susc) => {
-      res.send("Suscriptor modificado");
-      susc;
-    })
-    .catch((err) => res.send(err));
+    });
+  }
+
+  return res.status(200).json({ suscriptor, msg: "Suscriptor modificado" });
 };
 
 suscriptoresCtrl.eliminar = async (req, res) => {
+  const suscriptor = await Suscriptor.findById(req.body.id);
+
+  const perfiles = suscriptor.perfiles;
+
+  for (var i = 0; i < perfiles.length; i++) {
+    var idPerfil = perfiles[i].id;
+
+    var reseñas = await Reseña.find({
+      autor: {
+        id: idPerfil,
+      },
+    });
+
+    for (var j = 0; j < reseñas.length; j++) {
+      console.log("entro al for de reseñas");
+      var reseña = await Reseña.findById(reseña[j].id);
+      await reseña.updateOne({
+        autor: {
+          id: "", //id:null
+        },
+      });
+    }
+
+    await Perfil.findByIdAndRemove(idPerfil);
+  }
+
   await Suscriptor.findByIdAndRemove(req.body.id).then(
-    res.json({ msg: "Suscriptor/a Eliminado/a" })
+    res.status(200).json({ msg: "Suscripción Eliminada" })
   );
 };
 
@@ -192,30 +215,32 @@ suscriptoresCtrl.logout = (req, res) => {
 };
 
 suscriptoresCtrl.agregarPerfil = async (req, res) => {
-  const user = await Suscriptor.findById(req.body.id);
-  const perfiles = await user.perfiles.length;
+  const suscriptor = await Suscriptor.findById(req.body.id);
 
-  if (user.suscripcion === "REGULAR") {
-    if (perfiles === 2) {
-      return res.send(
-        "La cantidad maxima de perfiles para tu suscripcion ha sido alcanzada"
-      );
-    }
-  } else {
-    if (perfiles === 4) {
-      return res.send(
-        "La cantidad maxima de perfiles para tu suscripcion ha sido alcanzada"
-      );
-    }
-  }
   const perfil = await new Perfil({
     nombre: req.body.nombre,
     suscriptor: req.body.id,
   }).save();
 
-  await user
-    .updateOne({ $push: { perfiles: perfil._id } })
-    .then(res.send("Perfil agregado con éxito"));
+  await suscriptor.updateOne({
+    $push: {
+      perfiles: {
+        id: perfil.id,
+        nombre: req.body.nombre,
+      },
+    },
+  });
+  //.then(res.status(200).json({ msg: "Perfil agregado con éxito" }));
+
+  console.log(suscriptor);
+  res.status(200).json({ msg: "Perfil agregado con éxito" });
+};
+
+suscriptoresCtrl.cambiarSuscripcion = async (req, res) => {
+  const suscriptor = await Suscriptor.findById(req.body.idSuscriptor);
+  await suscriptor.updateOne({
+    suscripcion: req.body.suscripcion,
+  });
 };
 
 module.exports = suscriptoresCtrl;

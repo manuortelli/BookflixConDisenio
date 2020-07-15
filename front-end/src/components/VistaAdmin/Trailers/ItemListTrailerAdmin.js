@@ -58,6 +58,10 @@ class ItemListTrailerAdmin extends Component {
                             Ver detalle
                         </Link>
                         {' '} {' '}
+                        <Link className='btn btn-outline-success itemBoton' to={'/trailers/modificar/' + this.props.trailer._id}  >
+                            Modificar
+                        </Link>
+                        {' '} {' '}
                         <button className="btn btn-outline-danger itemBoton" onClick={() => confirmAlert({
                             customUI: ({ onClose }) => {
                                 return (

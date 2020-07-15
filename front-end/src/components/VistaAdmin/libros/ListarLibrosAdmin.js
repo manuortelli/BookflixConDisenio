@@ -84,7 +84,7 @@ export default class ListarLibrosAdmin extends Component {
 
                
                     <div >
-                        <Link to='/libro/nuevo' className='btn btn-success col-md-6 offset-md-3'>Cargar Metadata de un Libro</Link>
+                        <Link to='/libro/nuevo' className='btn btn-danger col-md-6 offset-md-3'>Cargar Metadata de un Libro</Link>
                     </div>
                     <div className="carrusel">
                         <Slider {...settings} >

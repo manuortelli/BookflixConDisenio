@@ -87,7 +87,7 @@ export default class ListarNovedades extends Component {
             return (
                 <div>
                     <div>
-                        <Link to ='/novedad/nueva' className='btn btn-success col-md-6 offset-md-3' > Cargar una novedad</Link>
+                        <Link to ='/novedad/nueva' className='btn btn-danger col-md-6 offset-md-3' > Cargar una novedad</Link>
 
                     </div>
 

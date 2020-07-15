@@ -20,6 +20,7 @@ export default class ListarTrailerAdmin extends Component {
             token: sessionStorage.getItem('token'),
             trailers:[],
             trailersCarrousel:[],
+            hayTrailers:true,
             
         }
 
@@ -56,6 +57,12 @@ export default class ListarTrailerAdmin extends Component {
             headers:{'xaccess':this.state.token}  
         })
         .then(res =>{
+            if (res.data.length == 0) {
+                this.setState({ hayTrailers: false })
+                }
+                else {
+                    this.setState({ hayTrailers: true })
+                }
             this.setLibros(res.data)
         })
         .catch();
@@ -73,21 +80,28 @@ export default class ListarTrailerAdmin extends Component {
     render() {
         const settings = {
             dots: true,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
             className: 'slides',
             
           };
+
+        const show = this.state.hayTrailers;
+
         
             return (
                     <div>
 
                
                     <div >
-                        <Link to='/trailers/nuevo' className='btn btn-success col-md-6 offset-md-3'>Cargar Trailer</Link>
+                        <Link to='/trailers/nuevo' className='btn btn-danger col-md-6 offset-md-3'>Cargar Trailer</Link>
                     </div>
+
+
+                { show ?
+                    <React.Fragment>
                     <div className="carrusel">
                         <Slider {...settings} >
 
@@ -105,6 +119,16 @@ export default class ListarTrailerAdmin extends Component {
                          
                         </Slider>
                     </div>
+                    </React.Fragment>
+
+                    : 
+                    <React.Fragment>
+                    <div className="cardErrorTrailer">
+                        <h4>POR EL MOMENTO NO HAY TRAILERS</h4>
+
+                    </div>
+                    </React.Fragment>
+                }
                 
                 </div>
             )

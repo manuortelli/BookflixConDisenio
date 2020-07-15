@@ -9,19 +9,30 @@ const PerfilSchema = new Schema({
     type: String,
     required: true,
   },
-  likesLibros: [String], //tiene el id del libro
-  likesCapitulos: [String], //tiene el id del capitulo
-  historialLibros:[{
-    libro : String,
-    terminado : String
-     }],
-  
-  historialCapitulos : [{
-    capitulo : String,
-    terminado : String
-     }],
+  likesLibros: [{ id: String }], //tiene el id del libro
+  likesCapitulos: [{ id: String }], //tiene el id del capitulo
+  historialLibros: [
+    {
+      libro: String,
+      terminado: String,
+      ultimoAcceso: Date,
+    },
+  ],
+
+  historialCapitulos: [
+    {
+      capitulo: String,
+      terminado: String,
+      ultimoAcceso: Date,
+    },
+  ],
   reportes: [String],
   recomendados: [String],
+  reseñas: [
+    {
+      libroId: String,
+    },
+  ],
 });
 
 PerfilSchema.likesLibros = async function () {

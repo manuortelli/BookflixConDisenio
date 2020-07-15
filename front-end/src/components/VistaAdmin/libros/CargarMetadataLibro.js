@@ -130,6 +130,7 @@ export default class CargarMetadata extends Component {
             .then(res => {
                 
                 alert(JSON.stringify(res.data));
+                return (window.location = '/libros')
             })
     
             .catch(err => {

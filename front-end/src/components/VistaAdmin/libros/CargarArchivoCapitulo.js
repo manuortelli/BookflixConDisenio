@@ -6,6 +6,7 @@ import axios from "../../../../node_modules/axios";
 import { Redirect } from "react-router-dom";
 
 const cargar = "http://localhost:4000/api/libros/cargarArchivoCapitulo";
+const Libro = "http://localhost:4000/api/libros/me "
 
 class CargarCapitulo extends Component {
   constructor(props) {
@@ -13,12 +14,13 @@ class CargarCapitulo extends Component {
     this.state = {
       id: this.props.match.params.id,
       token: sessionStorage.getItem("token"),
-      lanzamiento: new Date(),
-      vencimiento: null,
+      lanzamiento: "",
+      vencimiento: "",
       titulo: "",
       numero: "",
       ultimoCapitulo: false,
       pdf: null,
+      libro: [],
     };
 
     this.getPdf = this.getPdf.bind(this);
@@ -55,40 +57,131 @@ class CargarCapitulo extends Component {
     });
   };
 
-  onSubmit = async (e) => {
-    console.log(this.state.lanzamiento);
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("id", this.state.id);
-    formData.append("nombre", this.state.titulo);
-    formData.append("lanzamiento", this.state.lanzamiento);
-    formData.append("vencimiento", this.state.vencimiento);
-    formData.append("n", this.state.numero);
-    formData.append("ultimoCapitulo", this.state.ultimoCapitulo);
-    formData.append("portadaImg", this.state.pdf);
 
+  miLibro = async () => {
     axios
-      .post(cargar, formData, {
+      .post(Libro, { id: this.state.id }, {
         headers: { xaccess: this.state.token },
       })
       .then((res) => {
-        alert(JSON.stringify(res.response.data.msg));
-        return <Redirect to="http://localhost:3000/libros" />;
+        console.log("Mi Libro", res.data)
+        this.setState({
+          libro: res.data
+        })
       })
 
       .catch((err) => {
-        alert(JSON.stringify(err.response.data.msg));
+        //alert(JSON.stringify(err.response.data.msg));
       });
+  }
+
+
+  validacion = () => {
+    if (this.state.lanzamiento != null) {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
+      if (
+        new Date().getTime() !=
+        new Date(this.state.lanzamiento).getTime()
+      ) {
+        if (new Date(this.state.lanzamiento) < new Date()) {
+          alert("La fecha de publicacion debe ser igual o mayor a la de hoy ");
+          return false;
+        }
+      }
+    } else {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
+      if (new Date() > new Date(this.state.lanzamiento)) {
+        alert(
+          "La fecha de publicacion debe ser igual o mayor mayor a la de hoy  "
+        );
+        return false;
+      }
+    }
+
+    if (new Date(this.state.vencimiento) < new Date(this.state.lanzamiento)) {
+      alert("La fecha de expiracion no debe ser menor a la de publicacion");
+      return false;
+    }
+
+    return true;
   };
 
-  componentDidMount() {}
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+   
+    if (this.validacion()) {
+      const formData = new FormData();
+      formData.append("id", this.state.id);
+      formData.append("nombre", this.state.titulo);
+      formData.append("lanzamiento", this.state.lanzamiento);
+      if (this.state.vencimiento != null) {
+        formData.append("vencimiento", this.state.vencimiento);
+        console.log(this.state.vencimiento);
+      }
+      formData.append("titulo", this.state.titulo);
+      formData.append("n", this.state.numero);
+      if (this.state.ultimoCapitulo) {
+        formData.append("ultimo", this.state.ultimoCapitulo);
+      }
+      formData.append("portadaImg", this.state.pdf);
+      console.log("envio esto");
+      console.log(formData);
+      axios
+        .post(cargar, formData, {
+          headers: { xaccess: this.state.token },
+        })
+        .then((res) => {
+         
+          alert(JSON.stringify(res.response.data.msg));
+          return (window.location = '/libros')
+        })
+
+        .catch((err) => {
+          alert(JSON.stringify(err.response.data.msg));
+          window.location.reload(true);
+        });
+    }
+  };
+
+  componentDidMount() {
+    this.miLibro();
+  }
 
   render() {
     return (
       <div className="form-novedad">
         <div className="col-md-6 offset-md-3">
           <div className="card card-body text-light bg-dark">
-            <h3 className="card-header">Cargar Archivo de capitulo</h3>
+            <h3 className="card-header">Cargar Archivo de capitulo para el libro: {this.state.libro.titulo}</h3>
 
             <form onSubmit={this.onSubmit} autoComplete="off">
               <div className="form-group">
@@ -112,7 +205,7 @@ class CargarCapitulo extends Component {
                   name="numero"
                   onChange={this.onInputChange}
                   value={this.state.numero}
-                  placeholder="numero de capitulo"
+                  placeholder="Numero de capitulo"
                   required
                 ></input>
               </div>

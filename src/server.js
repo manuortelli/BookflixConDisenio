@@ -46,5 +46,7 @@ app.use("/api/novedades", require("./routes/api-novedades"));
 app.use("/api/libros", require("./routes/api-libros"));
 app.use("/api/perfiles", require("./routes/api-perfiles"));
 app.use("/api/trailers", require("./routes/api-trailers"));
+app.use("/api/resenas", require("./routes/api-resenas"));
+app.use("/api/reportes", require("./routes/api-reportes"));
 
 module.exports = app;

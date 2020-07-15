@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 //Constante a la cual hacemos la consulta
 const suscriptores= 'http://localhost:4000/api/suscriptores/me';
 const miperfilApi = 'http://localhost:4000/api/perfiles/me';
+const historialLibros = 'http://localhost:4000/api/perfiles/historialLibro';
+const eliminar = 'http://localhost:4000/api/suscriptores/eliminar'
 
 
 export default class MiSuscripcion extends Component {
@@ -13,8 +17,9 @@ export default class MiSuscripcion extends Component {
         super();
         this.state={
             token: sessionStorage.getItem('token'),
-            miSuscripcion:[],
+            miSuscripcion:JSON.parse(sessionStorage.getItem("user")),
             miPerfil:[],
+            perfil: JSON.parse(sessionStorage.getItem("perfilUser"))
             //miPerfil: sessionStorage.getItem('perfil'),
             
         }
@@ -26,14 +31,32 @@ export default class MiSuscripcion extends Component {
         this.setState({
             miSuscripcion:res
         });
-        console.log(this.state.miSuscripcion);
+      
     }
 
     setPerfiles(res){
         this.setState({
             miPerfil:res
         });
-        console.log(this.state.miPerfil);
+    }
+
+
+    eliminarSuscriptor = async () => {
+
+       await axios.post(eliminar ,
+            { id: this.state.miSuscripcion._id },
+            { headers: { 'xaccess': sessionStorage.getItem('token') } }
+
+        ).then(res => {
+            
+            alert(JSON.stringify(res.data.msg));
+            return (window.location = '/login')	
+        })
+
+        .catch(err => {
+            alert(JSON.stringify(err.data.msg))
+        } );
+
     }
 
     getDataPerfil = async () =>{
@@ -59,10 +82,25 @@ export default class MiSuscripcion extends Component {
         .catch(err => {
             alert(err.response)});
     }
+
+    historial = async () => {
+        await axios.post(historialLibros,
+            {id : this.state.perfil._id},
+            {
+            headers:{'xaccess':sessionStorage.getItem('token')}  
+        })
+        .then(res =>{
+            console.log("Historial",res.data)
+        })
+        .catch(err => {
+            alert(err.response)});
+    }
+    
     async componentDidMount(){
 
         this.getDataPerfil();
         this.getDataSuscriptor();
+        this.historial();
         
 
     }
@@ -71,15 +109,42 @@ export default class MiSuscripcion extends Component {
         return (
             <div className="container">
             <div class="cardVS col-md-6 offset-md-3 text-light bg-dark" >
-                <h1 class="card-header"> Suscriptor:  {this.state.miSuscripcion.nombre} </h1>
-                <h2 class="card-header"> Perfil Actual:  {this.state.miPerfil.nombre} </h2>
+                <h2 class="card-header bold"> Suscriptor:  {this.state.miSuscripcion.nombre} </h2>
+                <h4 class="card-header"> Perfil Actual:  {this.state.miPerfil.nombre} </h4>
                     <div class="card-body">                        
-                        <h4 class="card-subtitle mb-2 ">EMAIL: {this.state.miSuscripcion.email}</h4>
-                        <h4 class="card-subtitle mb-2 ">SUSCRIPCION: {this.state.miSuscripcion.suscripcion}</h4>
-                        <h4 class="card-subtitle mb-2 ">DNI: {this.state.miSuscripcion.dni}</h4>
+                        <h4 class="card-subtitle mb-2 ">E-mail: {this.state.miSuscripcion.email}</h4>
+                        <br></br>
+                        <h4 class="card-subtitle mb-2">Suscripción: {this.state.miSuscripcion.suscripcion}</h4>
+                        <br></br>
+                        <h4 class="card-subtitle mb-2">D.N.I: {this.state.miSuscripcion.dni}</h4>
                         <div>
-                        <Link to={'/suscriptor/suscripcion/modificar'} className='btn login_btn float-right'> Modificar</Link>
-                        <Link to={'/suscriptor/perfiles/historial'} className='btn login_btn float-left'> Historial</Link>
+                        <br></br>
+                        <Link to={'/suscriptor/suscripcion/modificar'} className='btn btn-outline-danger itemBoton float-right'> Modificar</Link>
+                
+
+                        <button className="btn btn-outline-danger itemBoton float-right" onClick={() => confirmAlert({
+                                customUI: ({ onClose }) => {
+                                    return (
+                                        <div className='custom-ui'>
+                                            <h1>¿Está seguro?</h1>
+                                            {' '}
+                                            <p>¿Desea eliminar su suscripción? Todos sus datos serán eliminado excepto las reseñas</p>
+                                            {' '}
+                                            <button onClick={onClose}>No</button> {' '}
+                                            <button
+                                                onClick={(e) => { this.eliminarSuscriptor(e) 
+                                                    onClose();
+    
+    
+    
+                                                }}
+                                            >
+                                                Si, deseo eliminarla
+                                </button> 
+                                </div>
+                                    );
+                                }
+                                         })}>Eliminar mi suscripción</button>
                         
                         </div>
                     </div>

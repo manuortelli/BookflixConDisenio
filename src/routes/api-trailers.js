@@ -1,33 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../middleware/auth');
-const cors = require('cors');
-const path = require('path');
+const auth = require("../middleware/auth");
+const cors = require("cors");
+const path = require("path");
 
-const {listar,visualizar,cargar,eliminar} = require('../controllers/trailers-controllers');
-const multer = require('multer');
+const {
+  listar,
+  visualizar,
+  cargar,
+  eliminar,
+  modificar,
+} = require("../controllers/trailers-controllers");
+
+const multer = require("multer");
 
 const storage = multer.diskStorage({
-  destination: function(req,file,cb){
-      cb(null, path.join(__dirname, '../../uploads/'));
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../../uploads/"));
   },
-  filename : function (req, file, cb){
-      
-      cb(null,  file.originalname)
-  }
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
 });
 
-const uploadPortada = multer({ 
-  storage: storage ,
-}).single('hola');
+const uploadPortada = multer({
+  storage: storage,
+}).single("hola");
 
-router.get('/', auth,cors(),listar);
+router.get("/", auth, cors(), listar);
 
-router.post('/me', auth, cors(), visualizar);
+router.post("/me", auth, cors(), visualizar);
 
-router.post('/cargar', auth, uploadPortada, cargar);
+router.post("/cargar", auth, uploadPortada, cargar);
 
-router.post('/eliminar', auth, cors(), eliminar);
+router.post("/modificar", uploadPortada , cors(), modificar);
+
+router.post("/eliminar", auth, cors(), eliminar);
 
 module.exports = router;
 

@@ -10,7 +10,7 @@ export default class MostrarTrailersAsociados extends Component {
             this.props.trailer !=  null?
             <div class="card-body" >
                 
-                <div class="card col-md-6 offset-md-3 text-light bg-dark" >
+                <div class="card col-md-7 offset-md-4 text-light bg-dark" >
                     <div class="card-body">
                        <h3 className="card-title "> trailer </h3>
                        <h5 className="card-title "> {this.props.trailer.titulo} </h5>

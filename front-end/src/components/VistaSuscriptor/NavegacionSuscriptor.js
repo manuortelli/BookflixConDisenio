@@ -3,7 +3,7 @@ import { Link ,Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 const suscriptor= 'http://localhost:4000/api/suscriptores/me';
-
+const loginPerfilApi = "http://localhost:4000/api/suscriptores/loginPerfil";
 
 class NavegacionSuscriptor extends Component {
   constructor(){
@@ -22,7 +22,7 @@ async componentDidMount(){
     await axios.get(suscriptor,{ headers:{'xaccess':this.state.token} })
       .then(res =>{
         this.setState({ nombre: res.data.nombre });
-        console.log(res)
+        
        
       })
         
@@ -42,7 +42,7 @@ async componentDidMount(){
           <Redirect to='/login'/>
 
           : <nav className="navbar navbar-expand-lg navbar-dark bg-dark" >
-               <Link className="nav-link" to="/home">
+               <Link className="nav-link" to="/homesuscriptor">
                <img width="185px"  height="50px" src={'http://localhost:4000/uploads/bookflix.png'}/>
                </Link>
               
@@ -67,6 +67,10 @@ async componentDidMount(){
 
                   <li className="nav-item">
                   <Link className="nav-link" to="/suscriptor/suscripcion">Mi suscripcion</Link>
+                  </li>
+
+                  <li className="nav-item">
+                  <Link className="nav-link" to="/suscriptor/perfiles">Perfiles</Link>
                   </li>
                 
                   <li>

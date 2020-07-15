@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();
 const auth = require("../middleware/auth");
 const cors = require("cors");
+const express = require("express");
+const router = express.Router();
 const path = require("path");
+
 const {
+  libroTerminado,
   listar,
   visualizar,
   cargar,
@@ -16,6 +18,9 @@ const {
   verCapitulo,
   existeLibro,
   existeCapitulo,
+  eliminarArchivoLibro,
+  eliminarCapitulo,
+  modificarCapitulo,
 } = require("../controllers/libros-controllers");
 const multer = require("multer");
 
@@ -27,20 +32,12 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-/*
-const imageFilter = function(req, file, cb) {
-    if (!file.originalname.match(/\.(pdf|doc|docx|jpg)$/)) {
-        return cb(new Error('Solo se permiten formatos de imagen o de video!, no se guardó el archivo'), false);
-    }
-    cb(null, true);
-};
 
-*/
 const uploadPortada = multer({
   storage: storage,
 }).single("portadaImg");
 
-router.get("/", auth, cors(), listar);
+router.get("/", cors(), listar);
 
 router.post("/me", auth, cors(), visualizar);
 
@@ -61,6 +58,8 @@ router.post(
 
 router.post("/modificar", auth, uploadPortada, modificar);
 
+router.post("/terminado", auth, cors(), libroTerminado);
+
 router.post("/existeLibro", auth, cors(), existeLibro);
 
 router.post("/existeCapitulo", auth, cors(), existeCapitulo);
@@ -68,5 +67,17 @@ router.post("/existeCapitulo", auth, cors(), existeCapitulo);
 router.post("/modificarFechasLibro", auth, modificarFecha);
 
 router.post("/eliminar", auth, cors(), eliminar);
+
+router.post("/eliminarArchivoLibro", auth, cors(), eliminarArchivoLibro);
+
+router.post("/eliminarCapitulo", auth, cors(), eliminarCapitulo);
+
+router.post(
+  "/modificarCapitulo",
+  auth,
+  cors(),
+  uploadPortada,
+  modificarCapitulo
+);
 
 module.exports = router;

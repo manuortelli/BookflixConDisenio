@@ -78,6 +78,7 @@ class ModificarFechas extends Component {
 
   validacion = () => {
     if (this.state.FechaAntigua != null) {
+      debugger;
       const hoy = JSON.stringify(new Date().getDate());
       const inputHoy = JSON.stringify(
         new Date(this.state.lanzamiento).getDate()
@@ -126,16 +127,11 @@ class ModificarFechas extends Component {
       }
     }
 
-    if (this.state.expiracion == "") {
-    } else {
-      if (
-        new Date(this.state.expiracion).getTime() <
-        new Date(this.state.lanzamiento.getTime())
-      ) {
-        alert("La fecha de expiracion no debe ser menor a la de publicacion");
-        return false;
-      }
+    if (new Date(this.state.expiracion) < new Date(this.state.lanzamiento)) {
+      alert("La fecha de expiracion no debe ser menor a la de publicacion");
+      return false;
     }
+
     return true;
   };
 

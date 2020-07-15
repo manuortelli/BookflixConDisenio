@@ -47,7 +47,7 @@ export default class NavegacionAdmin extends Component {
                   </li>
                   
                   <li className="nav-item">
-                  <Link className="nav-link" to="/trailers">Trailer </Link>
+                  <Link className="nav-link" to="/trailers">Trailers </Link>
                   </li>
                   
                   <li className="nav-item">
@@ -65,6 +65,11 @@ export default class NavegacionAdmin extends Component {
                   <li className="nav-item">
                   <Link className="nav-link" to="/suscriptores">Suscriptores </Link>
                   </li>
+
+                  <li className="nav-item">
+                  <Link className="nav-link" to="/reportes">Reportes </Link>
+                  </li>
+
                   <li>
                      <Link className="nav-link" to='/login' type='submit' onClick= {this.cerrarSesion}> Cerrar Sesión </Link>
                   </li>

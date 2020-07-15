@@ -34,7 +34,7 @@ class App extends Component {
         const { user, token, soyAdmin } = res.data;
 
         sessionStorage.setItem('token', token);
-
+        sessionStorage.setItem('tokenSuscriptor', token);
         sessionStorage.setItem('user', JSON.stringify({ user }));
 
         sessionStorage.setItem ('soyAdmin', soyAdmin );

@@ -6,6 +6,7 @@ import axios from "../../../../node_modules/axios";
 import { Redirect } from "react-router-dom";
 
 const cargar = "http://localhost:4000/api/libros/cargarArchivoLibro";
+const Libro = "http://localhost:4000/api/libros/me "
 
 class CargarLibro extends Component {
   constructor(props) {
@@ -13,9 +14,10 @@ class CargarLibro extends Component {
     this.state = {
       id: this.props.match.params.id,
       token: sessionStorage.getItem("token"),
-      lanzamiento: new Date(),
+      lanzamiento: "",
       vencimiento: "",
       pdf: null,
+      libro:[]
     };
 
     this.getPdf = this.getPdf.bind(this);
@@ -48,12 +50,92 @@ class CargarLibro extends Component {
     this.setState({ lanzamiento });
   };
 
+  miLibro = async () => {
+    axios
+      .post(Libro, { id: this.state.id }, {
+        headers: { xaccess: this.state.token },
+      })
+      .then((res) => {
+        console.log("Mi Libro", res.data)
+        this.setState({
+          libro: res.data
+        })
+      })
+
+      .catch((err) => {
+        //alert(JSON.stringify(err.response.data.msg));
+      });
+  }
+
+
+
+  validacion = () => {
+    if (this.state.lanzamiento != null) {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
+      if (
+        new Date().getTime() !=
+        new Date(this.state.lanzamiento).getTime()
+      ) {
+        if (new Date(this.state.lanzamiento) < new Date()) {
+          alert("La fecha de publicacion debe ser igual o mayor a la de hoy ");
+          return false;
+        }
+      }
+    } else {
+      const hoy = JSON.stringify(new Date().getDate());
+      const inputHoy = JSON.stringify(
+        new Date(this.state.lanzamiento).getDate()
+      );
+      const mes = JSON.stringify(new Date().getMonth() + 1);
+      const inputMes = JSON.stringify(
+        new Date(this.state.lanzamiento).getMonth() + 1
+      );
+      const año = JSON.stringify(new Date().getFullYear());
+      const inputAño = JSON.stringify(
+        new Date(this.state.lanzamiento).getFullYear()
+      );
+      if ((hoy == inputHoy) & (mes == inputMes) & (año == inputAño)) {
+        return true;
+      }
+      if (new Date() > new Date(this.state.lanzamiento)) {
+        alert(
+          "La fecha de publicacion debe ser igual o mayor mayor a la de hoy  "
+        );
+        return false;
+      }
+    }
+
+    if (new Date(this.state.vencimiento) < new Date(this.state.lanzamiento)) {
+      alert("La fecha de expiracion no debe ser menor a la de publicacion");
+      return false;
+    }
+
+    return true;
+  };
+
+
   onSubmit = async (e) => {
     e.preventDefault();
+    if (this.validacion()) {
     const formData = new FormData();
     formData.append("id", this.state.id);
     formData.append("lanzamiento", this.state.lanzamiento);
-    formData.append("expiracion", this.state.vencimiento);
+      if (this.state.vencimiento != "") {
+      formData.append("expiracion", this.state.vencimiento);}
     formData.append("portadaImg", this.state.pdf);
 
     axios
@@ -62,22 +144,26 @@ class CargarLibro extends Component {
       })
       .then((res) => {
         alert(JSON.stringify(res.response.data.msg));
-        return <Redirect to="http://localhost:3000/libros" />;
+        return (window.location = '/libros')
       })
 
       .catch((err) => {
         alert(JSON.stringify(err.response.data.msg));
+        return (window.location = '/libros')
       });
+    }
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.miLibro();
+  }
 
   render() {
     return (
       <div className="form-novedad">
         <div className="col-md-6 offset-md-3">
           <div className="card card-body text-light bg-dark">
-            <h3 className="card-header">Cargar Archivo</h3>
+    <h3 className="card-header">Cargar archivo para: {this.state.libro.titulo}</h3>
 
             <form onSubmit={this.onSubmit}>
               <label className="text-light">Archivo PDF</label>

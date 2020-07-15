@@ -165,7 +165,7 @@ class Generos extends Component {
                                 
                             </div>
                             <div className="form-group col s12">
-                                <button type="submit" className="btn btn-success float-right" > Agregar Género </button>
+                                <button type="submit" className="btn btn-danger float-right" > Agregar Género </button>
                                 </div>
                         </div>
                     </form>
@@ -187,7 +187,7 @@ class Generos extends Component {
                             </select>
                         </div>
                         <div className="form-group col s12">
-                            <button type="submit" className="btn btn-success float-right" > Eliminar Género </button>
+                            <button type="submit" className="btn btn-danger float-right" > Eliminar Género </button>
                         
                             </div>
                             </div>
@@ -226,7 +226,7 @@ class Generos extends Component {
 
 
                         <div className="form-group col s12 ">
-                            <button type="submit" className="btn btn-success float-right" >
+                            <button type="submit" className="btn btn-danger float-right" >
                                 Actualizar Género
                             </button>
                         </div>

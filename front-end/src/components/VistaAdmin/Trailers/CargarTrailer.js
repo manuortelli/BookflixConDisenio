@@ -60,6 +60,7 @@ class CargarTrailer extends Component {
             })
             .then(res => {
                 alert("Trailer cargado con exito");
+                return (window.location = '/trailers')
             })
             .catch(err => {
                 alert(JSON.stringify(err.response.data.msg))
@@ -133,7 +134,7 @@ class CargarTrailer extends Component {
         
         <form onSubmit={this.onSubmit} >
             <div className="form-group">
-            <h5>Titulo</h5>
+          
                 <input 
                     className="form-control" 
                     id="exampleFormControlInput1" 
@@ -146,7 +147,7 @@ class CargarTrailer extends Component {
             </div>
 
             <div className="form-group">
-            <h5>Descripción</h5>
+           
                 <textarea className="form-control" 
                     id="exampleFormControlTextarea1" 
                     rows="3"
@@ -158,11 +159,12 @@ class CargarTrailer extends Component {
                 </textarea> 
             </div>
 
-            <label className="text-light">Seleccione un libro asociado (Opcional)</label>
-
+            
             <div className="form-group">
-            <select className="form-control"  onChange={this.onInputChangeLibro}  id="exampleFormControlSelect1" name="libros">
+            <select className="form-control"  onChange={this.onInputChangeLibro} id="exampleFormControlSelect1" name="libros" >
+                <option value="" >Elija un libro asociado (Opcional)</option>
                 {this.state.libros.map(libro =>
+        
                 <option key={libro._id} value={libro._id} >{libro.titulo}</option>
                 )}
             </select>

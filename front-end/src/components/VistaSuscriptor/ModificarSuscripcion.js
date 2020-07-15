@@ -6,6 +6,7 @@ import axios from 'axios';
 //Constante a la cual hacemos la consulta
 const suscriptores= 'http://localhost:4000/api/suscriptores/me';
 const modificar='http://localhost:4000/api/suscriptores/modificar/';
+const loginPerfilApi = "http://localhost:4000/api/suscriptores/loginPerfil";
 
 
 export default class MiSuscripcion extends Component {
@@ -13,7 +14,7 @@ export default class MiSuscripcion extends Component {
         super();
         this.state = {
             token: sessionStorage.getItem('token'),
-
+            perfil: JSON.parse(sessionStorage.getItem("perfilUser")),
             id: '',
             nombre: '',
             email: '',
@@ -23,6 +24,7 @@ export default class MiSuscripcion extends Component {
             rta:'',
             añoE:'',
             mesE:'',
+            perfiles:'',
 
 
             valorInicial:'',     
@@ -38,6 +40,7 @@ export default class MiSuscripcion extends Component {
     
 
     setSusripcion(res){
+        console.log("Respuesta del servidor", res)
         this.setState({
             id: res._id,
             nombre: res.nombre,
@@ -45,13 +48,37 @@ export default class MiSuscripcion extends Component {
             dni: res.dni, 
             suscripcion: res.suscripcion,
             valorInicial: res.suscripcion,
+            perfiles: res.perfiles,
             numT: '',
             codT:'',
             
         });
+
+        console.log("Cantidad de perfiles", this.state.perfiles.length)
     }
 
+    actualizarPerfil = async () => {
+
+        await axios
+            .post(
+                loginPerfilApi,
+                { id: this.state.perfil._id },
+                {
+                    headers: { xaccess: sessionStorage.getItem("token") },
+                }
+            )
+            .then((res) => {
     
+                const { user, token } = res.data;
+                sessionStorage.setItem("token", token);
+                sessionStorage.setItem("perfilUser", JSON.stringify(user));
+                sessionStorage.setItem("perfil", res.data.user);
+                sessionStorage.setItem("perfilID", user._id);
+               
+    
+    
+            });
+        }
 
     getData = async () =>{
         await axios.get(suscriptores,{
@@ -123,6 +150,12 @@ export default class MiSuscripcion extends Component {
                 }
             } 
 
+            
+                 if (this.state.valorInicial == "PREMIUM" && this.state.suscripcion === "REGULAR" && this.state.perfiles.length>2){
+                     return alert ("No puede cambiar su suscripción a REGULAR ya que posee mas de 2 perfiles, elimine alguno de ellos y vuelva a intentar")
+                 }
+            
+
         }
              
         
@@ -136,10 +169,16 @@ export default class MiSuscripcion extends Component {
                 }
                 , { headers: { 'xaccess': this.state.token } })
                 .then(res => {
-                    alert(JSON.stringify(res.data))
+                    console.log(res.data)
+                    alert(JSON.stringify(res.data.msg))
+                    if (this.state.suscripcion=="PREMIUM"){
+                        alert("Ahora puede tener hasta 4 perfiles")
+                    }
+                    this.actualizarPerfil();
+                    return (window.location = '/suscriptor/suscripcion')
                 })
                 .catch(err => {
-                    alert(JSON.stringify(err.data))
+                    alert(JSON.stringify(err.response.data.msg))
                 });
 
     }

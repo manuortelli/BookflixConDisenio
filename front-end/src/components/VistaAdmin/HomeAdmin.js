@@ -1,51 +1,34 @@
-import React, { Component } from 'react'
-import { Redirect , Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Redirect, Link } from "react-router-dom";
 
-import NavegacionAdmin from './NavegacionAdminHome';
-import Buscador from'./libros/Buscador';
+import NavegacionAdmin from "./NavegacionAdmin";
+import Buscador from "./libros/Buscador";
 
 export default class Home extends Component {
-
-    constructor(){
-        super();
-        this.state={
-            user:'',
-            token: sessionStorage.getItem('token'),
-        };
-        this.cerrarSesion= this.cerrarSesion.bind(this);
-
+  constructor() {
+    super();
+    this.state = {
+      user: "",
+      token: sessionStorage.getItem("token"),
     };
+    this.cerrarSesion = this.cerrarSesion.bind(this);
+  }
 
- 
-    cerrarSesion=()=>{
-        sessionStorage.removeItem('token');
-       
-       
-    }
-    
-    render() {
-        return (
-            this.state.token !== '' ? 
-                <div>
-                    <NavegacionAdmin/>
+  cerrarSesion = () => {
+    sessionStorage.removeItem("token");
+  };
 
-                    <div class="d-flex justify-content-center">
-                    <Link className='btn btn-secondary' to="/libros">Libros</Link> 
-                    <Link className='btn btn-secondary' to="/novedades">Novedades </Link>
-                    <Link className='btn btn-secondary' to="/trailers">Trailers </Link>
-                    <Link className='btn btn-secondary' to="/autores">Autores </Link>
-                    <Link className='btn btn-secondary' to="/editoriales">Editoriales </Link>
-                    <Link className='btn btn-secondary' to="/generos">Generos </Link>
-                    <Link className='btn btn-secondary' to="/suscriptores">Suscriptores </Link>
-                    </div>
+  render() {
+    return this.state.token !== "" ? (
+      <div>
+        <NavegacionAdmin />
 
-                    <Buscador></Buscador>
-
-                </div>
-            :
-            <Redirect to="/login"/>
-        )
-    }
+        <Buscador></Buscador>
+      </div>
+    ) : (
+      <Redirect to="/login" />
+    );
+  }
 }
 
 /*

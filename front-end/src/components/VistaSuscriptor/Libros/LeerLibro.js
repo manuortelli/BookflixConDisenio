@@ -51,14 +51,12 @@ class LeerLibros extends Component {
             this.setState(prevState => ({ pageNumber: prevState.pageNumber + 1 }))
           }
           else {
-            alert('El libro ha llegado a su fin')
+            alert('Ha llegado al final')
           }
         }}>
           Siguiente
         </button>
-        <button onClick={this.Termino}>
-          Terminé
-                </button>
+       
         <div className="lector">
           <Document
             file={'http://localhost:4000/uploads/' + this.state.ruta}

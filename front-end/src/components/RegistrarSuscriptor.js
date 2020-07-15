@@ -47,20 +47,21 @@ class RegistrarSuscriptor extends Component {
             [event.target.name]: event.target.value
         })
     };
-    
-    getToken=(res)=>{
-            const {data} = res;
-            const {token , user} = data; 
 
-            sessionStorage.setItem('token', token );
-            sessionStorage.setItem('user', JSON.stringify( {user} ) );
-            this.setState(
-                {
-                token: token,
-                user: user,
-                }
-            );
-    };
+    setPremium = () => {
+        this.setState({
+            suscripcion: "PREMIUM"
+        })
+    }
+    setRegular= () => {
+        this.setState({
+            suscripcion: "REGULAR"
+        })
+    }
+
+
+    
+  
     getErrors=(err)=>{
       
         const {data} = err;
@@ -137,6 +138,18 @@ class RegistrarSuscriptor extends Component {
         });
 
     }
+
+    getToken = async (res) => {
+        console.log("Atencion Maderfaqer",res.data)
+        const { user, token, soyAdmin } = res.data;
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('tokenSuscriptor', token);
+        sessionStorage.setItem('user', JSON.stringify({ user }));
+        sessionStorage.setItem ('soyAdmin', soyAdmin );
+
+
+        this.setState({ token, user, soyAdmin});
+    };
 
     render(){
 
@@ -224,8 +237,8 @@ class RegistrarSuscriptor extends Component {
             
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label className="text-light">Tipo de Suscripción </label>
-                        <label> <button type="checkbox" class="btn btn-danger" onClick={this.onInputChange} name="suscripcion" value="REGULAR" data-toggle="button"> REGULAR</button>
-                        <button type="checkbox" class="btn btn-danger"  onClick={this.onInputChange} name="suscripcion" value="PREMIUM" data-toggle="button"> PREMIUM</button></label>  
+                        <button type="checkbox" class="btn btn-danger" onClick={this.setRegular} name="suscripcion" value="REGULAR" data-toggle="button"> REGULAR</button> {" "}
+                        <button type="checkbox" class="btn btn-danger"  onClick={this.setPremium} name="suscripcion" value="PREMIUM" data-toggle="button"> PREMIUM</button>
                 </div>
 
             
@@ -306,7 +319,7 @@ class RegistrarSuscriptor extends Component {
          :
          <Redirect
          from="/singup"
-         to="/homesuscriptor" />
+         to="/homeperfiles" />
         )
     }
 }

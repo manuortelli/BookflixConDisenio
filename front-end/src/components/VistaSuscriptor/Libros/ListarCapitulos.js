@@ -27,17 +27,19 @@ export default class ListarLibros extends Component {
         { headers: { xaccess: this.state.token } }
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
       })
       .catch((err) => {
         console.log(err.response.data.msg);
       });
   };
 
+
   componentDidMount() {
-    console.log(this.props.capitulos);
-  }
-  mostrarFecha = () => {};
+    console.log("Esto llega aca tenes q mirar",this.props.capitulos);
+  };
+
+  mostrarFecha = () => { };
   render() {
     return (
       <div>
@@ -48,29 +50,32 @@ export default class ListarLibros extends Component {
             </div>
           </div>
         ) : (
-          <div></div>
-        )}
+            <div></div>
+          )}
 
-        <div className="carrusel">
+        <h3 className="card-header text-light">Capitulos disponibles</h3>
+        <div className="container-capitulos">
           {this.props.capitulos.map((capi) => (
-            <div class="card col-md-5 offset-md-3 text-light bg-dark ">
-              <div class="card-body">
-                <h5 className="card-title ">Capitulo {capi.n} </h5>
-                <Link
-                  onClick={this.leerCapitulo}
-                  className="btn btn-outline-success itemBoton"
-                  to={"/suscriptor/libros/leerCapitulo/" + capi.archivo}
-                >
-                  Leer Capitulo
+            <React.Fragment>
+
+              <ul>
+
+                <li>
+                  <span className="card-title text-light ">{capi.titulo} </span>
+                  <Link
+                    onClick={() => this.leerCapitulo(capi._id)}
+                    className="btn btn-outline-danger itemBoton"
+                    to={"/suscriptor/libros/leerCapitulo/" + capi.archivo}
+                  >
+                    Leer Capitulo
                 </Link>
-                <Button onClick={this.leerCapitulo(capi._id)}>
-                  {" "}
-                  Marcar como leido
-                </Button>
-              </div>
-            </div>
+                </li>
+              </ul>
+
+            </React.Fragment>
           ))}
         </div>
+
       </div>
     );
   }

@@ -43,12 +43,13 @@ class VisualizarNovedad extends Component {
     render() {
 
         return (
+
             <div class="card col-md-6 offset-md-3 text-light " >
                 <div class="card-body button"  key={this.state.novedad._id}>
                 
                
                      <div class="card-body">
-                        <img alt='' width="550px" height="400px" src={portada + `${this.state.novedad.portada}`} />
+                        <img alt='' width="300px" height="400px" src={portada + `${this.state.novedad.portada}`} />
                         <h5 class="card-header">{this.state.novedad.titulo}</h5>
                         <h6 class="card-subtitle mb-2 text-light"> {this.state.novedad.descripcion}</h6>
                         <h6 class="card-subtitle mb-2 text-light">Publicada el {this.mostrarFecha(this.state.novedad.publicacion)}</h6>
@@ -56,6 +57,7 @@ class VisualizarNovedad extends Component {
                 </div>
                 
             </div>
+            
         )
     }
 }

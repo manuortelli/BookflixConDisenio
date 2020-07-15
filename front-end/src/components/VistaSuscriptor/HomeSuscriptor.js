@@ -1,67 +1,51 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom';
-import ListarNovedades from './Novedades/ListarNovedades';
-import Carrusel from './Carrusel';
-import NavegacionSuscriptor from './NavegacionSuscriptor';
-import { Document, Page } from 'react-pdf';
-import Buscador from './Libros/Buscador';
-import SlideLibros from './Libros/VerLibrosNS';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import NavegacionSuscriptor from "./NavegacionSuscriptor";
 
+import SlideLibros from "./Libros/VerLibrosNS";
+import SlideFavoritos from "./Libros/CarrouselFavoritos";
+import SlideHistorial from "./Historial/CarruselHistorial";
+import Historial from "./Historial/Historial";
+import SliderRecomendados from "./Recomendados/Recomendados";
 
 export default class Home extends Component {
-
-    constructor(){
-        super();
-        this.state={
-            user: JSON.parse(sessionStorage.getItem('user')),
-            token: sessionStorage.getItem('token'),
-            libros: null
-        };
-        this.cerrarSesion= this.cerrarSesion.bind(this);
-
-    }
-
- 
-    cerrarSesion = () =>{
-        sessionStorage.removeItem('token');
-       
-       
+  constructor() {
+    super();
+    this.state = {
+      user: JSON.parse(sessionStorage.getItem("user")),
+      token: sessionStorage.getItem("token"),
+      libros: null,
     };
-    async componentDidMount() {
-        this.getData();
-    }
+    this.cerrarSesion = this.cerrarSesion.bind(this);
+  }
 
-    getData = async () => {
-        //const {user} = this.state.user;
-        //const token = this.state.token;
+  cerrarSesion = () => {
+    sessionStorage.removeItem("token");
+  };
+  async componentDidMount() {
+    this.getData();
+  }
 
-    }
-   
-    
-    render() {
-        return (
-            this.state.token !== '' ? 
+  getData = async () => {
+    //const {user} = this.state.user;
+    //const token = this.state.token;
+  };
 
-                <div>
-    
-                    <NavegacionSuscriptor></NavegacionSuscriptor> 
-                    
-                    <div className="d-flex justify-content-center">
-                   
-                     
-                    
-                       
-                    </div>
-                    <SlideLibros></SlideLibros>
+  render() {
+    return this.state.token !== "" ? (
+      <div>
+        <NavegacionSuscriptor></NavegacionSuscriptor>
 
-                 
-                    
-                </div>
-            :
-            <Redirect to="/login"/>
-        )
-    }
+        <div className="d-flex justify-content-center"></div>
+        <SliderRecomendados></SliderRecomendados>
+        <SlideLibros></SlideLibros>
+        <SlideFavoritos></SlideFavoritos>
+        <Historial></Historial>
+      </div>
+    ) : (
+      <Redirect to="/login" />
+    );
+  }
 }
 
-
- //<Buscador></Buscador> 
+//<Buscador></Buscador>

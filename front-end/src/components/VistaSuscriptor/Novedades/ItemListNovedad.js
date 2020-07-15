@@ -22,7 +22,7 @@ class ItemNovedad extends Component {
                     <div class="card-body">
                     <h5 className="card-title ">{this.props.novedad.titulo} </h5>
                     <h6 className="card-subtitle mb-2 text-muted"> {this.props.novedad.descripcion}</h6>
-                    <Link to={'/suscriptor/novedad/'+this.props.novedad._id} className=" btn btn-success  " > Ver Detalle
+                    <Link to={'/suscriptor/novedad/'+this.props.novedad._id} className=" btn btn-outline-danger itemBoton float-right " > Ver Detalle
                     </Link>
                 </div>
                 </div>

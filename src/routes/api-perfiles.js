@@ -8,7 +8,7 @@ const {
   likesLibros,
   visualizarPadre,
   termineLibro,
-  termineCapitulo,
+
   likesCapitulos,
   visitadoLibro,
   visitadoCapitulo,
@@ -17,6 +17,8 @@ const {
   historialLibro,
   historialCapitulo,
   recomendados,
+  termineLibroParaReseña,
+  eliminar,
 } = require("../controllers/perfiles-controllers");
 
 router.get("/me", auth, cors(), visualizar);
@@ -29,9 +31,9 @@ router.post("/historialLibro", auth, cors(), historialLibro);
 
 router.post("/historialCapitulo", auth, cors(), historialCapitulo);
 
-router.post("likesLibros", auth, cors(), likesLibros);
+router.post("/likesLibros", auth, cors(), likesLibros);
 
-router.post("likesCapitulos", auth, cors(), likesCapitulos);
+router.post("/likesCapitulos", auth, cors(), likesCapitulos);
 
 router.post("/likeLibro", auth, cors(), likeLibro);
 
@@ -45,6 +47,8 @@ router.post("/recomendados", auth, cors(), recomendados);
 
 router.post("/termineLibro", auth, cors(), termineLibro);
 
-router.post("/termineCapitulo", auth, cors(), termineCapitulo);
+router.post("/termineLibroParaReseña", auth, cors(), termineLibroParaReseña);
+
+router.post("/eliminar", auth, cors(), eliminar);
 
 module.exports = router;

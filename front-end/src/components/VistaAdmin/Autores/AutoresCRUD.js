@@ -168,7 +168,7 @@ class Autor extends Component {
                                 
                             </div>
                             <div className="form-group col s12 ">
-                                <button type="submit" className="btn btn-success float-right " > Agregar Autor/a </button>
+                                <button type="submit" className="btn btn-danger float-right " > Agregar Autor/a </button>
                                 </div>
                         </div>
                     </form>
@@ -192,7 +192,7 @@ class Autor extends Component {
                             </select>
                         </div>
                         <div className="form-group col s12 ">
-                            <button type="submit" className="btn btn-success float-right" > Eliminar Autor/a </button>
+                            <button type="submit" className="btn btn-danger float-right" > Eliminar Autor/a </button>
                         </div>
                         </div>
                     </form>
@@ -236,7 +236,7 @@ class Autor extends Component {
 
                                     
                         <div className="form-group col s12 ">
-                            <button type="submit" className="btn btn-success float-right " >
+                            <button type="submit" className="btn btn-danger float-right " >
                                 Actualizar Autor/a
                             </button>
                         </div>
